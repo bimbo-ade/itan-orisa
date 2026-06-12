@@ -1,0 +1,488 @@
+/*
+Theme Name: Nigerian Gods
+Author: You
+Description: Yoruba mythology theme
+Version: 1.0
+*/
+
+:root {
+    /* Colors */
+    --gold: #FFD700;
+    --gold-light: #FFED4A;
+    --black: #0A0A0A;
+    --black-light: #1A1A1A;
+    --gray: #2A2A2A;
+    
+    /* God Colors */
+    --sango-red: #D32F2F;
+    --ogun-green: #2E7D32;
+    --oya-purple: #6A1B9A;
+    
+    /* Fonts */
+    --font-heading: 'Cinzel Decorative', 'Georgia', serif;
+    --font-body: 'Cormorant Garamond', 'Times New Roman', serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--black);
+    color: var(--gold);
+    font-family: var(--font-body);
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+}
+
+h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin: 2rem 0 1rem;
+    text-align: center;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+}
+
+p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+a {
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--gold-light);
+}
+
+.main-nav {
+    background: var(--black-light);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--gold);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-menu a {
+    font-size: 1rem;
+}
+
+.nav-menu .current-menu-item a,
+.nav-menu .current_page_item a,
+.nav-menu .current-page-ancestor a {
+    color: var(--gold-light);
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 5px;
+}
+
+.nav-menu li.current-post-type-archive a,
+.nav-menu li.current-archive a,
+.nav-menu li.menu-item-object-gods-archive a,
+.nav-menu li.current_page_parent a {
+    color: var(--gold-light);
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 5px;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 20px;
+    min-height: 70vh;
+}
+
+.button {
+    display: inline-block;
+    background: transparent;
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.button:hover {
+    background: var(--gold);
+    color: var(--black);
+}
+
+.hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, var(--black) 0%, var(--black-light) 100%);
+    border-radius: 8px;
+    margin-bottom: 3rem;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.intro-section {
+    max-width: 800px;
+    margin: 0 auto 4rem;
+    text-align: center;
+}
+
+.featured-gods {
+    margin: 4rem 0;
+}
+
+.god-grid-preview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.god-preview {
+    background: var(--black-light);
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.god-preview:hover {
+    transform: translateY(-5px);
+}
+
+.sango-preview {
+    border-top: 4px solid var(--sango-red);
+}
+
+.ogun-preview {
+    border-top: 4px solid var(--ogun-green);
+}
+
+.oya-preview {
+    border-top: 4px solid var(--oya-purple);
+}
+
+.god-preview h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.god-preview p {
+    color: var(--gold);
+    opacity: 0.8;
+}
+
+.story-tease {
+    text-align: center;
+    background: var(--black-light);
+    padding: 3rem;
+    border-radius: 8px;
+    margin-top: 3rem;
+}
+
+.gods-archive-hero {
+    text-align: center;
+    padding: 3rem 2rem;
+    margin-bottom: 3rem;
+    background: linear-gradient(135deg, var(--black) 0%, var(--black-light) 100%);
+    border-radius: 8px;
+    border-bottom: 2px solid var(--gold);
+}
+
+.gods-archive-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.gods-archive-hero p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.gods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+    margin: 3rem 0;
+}
+
+.god-card {
+    background: var(--black-light);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.god-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.1);
+}
+
+.god-card-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.god-card-image {
+    height: 250px;
+    overflow: hidden;
+}
+
+.god-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.god-card:hover .god-card-image img {
+    transform: scale(1.05);
+}
+
+.god-card-content {
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.god-card-content h2 {
+    font-size: 1.8rem;
+    margin: 0 0 1rem 0;
+    text-align: left;
+}
+
+.god-excerpt {
+    color: var(--gold);
+    opacity: 0.8;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.god-excerpt p {
+    margin: 0;
+}
+
+.god-card-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    text-align: center;
+    transition: all 0.3s ease;
+    margin-top: auto;
+}
+
+.god-card-button:hover {
+    background: var(--gold);
+    color: var(--black);
+}
+
+.stories-archive-hero {
+    text-align: center;
+    padding: 3rem 2rem;
+    margin-bottom: 3rem;
+    background: linear-gradient(135deg, var(--black) 0%, var(--black-light) 100%);
+    border-radius: 8px;
+    border-bottom: 2px solid var(--gold);
+}
+
+.stories-archive-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.stories-archive-hero p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.stories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.story-card {
+    background: var(--black-light);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 4px solid var(--gold);
+}
+
+.story-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.1);
+}
+
+.story-card-content {
+    padding: 2rem;
+}
+
+.story-card-content h2 {
+    font-size: 1.8rem;
+    margin: 0 0 1rem 0;
+    text-align: left;
+}
+
+.story-excerpt {
+    color: var(--gold);
+    opacity: 0.8;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.story-card-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.story-card-button:hover {
+    background: var(--gold);
+    color: var(--black);
+}
+
+.story-hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    margin-bottom: 3rem;
+    background: linear-gradient(135deg, var(--black-light) 0%, var(--black) 100%);
+    border-radius: 8px;
+    border-bottom: 3px solid var(--gold);
+}
+
+.story-hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.story-content-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.story-content {
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+.story-content h2 {
+    font-size: 2rem;
+    margin: 2rem 0 1rem;
+    text-align: left;
+}
+
+.story-content p {
+    margin-bottom: 1.5rem;
+}
+
+.site-footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--gold);
+    margin-top: 4rem;
+}
+
+.footer-container p {
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+    h2 {
+        font-size: 2rem;
+    }
+    .nav-menu {
+        gap: 1rem;
+    }
+    .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .god-grid-preview {
+        grid-template-columns: 1fr;
+    }
+    .gods-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .gods-archive-hero h1 {
+        font-size: 2rem;
+    }
+    .god-card-image {
+        height: 200px;
+    }
+    .stories-grid {
+        grid-template-columns: 1fr;
+    }
+    .stories-archive-hero h1 {
+        font-size: 2rem;
+    }
+    .story-hero h1 {
+        font-size: 2rem;
+    }
+    .story-content {
+        font-size: 1rem;
+    }
+}
