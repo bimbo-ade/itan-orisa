@@ -6,27 +6,25 @@ function register_gods() {
      register_post_type('god', [
         
         'labels' => [
-            'name'          => 'Gods',        // "Gods" in the menu
-            'singular_name' => 'God',         // "God" when talking about one
-            'add_new'       => 'Add New God', // Button text
-            'add_new_item'  => 'Add New God', // Page title
-            'edit_item'     => 'Edit God',    // Edit screen title
-            'view_item'     => 'View God',    // View button text
+            'name'          => 'Gods',        
+            'singular_name' => 'God',       
+            'add_new'       => 'Add New God',
+            'add_new_item'  => 'Add New God', 
+            'edit_item'     => 'Edit God',   
+            'view_item'     => 'View God',   
         ],
-        
-        // 'public' - Can regular visitors see it? True = yes
-        'public' => true,
+                'public' => true,
         
         'has_archive' => true,
          'rewrite' => ['slug' => 'gods'],
         
         'supports' => [
-            'title',    // The title field (required)
-            'editor',   // The big text box for writing content
-            'thumbnail','excerpt' // Featured image box
+            'title',   
+            'editor',   
+            'thumbnail','excerpt' 
         ],
         
-        'menu_icon' => 'dashicons-groups', // Groups icon (people together)
+        'menu_icon' => 'dashicons-groups', 
         
         'show_in_rest' => true,
     ]);
@@ -50,12 +48,12 @@ function register_stories() {
         
         'public' => true,
         'has_archive' => true,
-        'rewrite' => ['slug' => 'stories'],  // yoursite.com/stories/
+        'rewrite' => ['slug' => 'stories'], 
    'supports' => [
-            'title',    // The title field (required)
-            'editor',   // The big text box for writing content
-            'thumbnail','excerpt' // Featured image box
-        ],        'menu_icon' => 'dashicons-book',     // Book icon
+            'title',    
+            'editor',  
+            'thumbnail','excerpt' 
+        ],        'menu_icon' => 'dashicons-book', 
         'show_in_rest' => true,
     ]);
 }
@@ -76,10 +74,10 @@ add_action('init', 'register_my_menus');
 function load_my_theme_styles() {
     
     wp_enqueue_style(
-        'my-main-style',                    // Name (can be anything)
-        get_stylesheet_uri(),               // Automatically finds style.css
-        [],                                 // No dependencies
-        '1.0'                               // Version number
+        'my-main-style',                 
+        get_stylesheet_uri(),              
+        [],                                
+        '1.0'                             
     );
 }
 
