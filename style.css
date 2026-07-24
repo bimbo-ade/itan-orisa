@@ -164,50 +164,131 @@ a:hover {
 /* ============================================================
    MAIN NAV
    ============================================================ */
+/* =============================================================
+   MAIN NAV
+   CSS-nested. No .nav-menu class needed — the <ul> is targeted
+   directly since it only ever appears inside .nav-container.
+   Mobile menu is a pure-CSS checkbox toggle — zero JavaScript.
+   ============================================================= */
+
 .main-nav {
-    background: var(--night-deep);
-    padding: 1rem 0;
-    border: 1px solid var(--gold);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
+  background : var(--night-deep);
+  padding    : 1rem 0;
+  border     : 1px solid var(--gold);
+  position   : sticky;
+  top        : 0;
+  z-index    : 100;
 
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    justify-content: space-between;
-}
+  & .nav-container {
+    position        : relative;
+    max-width       : 1200px;
+    margin          : 0 auto;
+    padding         : 0 20px;
+    display         : flex;
+    align-items     : center;
+    justify-content : space-between;
+    gap             : 1rem;
+  }
 
-.logo a {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
+  & .logo a {
+    font-size   : 1.5rem;
+    font-weight : bold;
+    color       : var(--text-primary);
+    text-decoration: none;
+  }
 
-.nav-menu {
-    display: flex;
-    flex-wrap: wrap;
+  /* the checkbox that drives the toggle — invisible, but still
+     focusable/keyboard-operable, unlike display:none */
+  & .nav-toggle {
+    position : absolute;
+    opacity  : 0;
+    width    : 1px;
+    height   : 1px;
+    overflow : hidden;
+  }
+
+  & .nav-toggle-label {
+    display     : none;
+    flex-direction: column;
     justify-content: center;
-    list-style: none;
-    gap: 1rem;
-}
+    gap         : 5px;
+    width       : 28px;
+    cursor      : pointer;
 
+    & span {
+      display    : block;
+      height     : 2px;
+      background : var(--moon-warm);
+      transition : transform 0.25s ease, opacity 0.25s ease;
+    }
+  }
 
+  & ul {
+    display    : flex;
+    flex-wrap  : wrap;
+    justify-content: center;
+    list-style : none;
+    gap        : 1rem;
+    margin     : 0;
+    padding    : 0;
 
-.nav-menu .current-menu-item a,
-.nav-menu .current_page_item a,
-.nav-menu .current-page-ancestor a,
-.nav-menu li.current-post-type-archive a,
-.nav-menu li.current-archive a,
-.nav-menu li.menu-item-object-gods-archive a,
-.nav-menu li.current_page_parent a {
-    color: var(--moon-bright);
-    border-bottom: 2px solid var(--moon-bright);
-    padding-bottom: 5px;
+    /* every WP "this is the current page" class collapsed into one rule */
+    & :where(
+        .current-menu-item,
+        .current_page_item,
+        .current-page-ancestor,
+        li.current-post-type-archive,
+        li.current-archive,
+        li.menu-item-object-gods-archive,
+        li.current_page_parent
+      ) a {
+      color         : var(--moon-bright);
+      border-bottom : 2px solid var(--moon-bright);
+      padding-bottom: 5px;
+    }
+
+    & a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+  }
+
+  /* -----------------------------------------------------------
+     MOBILE — hamburger, pure CSS
+     ----------------------------------------------------------- */
+  @media ( max-width: 48em ) {
+
+    & .nav-toggle-label { display: flex; }
+
+    & ul {
+      position   : absolute;
+      top        : calc(100% + 1px);
+      left       : 0;
+      right      : 0;
+      flex-direction: column;
+      gap        : 0;
+      background : var(--night-deep);
+      border     : 1px solid var(--gold);
+      border-top : none;
+      max-height : 0;
+      overflow   : hidden;
+      transition : max-height 0.3s ease;
+
+      & li { width: 100%; text-align: center; }
+      & a  { display: block; padding: 0.85rem; }
+    }
+
+    /* the reveal — pure CSS, driven by :checked */
+    & .nav-toggle:checked ~ ul {
+      max-height : 60vh;
+      overflow-y : auto;
+    }
+
+    /* hamburger → X, driven by the same :checked state */
+    & .nav-toggle:checked ~ .nav-toggle-label span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    & .nav-toggle:checked ~ .nav-toggle-label span:nth-child(2) { opacity: 0; }
+    & .nav-toggle:checked ~ .nav-toggle-label span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  }
 }
 
 
@@ -239,123 +320,126 @@ a:hover {
      6. About Teaser
    ============================================================= */
 
-/* =============================================================
-   ITAN ORISA — Homepage
-   front-page.css  |  Mobile-first  |  CSS nesting
-   Inherits :root tokens from main stylesheet.
-   ============================================================= */
 
 .hp {
-  background-color : var(--night-deepest);
-  color            : var(--text-primary);
-  font-family      : var(--font-body);
-  overflow-x       : hidden;
+    background-color: var(--night-deepest);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    overflow-x: hidden;
 
-  & * { box-sizing : border-box; }
+    & * {
+        box-sizing: border-box;
+    }
 
 
-  /* -----------------------------------------------------------
+    /* -----------------------------------------------------------
      SHARED — inner container used in every section
      Direct child <div> of each <section> acts as the inner.
      Max-width + centred + side padding.
      ----------------------------------------------------------- */
-  & section > div:first-child {
-    width     : 100%;
-    max-width : var(--max-width);
-    margin    : 0 auto;
-    padding   : 0 var(--sp-md);
-  }
-
-  /* Shared eyebrow label — first <p> inside each section's inner div */
-  & section > div:first-child > p:first-child {
-    display        : block;
-    font-size      : 0.7rem;
-    font-weight    : 600;
-    letter-spacing : 0.18em;
-    text-transform : uppercase;
-    color          : var(--moon-bright);
-    margin-bottom  : var(--sp-md);
-  }
-
-  /* Shared inline text link — <a> that is not a button */
-  & a:not(.btn-primary):not(.btn-ghost) {
-    color           : var(--moon-bright);
-    font-size       : 0.9rem;
-    font-weight     : 600;
-    text-decoration : none;
-    border-bottom   : 1px solid transparent;
-    transition      : color var(--transition),
-                      border-color var(--transition);
-
-    &:hover {
-      color        : var(--moon-warm);
-      border-color : var(--moon-pale);
+    & section>div:first-child {
+        width: 100%;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 var(--sp-md);
     }
-  }
+
+    /* Shared eyebrow label — first <p> inside each section's inner div */
+    & section>div:first-child>p:first-child {
+        display: block;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--moon-bright);
+        margin-bottom: var(--sp-md);
+    }
+
+    /* Shared inline text link — <a> that is not a button */
+    & a:not(.btn-primary):not(.btn-ghost) {
+        color: var(--moon-bright);
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: color var(--transition),
+            border-color var(--transition);
+
+        &:hover {
+            color: var(--moon-warm);
+            border-color: var(--moon-pale);
+        }
+    }
 
 
-  /* -----------------------------------------------------------
+    /* -----------------------------------------------------------
      1. HERO
      ----------------------------------------------------------- */
-  & .hp-hero {
-    position        : relative;
-    min-height      : 100svh;
-    display         : flex;
-    align-items     : center;
-    justify-content : center;
-    text-align      : center;
-    padding         : var(--sp-xl) var(--sp-md);
-    overflow        : hidden;
-    background-image: url('images/hero.svg');
-    background-size : cover;
-    background-position: center;
+    & .hp-hero {
+        position: relative;
+        /* min-height: 100svh; */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: var(--sp-2xl) var(--sp-md);
+        overflow: hidden;
+        background-image: url('images/hero.svg');
+        background-size: cover;
+        background-position: center;
 
-    /* content div */
-    & > div {
-      position       : relative;
-      z-index        : 1;
-      max-width      : 700px;
-      margin         : 0 auto;
-      padding        : 0;
-      display        : flex;
-      flex-direction : column;
-      align-items    : center;
-      gap            : var(--sp-md);
+        /* content div */
+        &>div {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--sp-md);
 
-      /* "Yoruba Mythology — Nigeria, West Africa" kicker */
-      & > p {
-        font-size      : 0.7rem;
-        font-weight    : 600;
-        letter-spacing : 0.2em;
-        text-transform : uppercase;
-        color          : var(--moon-bright);
-        margin         : 0;
-        border         : none; /* override shared link styles if needed */
-      }
+            /* "Yoruba Mythology — Nigeria, West Africa" kicker */
+            &>p {
+                font-size: 0.7rem;
+                font-weight: 600;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--moon-bright);
+                margin: 0;
+                border: none;
+                /* override shared link styles if needed */
+            }
 
-      & h1 {
-        font-family   : var(--font-heading);
-        line-height   : 1.05;
-        color         : var(--text-primary);
-        margin        : 0;
+            & h1 {
+                font-family: var(--font-body);
+                line-height: 1.05;
+                color: var(--text-primary);
+                margin: 0;
+                text-transform: none;
+                font-weight: normal;
+                font-size: 1.3rem;
 
-        /* site name — Ìtàn Òrìṣà */
-        & span {
-          display       : block;
-          font-size     : clamp(2.5rem, 10vw, 5.5rem);
-          color         : var(--moon-bright);
-          margin-bottom : var(--sp-sm);
-          letter-spacing: 0.02em;
+                /* site name — Ìtàn Òrìṣà */
+                & span {
+                    font-family: var(--font-heading);
+                    font-weight: 700;
+                    display: block;
+                    font-size: clamp(2.5rem, 10vw, 7rem);
+                    color: var(--moon-bright);
+                    margin-bottom: var(--sp-sm);
+                    letter-spacing: 0.02em;
+                }
+
+                /* tagline below site name */
+                /* font-size : clamp(1.8rem, 6vw, 3rem); */
+            }
         }
-
-        /* tagline below site name */
-        font-size : clamp(1.8rem, 6vw, 3rem);
-      }
     }
-  }
 
 
-  /* -----------------------------------------------------------
+    /* -----------------------------------------------------------
      2. FEATURED STORY — LOVE TRIANGLE
      Card has four direct children:
        div:nth-child(1)  — overlay (gradient, aria-hidden)
@@ -363,114 +447,108 @@ a:hover {
        div:nth-child(3)  — card body (h2, p, ul, a)
        div:nth-child(4)  — image placeholder (aria-hidden)
      ----------------------------------------------------------- */
-  & .hp-story {
-    padding          : var(--sp-xl) 0;
-    background-color : var(--night-deep);
-    border-top       : 1px solid var(--night-light);
-    border-bottom    : 1px solid var(--night-light);
-  }
-
-  & .hp-story-card {
-    position            : relative;
-    background-image    : url('images/oya.png');
-    background-size     : cover;
-    background-position : center;
-    border-radius       : var(--border-radius);
-    overflow            : hidden;
-    border              : 1px solid var(--night-light);
-
-    /* overlay — dark gradient left to right */
-    & > div:nth-child(1) {
-      position   : absolute;
-      inset      : 0;
-      background : linear-gradient(
-        to right,
-        rgba(0, 0, 0, 0.85) 40%,
-        rgba(0, 0, 0, 0) 100%
-      );
-      pointer-events : none;
+    & .hp-story {
+        padding: var(--sp-xl) 0;
+        background-color: var(--night-deep);
+        border-top: 1px solid var(--night-light);
+        border-bottom: 1px solid var(--night-light);
     }
 
-    /* gradient band — top of card */
-    & > div:nth-child(2) {
-      position   : relative;
-      z-index    : 1;
-      height     : 3px;
-      background : linear-gradient(
-        90deg,
-        #FF6B4A,
-        #9B7FE0,
-        #4FA876
-      );
-    }
+    & .hp-story-card {
+        position: relative;
+        background-image: url('images/oya.png');
+        background-size: cover;
+        background-position: center;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        border: 1px solid var(--night-light);
 
-    /* card body */
-    & > div:nth-child(3) {
-      position       : relative;
-      z-index        : 1;
-      padding        : var(--sp-lg) var(--sp-md);
-      display        : flex;
-      flex-direction : column;
-      gap            : var(--sp-md);
-      max-width      : 560px;
-
-      & h2 {
-        font-family : var(--font-heading);
-        font-size   : clamp(1.8rem, 5vw, 3rem);
-        line-height : 1.1;
-        color       : var(--text-primary);
-        margin      : 0;
-      }
-
-      & > p {
-        font-size  : 0.95rem;
-        line-height: 1.75;
-        color      : var(--text-secondary);
-        margin     : 0;
-      }
-
-      /* character pills — <ul> with <li style="--cp:colour"> */
-      & ul {
-        list-style : none;
-        padding    : 0;
-        margin     : 0;
-        display    : flex;
-        flex-wrap  : wrap;
-        gap        : var(--sp-xs);
-
-        & li {
-          display      : inline-flex;
-          align-items  : center;
-          gap          : 0.4rem;
-          padding      : 0.35rem 0.85rem;
-          border-radius: 100px;
-          font-size    : 0.78rem;
-          font-weight  : 600;
-          color        : var(--text-primary);
-          background   : rgba(255,255,255,0.06);
-          border       : 1px solid rgba(255,255,255,0.1);
-
-          /* colour dot */
-          & span {
-            display       : block;
-            width         : 8px;
-            height        : 8px;
-            border-radius : 50%;
-            background    : var(--cp, var(--moon-bright));
-            flex-shrink   : 0;
-          }
+        /* overlay — dark gradient left to right */
+        &>div:nth-child(1) {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right,
+                    rgba(0, 0, 0, 0.85) 40%,
+                    rgba(0, 0, 0, 0) 100%);
+            pointer-events: none;
         }
-      }
+
+        /* gradient band — top of card */
+        &>div:nth-child(2) {
+            position: relative;
+            z-index: 1;
+            height: 3px;
+            background: linear-gradient(90deg,
+                    #FF6B4A,
+                    #9B7FE0,
+                    #4FA876);
+        }
+
+        /* card body */
+        &>div:nth-child(3) {
+            position: relative;
+            z-index: 1;
+            padding: var(--sp-lg) var(--sp-md);
+            display: flex;
+            flex-direction: column;
+            gap: var(--sp-md);
+            max-width: 560px;
+
+            & h2 {
+                font-family: var(--font-heading);
+                font-size: clamp(1.8rem, 5vw, 3rem);
+                line-height: 1.1;
+                color: var(--text-primary);
+                margin: 0;
+            }
+
+            &>p {
+                color: var(--text-secondary);
+                margin: 0;
+            }
+
+            /* character pills — <ul> with <li style="--cp:colour"> */
+            & ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-wrap: wrap;
+                gap: var(--sp-xs);
+
+                & li {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.4rem;
+                    padding: 0.35rem 0.85rem;
+                    border-radius: 100px;
+                    font-size: 0.78rem;
+                    font-weight: 600;
+                    color: var(--text-primary);
+                    background: rgba(255, 255, 255, 0.06);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+
+                    /* colour dot */
+                    & span {
+                        display: block;
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 50%;
+                        background: var(--cp, var(--moon-bright));
+                        flex-shrink: 0;
+                    }
+                }
+            }
+        }
+
+        /* image placeholder div — hidden on mobile, decorative on desktop */
+        &>div:nth-child(4) {
+            display: none;
+        }
     }
 
-    /* image placeholder div — hidden on mobile, decorative on desktop */
-    & > div:nth-child(4) {
-      display : none;
-    }
-  }
 
-
-  /* -----------------------------------------------------------
+    /* -----------------------------------------------------------
      3. GOD CARDS
      Section > div (inner) > p (label) > div (grid) > a (cards)
      Each <a> has two direct children:
@@ -478,293 +556,291 @@ a:hover {
        p     — personality line
        span  — CTA arrow
      ----------------------------------------------------------- */
-  & .hp-gods {
-    padding          : var(--sp-xl) 0;
-    background-color : var(--night-deepest);
+    & .hp-gods {
+        padding: var(--sp-xl) 0;
+        background-color: var(--night-deepest);
 
-    /* grid wrapper — second div inside inner */
-    & > div > div {
-      display        : flex;
-      flex-direction : column;
-      gap            : var(--sp-md);
-      margin-top     : var(--sp-md);
-    }
-
-    /* each god card — <a> element */
-    & a {
-      display          : flex;
-      flex-direction   : column;
-      gap              : var(--sp-sm);
-      padding          : var(--sp-md);
-      background-color : var(--night-mid);
-      border           : 1px solid var(--night-light);
-      border-top       : 3px solid var(--gc, var(--moon-bright));
-      border-radius    : var(--border-radius);
-      text-decoration  : none;
-      color            : inherit;
-      transition       : background var(--transition),
-                         transform  var(--transition);
-
-      &:hover {
-        background-color : var(--night-muted);
-        transform        : translateY(-3px);
-        border-color     : var(--gc, var(--moon-bright));
-      }
-
-      /* name + domain wrapper */
-      & > div {
-        & h3 {
-          font-family   : var(--font-heading);
-          font-size     : 1.8rem;
-          line-height   : 1;
-          color         : var(--gc, var(--moon-bright));
-          margin-bottom : 0.25rem;
+        /* grid wrapper — second div inside inner */
+        &>div>div {
+            display: flex;
+            flex-direction: column;
+            gap: var(--sp-md);
+            margin-top: var(--sp-md);
         }
 
-        & p {
-          font-size  : 0.86rem;
-          font-weight: 500;
-          color      : var(--text-secondary);
-          margin     : 0;
+        /* each god card — <a> element */
+        & a {
+            display: flex;
+            flex-direction: column;
+            gap: var(--sp-sm);
+            padding: var(--sp-md);
+            background-color: var(--night-mid);
+            border: 1px solid var(--night-light);
+            border-top: 3px solid var(--gc, var(--moon-bright));
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            color: inherit;
+            transition: background var(--transition),
+                transform var(--transition);
+
+            &:hover {
+                background-color: var(--night-muted);
+                transform: translateY(-3px);
+                border-color: var(--gc, var(--moon-bright));
+            }
+
+            /* name + domain wrapper */
+            &>div {
+                & h3 {
+                    font-family: var(--font-heading);
+                    font-size: 1.8rem;
+                    line-height: 1;
+                    color: var(--gc, var(--moon-bright));
+                    margin-bottom: 0.25rem;
+                }
+
+                & p {
+                    font-size: 0.86rem;
+                    font-weight: 500;
+                    color: var(--text-secondary);
+                    margin: 0;
+                }
+            }
+
+            /* personality line */
+            &>p {
+                color: var(--text-secondary);
+                line-height: 1.65;
+                margin: 0;
+                flex: 1;
+            }
+
+            /* CTA arrow span */
+            &>span {
+                font-size: 0.88rem;
+                font-weight: 700;
+                color: var(--gc, var(--moon-bright));
+                transition: opacity var(--transition);
+            }
+
+            &:hover>span {
+                opacity: 0.75;
+            }
         }
-      }
-
-      /* personality line */
-      & > p {
-        font-size  : 0.95rem;
-        color      : var(--text-secondary);
-        line-height: 1.65;
-        margin     : 0;
-        flex       : 1;
-      }
-
-      /* CTA arrow span */
-      & > span {
-        font-size  : 0.88rem;
-        font-weight: 700;
-        color      : var(--gc, var(--moon-bright));
-        transition : opacity var(--transition);
-      }
-
-      &:hover > span { opacity : 0.75; }
     }
-  }
 
 
-  /* -----------------------------------------------------------
+    /* -----------------------------------------------------------
      4. CULTURAL GROUNDING
      Inner > p (label) > div (body) > h2 + p + a
      ----------------------------------------------------------- */
-  & .hp-culture {
-    padding          : var(--sp-xl) 0;
-    background-color : var(--night-deep);
-    border-top       : 1px solid var(--night-light);
-    border-bottom    : 1px solid var(--night-light);
+    & .hp-culture {
+        padding: var(--sp-xl) 0;
+        background-color: var(--night-deep);
+        border-top: 1px solid var(--night-light);
+        border-bottom: 1px solid var(--night-light);
 
-    /* body div */
-    & > div > div {
-      max-width : 640px;
+        /* body div */
+        &>div>div {
+            max-width: 640px;
 
-      & h2 {
-        font-family   : var(--font-heading);
-        font-size     : clamp(1.8rem, 5vw, 3rem);
-        line-height   : 1.1;
-        color         : var(--text-primary);
-        margin-bottom : var(--sp-md);
-      }
+            & h2 {
+                font-family: var(--font-heading);
+                font-size: clamp(1.8rem, 5vw, 3rem);
+                line-height: 1.1;
+                color: var(--text-primary);
+                margin-bottom: var(--sp-md);
+            }
 
-      & p {
-        font-size     : 1rem;
-        line-height   : 1.75;
-        color         : var(--text-secondary);
-        margin-bottom : var(--sp-md);
-      }
+            & p {
+                color: var(--text-secondary);
+                margin-bottom: var(--sp-md);
+            }
+        }
     }
-  }
 
 
-  /* -----------------------------------------------------------
+    /* -----------------------------------------------------------
      5. PANTHEON TEASER
      Inner > p (label) > div (two-col) > div (text) + div (image)
      ----------------------------------------------------------- */
-  & .hp-pantheon {
-    padding          : var(--sp-xl) 0;
-    background-color : var(--night-deepest);
+    & .hp-pantheon {
+        padding: var(--sp-xl) 0;
+        background-color: var(--night-deepest);
 
-    /* two-col content wrapper */
-    & > div > div {
-      display        : flex;
-      flex-direction : column;
-      gap            : var(--sp-xl);
-      align-items    : center;
+        /* two-col content wrapper */
+        &>div>div {
+            display: flex;
+            flex-direction: column;
+            gap: var(--sp-xl);
+            align-items: center;
 
-      /* text body */
-      & > div:first-child {
-        max-width : 540px;
+            /* text body */
+            &>div:first-child {
+                max-width: 540px;
 
-        & h2 {
-          font-family   : var(--font-heading);
-          font-size     : clamp(2.5rem, 8vw, 5rem);
-          line-height   : 1;
-          color         : var(--text-primary);
-          margin-bottom : var(--sp-md);
+                & h2 {
+                    font-family: var(--font-heading);
+                    font-size: clamp(2.5rem, 8vw, 5rem);
+                    line-height: 1;
+                    color: var(--text-primary);
+                    margin-bottom: var(--sp-md);
 
-          & em {
-            color      : var(--moon-bright);
-            font-style : normal;
-            display    : block;
-          }
+                    & em {
+                        color: var(--moon-bright);
+                        font-style: normal;
+                        display: block;
+                    }
+                }
+
+                & p {
+                    color: var(--text-secondary);
+                    margin-bottom: var(--sp-lg);
+                }
+            }
+
+            /* image div */
+            &>div:last-child {
+                display: flex;
+                justify-content: center;
+
+                & img {
+                    width: 80%;
+                    max-width: 320px;
+                    height: auto;
+                    display: block;
+                }
+            }
         }
-
-        & p {
-          font-size     : 1rem;
-          line-height   : 1.75;
-          color         : var(--text-secondary);
-          margin-bottom : var(--sp-lg);
-        }
-      }
-
-      /* image div */
-      & > div:last-child {
-        display         : flex;
-        justify-content : center;
-
-        & img {
-          width     : 80%;
-          max-width : 320px;
-          height    : auto;
-          display   : block;
-        }
-      }
     }
-  }
 
 
-  /* -----------------------------------------------------------
+    /* -----------------------------------------------------------
      6. ABOUT TEASER
      Inner > p (label) > div (body) > h2 + p + a
      ----------------------------------------------------------- */
-  & .hp-about {
-    padding          : var(--sp-xl) 0;
-    background-color : var(--night-deep);
-    border-top       : 1px solid var(--night-light);
+    & .hp-about {
+        padding: var(--sp-xl) 0;
+        background-color: var(--night-deep);
+        border-top: 1px solid var(--night-light);
 
-    /* body div */
-    & > div > div {
-      max-width : 600px;
+        /* body div */
+        &>div>div {
+            max-width: 600px;
 
-      & h2 {
-        font-family   : var(--font-heading);
-        font-size     : clamp(1.6rem, 4vw, 2.5rem);
-        line-height   : 1.15;
-        color         : var(--text-primary);
-        margin-bottom : var(--sp-md);
-      }
+            & h2 {
+                font-family: var(--font-heading);
+                font-size: clamp(1.6rem, 4vw, 2.5rem);
+                line-height: 1.15;
+                color: var(--text-primary);
+                margin-bottom: var(--sp-md);
+            }
 
-      & p {
-        font-size     : 1rem;
-        line-height   : 1.75;
-        color         : var(--text-secondary);
-        margin-bottom : var(--sp-md);
-      }
+            & p {
+                color: var(--text-secondary);
+                margin-bottom: var(--sp-md);
+            }
+        }
     }
-  }
 
 
-  /* -----------------------------------------------------------
+    /* -----------------------------------------------------------
      TABLET — 640px+
      ----------------------------------------------------------- */
-  @media ( min-width: 40em ) {
+    @media (min-width: 40em) {
 
-    /* Story card body — more padding */
-    & .hp-story-card > div:nth-child(3) {
-      padding : var(--sp-xl);
+        /* Story card body — more padding */
+        & .hp-story-card>div:nth-child(3) {
+            padding: var(--sp-xl);
+        }
+
+        /* God cards — two column */
+        & .hp-gods>div>div {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        /* More padding on lower sections */
+        & .hp-culture,
+        & .hp-pantheon,
+        & .hp-about {
+            padding: var(--sp-2xl) 0;
+        }
     }
 
-    /* God cards — two column */
-    & .hp-gods > div > div {
-      display               : grid;
-      grid-template-columns : repeat(2, 1fr);
-    }
 
-    /* More padding on lower sections */
-    & .hp-culture,
-    & .hp-pantheon,
-    & .hp-about {
-      padding : var(--sp-2xl) 0;
-    }
-  }
-
-
-  /* -----------------------------------------------------------
+    /* -----------------------------------------------------------
      DESKTOP — 1024px+
      ----------------------------------------------------------- */
-  @media ( min-width: 64em ) {
+    @media (min-width: 64em) {
 
-    /* God cards — three column */
-    & .hp-gods > div > div {
-      grid-template-columns : repeat(3, 1fr);
+        /* God cards — three column */
+        & .hp-gods>div>div {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* Story card — horizontal layout */
+        & .hp-story-card {
+            display: flex;
+
+            /* gradient band flips to left vertical strip */
+            &>div:nth-child(2) {
+                width: 4px;
+                height: auto;
+                background: linear-gradient(180deg,
+                        #FF6B4A,
+                        #9B7FE0,
+                        #4FA876);
+                flex-shrink: 0;
+                order: -1;
+            }
+
+            &>div:nth-child(3) {
+                flex: 1;
+                padding: var(--sp-xl);
+            }
+        }
+
+        /* Pantheon — side by side */
+        & .hp-pantheon>div>div {
+            flex-direction: row;
+            align-items: center;
+
+            &>div:last-child img {
+                max-width: 400px;
+                width: 100%;
+            }
+        }
+
+        /* Culture and about body wider */
+        & .hp-culture>div>div,
+        & .hp-about>div>div {
+            max-width: 720px;
+        }
     }
 
-    /* Story card — horizontal layout */
-    & .hp-story-card {
-      display : flex;
 
-      /* gradient band flips to left vertical strip */
-      & > div:nth-child(2) {
-        width      : 4px;
-        height     : auto;
-        background : linear-gradient(
-          180deg,
-          #FF6B4A,
-          #9B7FE0,
-          #4FA876
-        );
-        flex-shrink: 0;
-        order      : -1;
-      }
-
-      & > div:nth-child(3) {
-        flex    : 1;
-        padding : var(--sp-xl);
-      }
-    }
-
-    /* Pantheon — side by side */
-    & .hp-pantheon > div > div {
-      flex-direction : row;
-      align-items    : center;
-
-      & > div:last-child img {
-        max-width : 400px;
-        width     : 100%;
-      }
-    }
-
-    /* Culture and about body wider */
-    & .hp-culture > div > div,
-    & .hp-about > div > div {
-      max-width : 720px;
-    }
-  }
-
-
-  /* -----------------------------------------------------------
+    /* -----------------------------------------------------------
      ACCESSIBILITY
      ----------------------------------------------------------- */
-  @media ( prefers-reduced-motion: reduce ) {
-    & * { transition : none !important; animation : none !important; }
+    @media (prefers-reduced-motion: reduce) {
+        & * {
+            transition: none !important;
+            animation: none !important;
+        }
 
-    & .hp-gods a:hover { transform : none; }
-  }
+        & .hp-gods a:hover {
+            transform: none;
+        }
+    }
 
-  & a:focus-visible,
-  & .btn-primary:focus-visible,
-  & .btn-ghost:focus-visible {
-    outline        : 3px solid var(--moon-bright);
-    outline-offset : 3px;
-    border-radius  : 3px;
-  }
+    & a:focus-visible,
+    & .btn-primary:focus-visible,
+    & .btn-ghost:focus-visible {
+        outline: 3px solid var(--moon-bright);
+        outline-offset: 3px;
+        border-radius: 3px;
+    }
 }
 
 /* =================
@@ -782,12 +858,6 @@ END OF HOME PAGE
 
    STORIES LIST PAGEEEEEE
  ============================================================ */
-
-/* =============================================================
-   ITAN ORISA — Gods Archive & Stories Archive
-   archive-gods-stories.css  |  Mobile-first  |  CSS nesting
-   Inherits :root tokens from main stylesheet.
-   ============================================================= */
 
 
 /* =============================================================
@@ -857,7 +927,6 @@ END OF HOME PAGE
             }
 
             & p {
-                font-size: 1rem;
                 color: var(--text-secondary);
                 margin: 0;
             }
@@ -1002,7 +1071,6 @@ END OF HOME PAGE
                 flex: 1;
 
                 & p {
-                    font-size: 0.9rem;
                     color: var(--text-secondary);
 
                     margin: 0;
@@ -1012,7 +1080,7 @@ END OF HOME PAGE
             /* CTA link — sits above ::after overlay */
             &>a {
                 display: inline-block;
-                font-size: 0.8rem;
+                font-size: 0.9rem;
                 font-weight: 700;
                 color: var(--gc, var(--moon-bright));
                 text-decoration: none;
@@ -1141,7 +1209,6 @@ END OF HOME PAGE
             }
 
             & p {
-                font-size: 1rem;
                 color: var(--text-secondary);
 
                 margin: 0;
@@ -1263,7 +1330,6 @@ END OF HOME PAGE
             /* excerpt */
             &>div {
                 & p {
-                    font-size: 0.9rem;
                     color: var(--text-secondary);
                     margin: 0;
                 }
@@ -1307,7 +1373,7 @@ END OF HOME PAGE
             /* CTA link */
             &>a {
                 display: inline-block;
-                font-size: 0.8rem;
+                font-size: 0.9rem;
                 font-weight: 700;
                 color: var(--moon-bright);
                 text-decoration: none;
@@ -1401,29 +1467,1689 @@ END OF HOME PAGE
 /* ============================================================
    SINGLE STORY
    ============================================================ */
-/* ============================================================
-   SINGLE GOD PAGE
-   ============================================================ */
-/* ============================================================
-   SINGLE GOD PAGE
-   ============================================================ */
-/* ============================================================
-   SINGLE GOD PAGE
-   ============================================================ */
+/* =============================================================
+
+/* =============================================================
+   ITAN ORISA — Single God Page
+
+   ============================================================= */
+
+/* =============================================================
+   ITAN ORISA — Single God Page (Complete Rebuild)
+   single-god.css  |  Mobile-first  |  CSS nesting
+
+   Design language:
+   ─ --god and --god-rgb (set per post) drive EVERYTHING.
+     Every tint, glow, border, and accent traces back to
+     the deity's colour. You feel whose page you're on
+     from the first pixel.
+   ─ Sections alternate between atmospheric immersion
+     (hero, timeline, love triangle, mid-quote, legacy)
+     and structured clarity (facts bar, powers, relations,
+     worship, FAQ). The rhythm prevents fatigue.
+   ─ Typography is cinematic. Headings are large, pull
+     quotes are large, the deity name is enormous.
+   ─ The page feels like a graphic novel, not a Wikipedia
+     article.
+   ============================================================= */
+
+.single-god {
+    background-color: var(--night-deepest);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+
+    & * {
+        box-sizing: border-box;
+    }
+
+    /* God colour tint shortcuts — used throughout */
+    --god-tint : rgba(var(--god-rgb), 0.08);
+    --god-border : rgba(var(--god-rgb), 0.2);
+    --god-glow : rgba(var(--god-rgb), 0.15);
+
+
+    /* -----------------------------------------------------------
+     TOP NAV BREADCRUMB
+     ----------------------------------------------------------- */
+    & .god-topnav {
+        position: sticky;
+        top: var(--nav-height, 56px);
+        z-index: 80;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem var(--sp-md);
+        background: color-mix(in srgb, var(--night-deep) 90%, var(--god) 10%);
+        border-bottom: 1px solid var(--god-border);
+        font-size: 0.72rem;
+        backdrop-filter: blur(8px);
+
+        & a {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color var(--transition);
+
+            &:hover {
+                color: var(--god);
+            }
+        }
+
+        &>span {
+            color: var(--text-muted);
+
+            & strong {
+                color: var(--god);
+            }
+        }
+    }
+
+
+    /* -----------------------------------------------------------
+     1. HERO
+     ----------------------------------------------------------- */
+    & .god-hero {
+        position: relative;
+        min-height: 100svh;
+        display: flex;
+        align-items: flex-end;
+        padding: var(--sp-2xl) var(--sp-md) var(--sp-xl);
+        overflow: hidden;
+
+        /* ── portrait image ── */
+        & .god-hero-image {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+
+            & img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                opacity: 0.35;
+                filter: saturate(0.6);
+            }
+        }
+
+        /* ── god-colour atmospheric glow ── */
+        & .god-hero-atmosphere {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+                radial-gradient(ellipse 90% 70% at 20% 100%,
+                    rgba(var(--god-rgb), 0.3) 0%,
+                    transparent 60%),
+                linear-gradient(to top,
+                    var(--night-deepest) 0%,
+                    rgba(7, 9, 26, 0.75) 55%,
+                    transparent 100%);
+            pointer-events: none;
+        }
+
+        /* ── subtle grid overlay — graphic novel panel ── */
+        & .god-hero-grid {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            opacity: 0.03;
+            background-image:
+                linear-gradient(rgba(var(--god-rgb), 1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(var(--god-rgb), 1) 1px, transparent 1px);
+            background-size: 52px 52px;
+            pointer-events: none;
+        }
+
+        /* ── content ── */
+        & .god-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: var(--sp-md);
+
+            &>span {
+                font-size: 0.62rem;
+                font-weight: 700;
+                letter-spacing: 0.25em;
+                text-transform: uppercase;
+                color: var(--god);
+                opacity: 0.85;
+            }
+
+            & h1 {
+                font-family: var(--font-heading);
+                font-size: clamp(4.5rem, 16vw, 11rem);
+                line-height: 0.88;
+                color: var(--text-primary);
+                margin: 0;
+                text-shadow: 0 0 100px rgba(var(--god-rgb), 0.5);
+            }
+
+            & .god-tagline {
+                font-family: var(--font-heading);
+                font-size: clamp(1rem, 2.5vw, 1.5rem);
+                color: var(--god);
+                font-style: italic;
+                margin: 0;
+            }
+
+            & .god-voice {
+                font-size: 0.95rem;
+                color: var(--text-secondary);
+                font-style: italic;
+                max-width: 500px;
+                margin: 0;
+                line-height: 1.65;
+                padding-left: var(--sp-md);
+                border-left: 2px solid rgba(var(--god-rgb), 0.45);
+            }
+
+            & .god-hero-cta {
+                display: flex;
+                flex-wrap: wrap;
+                gap: var(--sp-sm);
+            }
+        }
+
+        /* ── scroll hint ── */
+        & .god-hero-scroll {
+            position: absolute;
+            bottom: var(--sp-lg);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+
+            & span {
+                display: block;
+                width: 1px;
+                height: 56px;
+                background: linear-gradient(to bottom, var(--god), transparent);
+                animation: heroScroll 2.2s ease-in-out infinite;
+            }
+        }
+    }
+
+    @keyframes heroScroll {
+        0% {
+            opacity: 1;
+            transform: scaleY(1);
+            transform-origin: top;
+        }
+
+        50% {
+            opacity: 0.3;
+        }
+
+        100% {
+            opacity: 1;
+            transform: scaleY(0.25);
+            transform-origin: bottom;
+        }
+    }
+
+
+    /* -----------------------------------------------------------
+     2. QUICK FACTS BAR
+     Horizontal strip. Scrollable on mobile.
+     ----------------------------------------------------------- */
+    & .god-facts-bar {
+        display: flex;
+        overflow-x: auto;
+        scrollbar-width: none;
+        background-color: color-mix(in srgb, var(--night-deep) 90%, var(--god) 10%);
+        border-bottom: 1px solid var(--god-border);
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        &>div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+            padding: var(--sp-md) var(--sp-lg);
+            border-right: 1px solid var(--god-border);
+            flex-shrink: 0;
+            text-align: center;
+            min-width: 110px;
+            transition: background var(--transition);
+
+            &:last-child {
+                border-right: none;
+            }
+
+            &:hover {
+                background-color: rgba(var(--god-rgb), 0.08);
+            }
+
+            &>span {
+                font-size: 1.4rem;
+                line-height: 1;
+            }
+
+            & small {
+                font-size: 0.58rem;
+                font-weight: 700;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                color: var(--text-muted);
+            }
+
+            & strong {
+                font-size: 0.85rem;
+                color: var(--text-primary);
+                font-weight: 600;
+                line-height: 1.3;
+            }
+        }
+    }
+
+
+    /* -----------------------------------------------------------
+     3. INTRO + PULL QUOTE
+     Split layout — left prose, right large quote.
+     ----------------------------------------------------------- */
+    & .god-intro {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-xl);
+        padding: var(--sp-xl) var(--sp-md);
+        background-color: color-mix(in srgb, var(--night-deepest) 96%, var(--god) 4%);
+        border-bottom: 1px solid var(--god-border);
+        max-width: var(--max-width);
+        margin: 0 auto;
+
+        /* left — intro text */
+        &>div:first-child {
+            & h2 {
+                font-family: var(--font-heading);
+                font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+                line-height: 1.1;
+                color: var(--text-primary);
+                margin-bottom: var(--sp-md);
+            }
+
+            & p,
+            & div p {
+                line-height: 1.8;
+                color: var(--text-secondary);
+                margin-bottom: var(--sp-md);
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        /* right — pull quote */
+        &>div:last-child {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            & blockquote {
+                font-family: var(--font-heading);
+                font-size: clamp(1.8rem, 5vw, 3rem);
+                line-height: 1.15;
+                color: var(--text-primary);
+                margin: 0 0 var(--sp-md);
+                text-shadow: 0 0 60px rgba(var(--god-rgb), 0.3);
+
+                /* decorative opening quote mark */
+                &::before {
+                    content: '\201C';
+                    display: block;
+                    font-size: 5rem;
+                    color: var(--god);
+                    line-height: 0.7;
+                    margin-bottom: var(--sp-sm);
+                    opacity: 0.6;
+                }
+            }
+
+            & cite {
+                font-size: 0.72rem;
+                font-weight: 700;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                color: var(--god);
+                font-style: normal;
+            }
+        }
+    }
+
+
+    /* -----------------------------------------------------------
+     4. LIFE JOURNEY TIMELINE
+     Horizontal stages — dramatic horizontal scroll on mobile.
+     ----------------------------------------------------------- */
+    & .god-timeline {
+        padding: var(--sp-xl) 0;
+        background: color-mix(in srgb, var(--night-deep) 88%, var(--god) 12%);
+        border-top: 2px solid rgba(var(--god-rgb), 0.2);
+        border-bottom: 2px solid rgba(var(--god-rgb), 0.2);
+        overflow: hidden;
+
+        & .god-timeline-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--sp-md);
+
+            &>h2 {
+                font-family: var(--font-heading);
+                font-size: clamp(1.5rem, 4vw, 2.5rem);
+                color: var(--text-primary);
+                margin-bottom: var(--sp-xl);
+                text-align: center;
+            }
+        }
+
+        & .god-timeline-track {
+            position: relative;
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            padding: var(--sp-md) var(--sp-md) var(--sp-xl);
+            scrollbar-width: none;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
+        /* connecting line */
+        & .god-timeline-line {
+            position: absolute;
+            top: calc(var(--sp-md) + 36px);
+            left: var(--sp-md);
+            right: var(--sp-md);
+            height: 1px;
+            background: linear-gradient(to right,
+                    transparent,
+                    rgba(var(--god-rgb), 0.5) 10%,
+                    rgba(var(--god-rgb), 0.5) 90%,
+                    transparent);
+        }
+
+        /* each stage */
+        & .god-timeline-stage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--sp-md);
+            flex: 0 0 160px;
+            text-align: center;
+            padding: 0 var(--sp-sm);
+        }
+
+        /* node — circle with image or emoji */
+        & .god-timeline-node {
+            position: relative;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background-color: color-mix(in srgb, var(--night-mid) 80%, var(--god) 20%);
+            border: 2px solid rgba(var(--god-rgb), 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+            z-index: 1;
+            transition: border-color var(--transition), transform var(--transition);
+
+            & img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                filter: saturate(0.7);
+            }
+
+            & span {
+                font-size: 1.6rem;
+            }
+
+            /* glow ring on hover */
+            &:hover {
+                border-color: var(--god);
+                transform: scale(1.05);
+                box-shadow: 0 0 20px rgba(var(--god-rgb), 0.3);
+            }
+        }
+
+        & .god-timeline-content {
+            & strong {
+                display: block;
+                font-family: var(--font-heading);
+                font-size: 1rem;
+                color: var(--god);
+                margin-bottom: 0.35rem;
+            }
+
+            & p {
+                font-size: 0.78rem;
+                color: var(--text-secondary);
+                line-height: 1.5;
+                margin: 0;
+            }
+        }
+    }
+
+
+    /* -----------------------------------------------------------
+     5. LOVE TRIANGLE — FULL BLEED
+     Cinematic. Not a card. The whole section IS the image.
+     ----------------------------------------------------------- */
+    & .god-triangle-bleed {
+        position: relative;
+        min-height: 70svh;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+
+        & .god-triangle-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+
+            & img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                filter: saturate(0.6) brightness(0.6);
+            }
+        }
+
+        & .god-triangle-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+                linear-gradient(to right,
+                    rgba(7, 9, 26, 0.92) 0%,
+                    rgba(7, 9, 26, 0.5) 60%,
+                    rgba(7, 9, 26, 0.2) 100%),
+                linear-gradient(to top,
+                    var(--night-deepest) 0%,
+                    transparent 30%);
+        }
+
+        & .god-triangle-content {
+            position: relative;
+            z-index: 2;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: var(--sp-2xl) var(--sp-md);
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: var(--sp-md);
+
+            & small {
+                font-size: 0.62rem;
+                font-weight: 700;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--god);
+                opacity: 0.85;
+            }
+
+            & h2 {
+                font-family: var(--font-heading);
+                font-size: clamp(2.5rem, 7vw, 5rem);
+                line-height: 1.0;
+                color: var(--text-primary);
+                margin: 0;
+                text-shadow: 0 2px 40px rgba(0, 0, 0, 0.5);
+            }
+
+            & p {
+                font-size: 1rem;
+                color: var(--text-secondary);
+                line-height: 1.7;
+                margin: 0;
+                max-width: 480px;
+            }
+        }
+    }
+
+
+    /* -----------------------------------------------------------
+     6. THREE TEASER CARDS
+     Three configurable content teasers below the love triangle.
+     ----------------------------------------------------------- */
+    & .god-teasers {
+        display: grid;
+        grid-template-columns: 1fr;
+        background-color: var(--night-deep);
+        border-bottom: 1px solid var(--god-border);
+
+        &>div {
+            padding: var(--sp-xl) var(--sp-md);
+            border-bottom: 1px solid var(--god-border);
+            display: flex;
+            flex-direction: column;
+            gap: var(--sp-sm);
+            position: relative;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            /* top accent line in god colour */
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: var(--sp-md);
+                right: var(--sp-md);
+                height: 2px;
+                background: rgba(var(--god-rgb), 0.4);
+            }
+
+            /* icon */
+            &>span:first-child {
+                font-size: 2rem;
+                display: block;
+                margin-bottom: var(--sp-xs);
+            }
+
+            & h3 {
+                font-family: var(--font-heading);
+                font-size: clamp(1.3rem, 3vw, 1.8rem);
+                color: var(--text-primary);
+                margin: 0;
+            }
+
+            & p {
+                font-size: 0.92rem;
+                color: var(--text-secondary);
+                line-height: 1.65;
+                margin: 0;
+                flex: 1;
+            }
+
+            & a {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+                font-size: 0.82rem;
+                font-weight: 700;
+                color: var(--god);
+                text-decoration: none;
+                margin-top: var(--sp-xs);
+                transition: gap var(--transition);
+
+                &:hover {
+                    gap: 0.7rem;
+                }
+            }
+        }
+    }
+
+
+    /* -----------------------------------------------------------
+     7. POWERS & SYMBOLS
+     Atmospheric dark section.
+     Domains as tag pills, symbols as horizontal strip.
+     ----------------------------------------------------------- */
+    & .god-powers {
+        padding: var(--sp-xl) 0;
+        background: color-mix(in srgb, var(--night-deepest) 85%, var(--god) 15%);
+        border-top: 2px solid rgba(var(--god-rgb), 0.15);
+        border-bottom: 2px solid rgba(var(--god-rgb), 0.15);
+        overflow: hidden;
+        position: relative;
+
+        /* large radial glow from right */
+        &::after {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -5%;
+            width: 50%;
+            height: 160%;
+            background: radial-gradient(ellipse,
+                    rgba(var(--god-rgb), 0.12) 0%,
+                    transparent 70%);
+            pointer-events: none;
+        }
+
+        & .god-powers-inner {
+            position: relative;
+            z-index: 1;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--sp-md);
+
+            & small {
+                display: block;
+                font-size: 0.62rem;
+                font-weight: 700;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--god);
+                margin-bottom: var(--sp-xs);
+                opacity: 0.8;
+            }
+
+            & h2 {
+                font-family: var(--font-heading);
+                font-size: clamp(2rem, 5vw, 3.5rem);
+                color: var(--text-primary);
+                margin-bottom: var(--sp-lg);
+                text-shadow: 0 0 40px rgba(var(--god-rgb), 0.3);
+            }
+        }
+
+        /* domain tag pills */
+        & .god-domains {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--sp-xs);
+            margin-bottom: var(--sp-xl);
+
+            & span {
+                padding: 0.4rem 1rem;
+                background-color: rgba(var(--god-rgb), 0.12);
+                border: 1px solid rgba(var(--god-rgb), 0.3);
+                border-radius: 100px;
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: var(--god);
+                transition: background var(--transition);
+
+                &:hover {
+                    background-color: rgba(var(--god-rgb), 0.22);
+                }
+            }
+        }
+
+        /* symbols horizontal strip — scrollable on mobile */
+        & .god-symbols-strip {
+            display: flex;
+            gap: 1px;
+            overflow-x: auto;
+            background-color: var(--god-border);
+            border: 1px solid var(--god-border);
+            border-radius: var(--border-radius);
+            scrollbar-width: none;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            &>div {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: var(--sp-sm);
+                padding: var(--sp-lg) var(--sp-md);
+                background-color: color-mix(in srgb, var(--night-mid) 85%, var(--god) 15%);
+                flex: 0 0 140px;
+                text-align: center;
+                transition: background var(--transition);
+
+                &:hover {
+                    background-color: rgba(var(--god-rgb), 0.15);
+                }
+
+                &>div {
+                    width: 52px;
+                    height: 52px;
+                    border-radius: 50%;
+                    background-color: rgba(var(--god-rgb), 0.12);
+                    border: 1px solid rgba(var(--god-rgb), 0.3);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 1.5rem;
+                }
+
+                & h4 {
+                    font-size: 0.8rem;
+                    font-weight: 700;
+                    color: var(--text-primary);
+                    margin: 0;
+                }
+
+                & p {
+                    font-size: 0.72rem;
+                    color: var(--text-secondary);
+                    margin: 0;
+                    line-height: 1.45;
+                }
+            }
+        }
+    }
+
+
+    /* -----------------------------------------------------------
+     8. RELATIONSHIPS
+     Portrait cards — image or emoji fallback.
+     ----------------------------------------------------------- */
+    & .god-relations {
+        padding: var(--sp-xl) 0;
+        background-color: var(--night-deep);
+        border-bottom: 1px solid var(--god-border);
+
+        & .god-relations-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--sp-md);
+
+            & small {
+                display: block;
+                font-size: 0.62rem;
+                font-weight: 700;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--god);
+                margin-bottom: var(--sp-xs);
+                opacity: 0.8;
+            }
+
+            & h2 {
+                font-family: var(--font-heading);
+                font-size: clamp(1.8rem, 4vw, 2.8rem);
+                color: var(--text-primary);
+                margin-bottom: var(--sp-lg);
+            }
+        }
+
+        & .god-relations-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--sp-sm);
+        }
+
+        & .god-relation-card {
+            display: flex;
+            flex-direction: column;
+            background-color: color-mix(in srgb, var(--night-mid) 90%, var(--god) 10%);
+            border: 1px solid var(--god-border);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: transform var(--transition), border-color var(--transition);
+
+            &:hover {
+                transform: translateY(-3px);
+                border-color: var(--god);
+            }
+
+            & .god-relation-portrait {
+                position: relative;
+                aspect-ratio: 3 / 2;
+                overflow: hidden;
+                background: rgba(var(--god-rgb), 0.08);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                & img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                    filter: saturate(0.7);
+                    transition: transform 0.4s ease, filter 0.4s ease;
+                }
+
+                & span {
+                    font-size: 3rem;
+                }
+
+                /* gradient at bottom of portrait */
+                &::after {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 50%;
+                    background: linear-gradient(to top, var(--night-mid), transparent);
+                    pointer-events: none;
+                }
+            }
+
+            &:hover .god-relation-portrait img {
+                transform: scale(1.04);
+                filter: saturate(0.9);
+            }
+
+            & .god-relation-body {
+                padding: var(--sp-md);
+                display: flex;
+                flex-direction: column;
+                gap: 0.3rem;
+
+                & strong {
+                    font-family: var(--font-heading);
+                    font-size: 1.1rem;
+                    color: var(--text-primary);
+                }
+
+                & small {
+                    font-size: 0.6rem;
+                    font-weight: 700;
+                    letter-spacing: 0.12em;
+                    color: var(--god);
+                }
+
+                & p {
+                    font-size: 0.82rem;
+                    color: var(--text-secondary);
+                    line-height: 1.55;
+                    margin: 0;
+                    flex: 1;
+                }
+
+                & span {
+                    font-size: 0.75rem;
+                    font-weight: 700;
+                    color: var(--god);
+                    margin-top: var(--sp-xs);
+                    transition: opacity var(--transition);
+                }
+
+                &:hover span {
+                    opacity: 0.7;
+                }
+            }
+        }
+    }
+
+
+    /* -----------------------------------------------------------
+     9. MID-PAGE QUOTE BREAK
+     Full bleed. Visual breathing room. Nothing else here.
+     ----------------------------------------------------------- */
+    & .god-midquote {
+        position: relative;
+        padding: var(--sp-2xl) var(--sp-md);
+        text-align: center;
+        overflow: hidden;
+        background: color-mix(in srgb, var(--night-deepest) 78%, var(--god) 22%);
+
+        /* large atmospheric glow */
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 90% 70% at 50% 50%,
+                    rgba(var(--god-rgb), 0.2) 0%,
+                    transparent 70%);
+            pointer-events: none;
+        }
+
+        &>div {
+            display: none;
+        }
+
+        /* aria-hidden spacer, hidden in CSS */
+
+        & blockquote {
+            position: relative;
+            z-index: 1;
+            font-family: var(--font-heading);
+            font-size: clamp(1.6rem, 5vw, 3rem);
+            line-height: 1.25;
+            color: var(--text-primary);
+            max-width: 760px;
+            margin: 0 auto var(--sp-md);
+            text-shadow: 0 0 80px rgba(var(--god-rgb), 0.4);
+        }
+
+        & cite {
+            position: relative;
+            z-index: 1;
+            font-size: 0.68rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--god);
+            font-style: normal;
+            opacity: 0.75;
+        }
+    }
+
+
+    /* -----------------------------------------------------------
+     10. WORSHIP TODAY
+     Split — text + list left, images right.
+     ----------------------------------------------------------- */
+    & .god-worship {
+        padding: var(--sp-xl) 0;
+        background-color: color-mix(in srgb, var(--night-deep) 93%, var(--god) 7%);
+        border-top: 1px solid var(--god-border);
+        border-bottom: 1px solid var(--god-border);
+
+        & .god-worship-inner {
+            display: flex;
+            flex-direction: column;
+            gap: var(--sp-xl);
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--sp-md);
+        }
+
+        & .god-worship-text {
+            & small {
+                display: block;
+                font-size: 0.62rem;
+                font-weight: 700;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--god);
+                margin-bottom: var(--sp-xs);
+                opacity: 0.8;
+            }
+
+            & h2 {
+                font-family: var(--font-heading);
+                font-size: clamp(1.8rem, 4vw, 2.8rem);
+                color: var(--text-primary);
+                margin-bottom: var(--sp-md);
+            }
+
+            &>div p {
+                font-size: 1rem;
+                line-height: 1.75;
+                color: var(--text-secondary);
+                margin-bottom: var(--sp-md);
+            }
+        }
+
+        /* worship list — icons + text */
+        & .god-worship-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--sp-md);
+            margin-top: var(--sp-md);
+
+            &>div {
+                display: flex;
+                gap: var(--sp-sm);
+                align-items: flex-start;
+
+                &>span {
+                    font-size: 1.4rem;
+                    flex-shrink: 0;
+                    margin-top: 0.1rem;
+                }
+
+                & strong {
+                    display: block;
+                    font-size: 0.92rem;
+                    color: var(--text-primary);
+                    font-weight: 600;
+                    margin-bottom: 0.2rem;
+                }
+
+                & p {
+                    font-size: 0.82rem;
+                    color: var(--text-secondary);
+                    line-height: 1.55;
+                    margin: 0;
+                }
+            }
+        }
+
+        /* location tags */
+        & .god-worship-locations {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--sp-xs);
+            margin-top: var(--sp-lg);
+
+            & span {
+                padding: 0.35rem 0.85rem;
+                background-color: rgba(var(--god-rgb), 0.1);
+                border: 1px solid var(--god-border);
+                border-radius: 100px;
+                font-size: 0.78rem;
+                color: var(--text-secondary);
+            }
+        }
+
+        /* worship images — stacked on mobile, grid on tablet */
+        & .god-worship-images {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--sp-sm);
+
+            &>div {
+                border-radius: var(--border-radius);
+                overflow: hidden;
+                aspect-ratio: 4 / 3;
+
+                & img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                    filter: saturate(0.75);
+                    transition: filter 0.4s ease, transform 0.4s ease;
+                }
+
+                &:hover img {
+                    filter: saturate(1);
+                    transform: scale(1.03);
+                }
+            }
+        }
+    }
+
+
+    /* -----------------------------------------------------------
+     11. IN CULTURE
+     Image card grid with type badge.
+     ----------------------------------------------------------- */
+    & .god-culture {
+        padding: var(--sp-xl) 0;
+        background-color: var(--night-deepest);
+        border-bottom: 1px solid var(--god-border);
+
+        & .god-culture-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--sp-md);
+
+            & small {
+                display: block;
+                font-size: 0.62rem;
+                font-weight: 700;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--god);
+                margin-bottom: var(--sp-xs);
+                opacity: 0.8;
+            }
+
+            & h2 {
+                font-family: var(--font-heading);
+                font-size: clamp(1.8rem, 4vw, 2.8rem);
+                color: var(--text-primary);
+                margin-bottom: var(--sp-lg);
+            }
+        }
+
+        & .god-culture-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--sp-sm);
+        }
+
+        & .god-culture-card {
+            background-color: var(--night-mid);
+            border: 1px solid var(--god-border);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: transform var(--transition), border-color var(--transition);
+
+            &:hover {
+                transform: translateY(-2px);
+                border-color: var(--god);
+            }
+
+            & .god-culture-card-media {
+                position: relative;
+                aspect-ratio: 3 / 2;
+                overflow: hidden;
+                background: rgba(var(--god-rgb), 0.08);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                & img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                    filter: saturate(0.7);
+                    transition: transform 0.4s ease;
+                }
+
+                &:hover img {
+                    transform: scale(1.04);
+                }
+
+                & span:not(.god-culture-badge) {
+                    font-size: 2.5rem;
+                }
+
+                /* type badge */
+                & .god-culture-badge {
+                    position: absolute;
+                    top: var(--sp-xs);
+                    left: var(--sp-xs);
+                    padding: 0.2rem 0.55rem;
+                    background-color: rgba(var(--god-rgb), 0.85);
+                    color: var(--night-deepest);
+                    font-size: 0.58rem;
+                    font-weight: 700;
+                    letter-spacing: 0.1em;
+                    text-transform: uppercase;
+                    border-radius: 4px;
+                }
+            }
+
+            & .god-culture-card-body {
+                padding: var(--sp-sm) var(--sp-md);
+                display: flex;
+                flex-direction: column;
+                gap: 0.2rem;
+
+                & strong {
+                    font-size: 0.88rem;
+                    color: var(--text-primary);
+                    font-weight: 600;
+                    line-height: 1.3;
+                }
+
+                & small {
+                    font-size: 0.72rem;
+                    color: var(--text-muted);
+                }
+            }
+        }
+    }
+
+
+    /* -----------------------------------------------------------
+     12. FAQ
+     Native <details> accordion. Animated with CSS.
+     ----------------------------------------------------------- */
+    & .god-faq {
+        padding: var(--sp-xl) 0;
+        background-color: color-mix(in srgb, var(--night-deep) 93%, var(--god) 7%);
+        border-bottom: 1px solid var(--god-border);
+
+        & .god-faq-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--sp-md);
+
+            & small {
+                display: block;
+                font-size: 0.62rem;
+                font-weight: 700;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--god);
+                margin-bottom: var(--sp-xs);
+                opacity: 0.8;
+            }
+
+            & h2 {
+                font-family: var(--font-heading);
+                font-size: clamp(1.8rem, 4vw, 2.8rem);
+                color: var(--text-primary);
+                margin-bottom: var(--sp-lg);
+            }
+        }
+
+        & .god-faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            border-top: 1px solid var(--god-border);
+        }
+
+        & details {
+            border-bottom: 1px solid var(--god-border);
+
+            &[open] summary {
+                color: var(--god);
+
+                & span:last-child {
+                    color: var(--god);
+                    transform: rotate(45deg);
+                }
+            }
+
+            /* answer content */
+            &>div {
+                padding: 0 var(--sp-md) var(--sp-lg);
+                font-size: 0.95rem;
+                line-height: 1.75;
+                color: var(--text-secondary);
+
+                & p {
+                    margin-bottom: var(--sp-sm);
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+
+                & strong {
+                    color: var(--text-primary);
+                }
+            }
+        }
+
+        & summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--sp-md);
+            cursor: pointer;
+            list-style: none;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            transition: color var(--transition);
+            gap: var(--sp-md);
+
+            &::-webkit-details-marker {
+                display: none;
+            }
+
+            &:hover {
+                color: var(--god);
+            }
+
+            & span:first-child {
+                flex: 1;
+            }
+
+            & span:last-child {
+                color: var(--text-muted);
+                font-size: 1.2rem;
+                font-weight: 300;
+                flex-shrink: 0;
+                transition: transform 0.2s ease, color var(--transition);
+            }
+        }
+    }
+
+
+    /* -----------------------------------------------------------
+     13. LEGACY QUOTE
+     Full-bleed cinematic closing moment.
+     ----------------------------------------------------------- */
+    & .god-legacy {
+        position: relative;
+        padding: var(--sp-2xl) var(--sp-md);
+        text-align: center;
+        overflow: hidden;
+        background: color-mix(in srgb, var(--night-deepest) 75%, var(--god) 25%);
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 65% at 50% 50%,
+                    rgba(var(--god-rgb), 0.22) 0%,
+                    transparent 70%);
+            pointer-events: none;
+        }
+
+        &>div {
+            display: none;
+        }
+
+        & blockquote {
+            position: relative;
+            z-index: 1;
+            font-family: var(--font-heading);
+            font-size: clamp(1.5rem, 4.5vw, 2.5rem);
+            line-height: 1.3;
+            color: var(--text-primary);
+            max-width: 760px;
+            margin: 0 auto var(--sp-md);
+            text-shadow: 0 0 80px rgba(var(--god-rgb), 0.4);
+        }
+
+        & cite {
+            position: relative;
+            z-index: 1;
+            font-size: 0.68rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--god);
+            font-style: normal;
+            opacity: 0.7;
+        }
+    }
+
+
+    /* -----------------------------------------------------------
+     14. CROSS-GOD NAVIGATION
+     Two cards, each tinted with that god's colour (--gc).
+     Portrait image or icon fallback.
+     ----------------------------------------------------------- */
+    & .god-crossnav {
+        padding: var(--sp-xl) var(--sp-md);
+        background-color: var(--night-deep);
+        border-top: 2px solid var(--god-border);
+        text-align: center;
+
+        &>small {
+            display: block;
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--moon-bright);
+            margin-bottom: var(--sp-xs);
+            opacity: 0.8;
+        }
+
+        &>h2 {
+            font-family: var(--font-heading);
+            font-size: clamp(1.5rem, 3.5vw, 2rem);
+            color: var(--text-primary);
+            margin-bottom: var(--sp-lg);
+        }
+
+        &>div {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--sp-md);
+            max-width: 700px;
+            margin: 0 auto;
+
+            & a {
+                display: flex;
+                align-items: center;
+                gap: 0;
+                background-color: color-mix(in srgb, var(--night-mid) 85%, var(--gc, var(--moon-bright)) 15%);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-top: 3px solid var(--gc, var(--moon-bright));
+                border-radius: var(--border-radius);
+                overflow: hidden;
+                text-decoration: none;
+                color: inherit;
+                transition: transform var(--transition), border-color var(--transition);
+
+                &:hover {
+                    transform: translateY(-3px);
+                    border-color: var(--gc, var(--moon-bright));
+                }
+            }
+        }
+
+        /* portrait — left side of cross-nav card */
+        & .god-crossnav-portrait {
+            position: relative;
+            width: 80px;
+            flex-shrink: 0;
+            overflow: hidden;
+            align-self: stretch;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.03);
+
+            & img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                filter: saturate(0.6);
+            }
+
+            & span {
+                font-size: 2rem;
+                display: block;
+            }
+
+            /* gradient from right edge */
+            &>div {
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(to right,
+                        transparent 60%,
+                        color-mix(in srgb, var(--night-mid) 85%, var(--gc, var(--moon-bright)) 15%) 100%);
+                pointer-events: none;
+            }
+        }
+
+        /* text body — right side */
+        & .god-crossnav-body {
+            padding: var(--sp-md);
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            flex: 1;
+            text-align: left;
+            position: relative;
+
+            & small {
+                font-size: 0.58rem;
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--text-muted);
+            }
+
+            & strong {
+                font-family: var(--font-heading);
+                font-size: 1.5rem;
+                color: var(--gc, var(--moon-bright));
+                display: block;
+            }
+
+            & p {
+                font-size: 0.82rem;
+                color: var(--text-secondary);
+                margin: 0;
+                font-style: italic;
+                flex: 1;
+            }
+
+            /* arrow */
+            & span {
+                position: absolute;
+                right: var(--sp-md);
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--gc, var(--moon-bright));
+                font-size: 1.2rem;
+                transition: transform var(--transition);
+            }
+
+            &:hover span {
+                transform: translateY(-50%) translateX(4px);
+            }
+        }
+    }
+
+
+    /* -----------------------------------------------------------
+     TABLET — 640px+
+     ----------------------------------------------------------- */
+    @media (min-width: 40em) {
+
+        & .god-intro {
+            flex-direction: row;
+            align-items: flex-start;
+            gap: var(--sp-2xl);
+
+            &>div:first-child {
+                flex: 1.2;
+            }
+
+            &>div:last-child {
+                flex: 1;
+            }
+        }
+
+        & .god-teasers {
+            grid-template-columns: repeat(3, 1fr);
+
+            &>div {
+                border-bottom: none;
+                border-right: 1px solid var(--god-border);
+
+                &:last-child {
+                    border-right: none;
+                }
+
+                &::before {
+                    left: 0;
+                    right: 0;
+                }
+            }
+        }
+
+        & .god-relations-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        & .god-worship-inner {
+            flex-direction: row;
+            align-items: flex-start;
+
+            & .god-worship-text {
+                flex: 1.3;
+            }
+
+            & .god-worship-images {
+                flex: 1;
+                grid-template-columns: 1fr;
+                gap: var(--sp-sm);
+            }
+        }
+
+        & .god-culture-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        & .god-crossnav>div {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        & .god-crossnav .god-crossnav-portrait {
+            width: 100px;
+        }
+    }
+
+
+    /* -----------------------------------------------------------
+     DESKTOP — 1024px+
+     ----------------------------------------------------------- */
+    @media (min-width: 64em) {
+
+        & .god-hero .god-hero-content h1 {
+            font-size: clamp(6rem, 16vw, 14rem);
+        }
+
+        & .god-intro {
+            padding: var(--sp-2xl) var(--sp-xl);
+            gap: var(--sp-2xl);
+
+            &>div:last-child blockquote {
+                font-size: clamp(2.2rem, 4vw, 3.5rem);
+            }
+        }
+
+        & .god-timeline .god-timeline-inner {
+            padding: 0 var(--sp-xl);
+        }
+
+        & .god-timeline .god-timeline-stage {
+            flex: 0 0 200px;
+        }
+
+        & .god-timeline .god-timeline-node {
+            width: 88px;
+            height: 88px;
+        }
+
+        & .god-powers .god-powers-inner {
+            padding: 0 var(--sp-xl);
+        }
+
+        & .god-symbols-strip>div {
+            flex: 0 0 160px;
+        }
+
+        & .god-relations .god-relations-inner {
+            padding: 0 var(--sp-xl);
+        }
+
+        & .god-relations-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        & .god-culture-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        & .god-culture .god-culture-inner {
+            padding: 0 var(--sp-xl);
+        }
+
+        & .god-faq .god-faq-inner {
+            padding: 0 var(--sp-xl);
+        }
+
+        & .god-worship .god-worship-inner {
+            padding: 0 var(--sp-xl);
+        }
+
+        & .god-worship-images {
+            grid-template-columns: 1fr;
+        }
+
+        & .god-crossnav .god-crossnav-portrait {
+            width: 120px;
+        }
+    }
+
+
+    /* -----------------------------------------------------------
+     ACCESSIBILITY
+     ----------------------------------------------------------- */
+    @media (prefers-reduced-motion: reduce) {
+        & * {
+            transition: none !important;
+            animation: none !important;
+        }
+
+        & .god-relation-card:hover,
+        & .god-culture-card:hover,
+        & .god-crossnav>div a:hover,
+        & .god-timeline-node:hover {
+            transform: none;
+        }
+    }
+
+    & a:focus-visible,
+    & summary:focus-visible,
+    & button:focus-visible {
+        outline: 3px solid var(--god);
+        outline-offset: 3px;
+        border-radius: 3px;
+    }
+}
 
 /* ============================================================
-A
-ABOUT PAGE
-ABOUT PAGE
+END OF SINGLE GOD AND SINGLE STORY
+END OF SINGLE GOD AND SINGLE STORY
+END OF SINGLE GOD AND SINGLE STORY
+
 ============================================================ */
 
 
-
-/* =============================================================
-   ITAN ORISA — About Page
-   page-about.css  |  Mobile-first  |  CSS nesting
-   Inherits :root tokens from main stylesheet.
-   ============================================================= */
+/* ABOUT PAGE */
 
 .about-page {
     background-color: var(--night-deepest);
@@ -1438,7 +3164,6 @@ ABOUT PAGE
      ----------------------------------------------------------- */
     & .ab-hero {
         position: relative;
-        /* min-height: 100svh; */
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1470,7 +3195,7 @@ ABOUT PAGE
 
         & h1 {
             font-family: var(--font-heading);
-            font-size: clamp(2.5rem, 10vw, 5.5rem);
+            font-size: clamp(2rem, 7vw, 4rem);
             line-height: 0.95;
             color: var(--text-primary);
             margin: 0;
@@ -1482,7 +3207,6 @@ ABOUT PAGE
         }
 
         & p {
-            font-size: 1rem;
             color: var(--text-secondary);
 
             margin: 0;
@@ -1734,10 +3458,7 @@ ABOUT PAGE
     @media (min-width: 40em) {
 
         & .ab-section {
-            /* display: grid;
-            grid-template-columns: 180px 1fr;
-            gap: var(--sp-xl);
-            align-items: start; */
+
 
 
             &>header {
@@ -1769,9 +3490,9 @@ ABOUT PAGE
 
         }
 
-        & .ab-hero h1 {
+        /* & .ab-hero h1 {
             font-size: 8rem;
-        }
+        } */
 
 
     }
@@ -1784,9 +3505,10 @@ ABOUT PAGE
 
         }
 
+        /* 
         & .ab-hero h1 {
             font-size: 8rem;
-        }
+        } */
 
 
     }
@@ -1808,27 +3530,16 @@ ABOUT PAGE
     }
 }
 
+/* END OF ABOUT PAGE */
 
 
-/* ============================================================
-A
-END OF ABOUT PAGE
-END OF ABOUT PAGE
-============================================================ */
 
-/* ============================================================
-
- CULTURAL CONTEXT  PAGE
-CULTURAL CONTEXT  PAGE
-============================================================ */
-
-
+/* CULTURAL CONTEXT  PAGE */
 
 .cc-page {
     background-color: var(--night-deepest);
     color: var(--text-primary);
     font-family: var(--font-body);
-    /* overflow-x: hidden; */
 
 
 
@@ -1878,14 +3589,13 @@ CULTURAL CONTEXT  PAGE
 
             & h1 {
                 font-family: var(--font-heading);
-                font-size: clamp(2.2rem, 7vw, 4.5rem);
+                font-size: clamp(2rem, 7vw, 4rem);
                 line-height: 1.05;
                 color: var(--text-primary);
                 margin-bottom: var(--sp-md);
             }
 
             & p {
-                font-size: 1rem;
                 color: var(--text-secondary);
 
                 margin: 0;
@@ -2305,7 +4015,7 @@ CULTURAL CONTEXT  PAGE
      ----------------------------------------------------------- */
     @media (min-width: 40em) {
 
-   
+
         & .cc-fact-strip {
             flex-direction: row;
             gap: var(--sp-xl);
@@ -2320,11 +4030,12 @@ CULTURAL CONTEXT  PAGE
         }
     }
 
-  @media (min-width: 57em) {
-   & .cc-sticky-nav {
-        justify-content: center;
+    @media (min-width: 57em) {
+        & .cc-sticky-nav {
+            justify-content: center;
         }
     }
+
     /* -----------------------------------------------------------
      DESKTOP 1024px+
      ----------------------------------------------------------- */
@@ -2359,146 +4070,142 @@ CULTURAL CONTEXT  PAGE
     }
 }
 
-/* ============================================================
-
-END OF CULTURAL CONTEXT  PAGE
-END OF CULTURAL CONTEXT  PAGE
-============================================================ */
+/* END OF CULTURAL CONTEXT  PAGE */
 
 /* /* =============================================================
    ITAN ORISA — 404 Error Page
-   404.css  |  Mobile-first  |  CSS nesting
-   Inherits :root tokens from main stylesheet.
    ============================================================= */
 
 .error-page {
-  background-color : var(--night-deepest);
-  color            : var(--text-primary);
-  font-family      : var(--font-body);
-  overflow-x       : hidden;
-  min-height       : 100svh;
+    background-color: var(--night-deepest);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    min-height: 100svh;
 
-  & * { box-sizing : border-box; }
+    & * {
+        box-sizing: border-box;
+    }
 
 
-  /* -----------------------------------------------------------
+    /* -----------------------------------------------------------
      HERO — full viewport, centred
      Three direct children:
        div:first-child   — aria-hidden decorative glow
        div:nth-child(2)  — main content
        .error-symbols    — floating deity symbols
      ----------------------------------------------------------- */
-  & .error-hero {
-    position        : relative;
-    min-height      : 100svh;
-    display         : flex;
-    align-items     : center;
-    justify-content : center;
-    padding         : var(--sp-xl) var(--sp-md);
-    overflow        : hidden;
+    & .error-hero {
+        position: relative;
+        min-height: 100svh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--sp-xl) var(--sp-md);
+        overflow: hidden;
 
-    /* deep radial glow from centre */
-    &::before {
-      content    : '';
-      position   : absolute;
-      inset      : 0;
-      background : radial-gradient(
-        ellipse 70% 60% at 50% 50%,
-        rgba(245, 200, 66, 0.06) 0%,
-        transparent 65%
-      );
-      pointer-events : none;
-    }
-
-    /* noise texture */
-    &::after {
-      content          : '';
-      position         : absolute;
-      inset            : 0;
-      opacity          : 0.025;
-      background-image : url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size  : 256px;
-      pointer-events   : none;
-    }
-
-    /* aria-hidden decorative div */
-    & > div:first-child { display : none; }
-
-    /* main content */
-    & > div:nth-child(2) {
-      position   : relative;
-      z-index    : 1;
-      max-width  : 640px;
-      text-align : center;
-      margin     : 0 auto;
-
-      /* "404" — large eyebrow number */
-      & > span {
-        display        : block;
-        font-family    : var(--font-heading);
-        font-size      : clamp(5rem, 20vw, 12rem);
-        line-height    : 1;
-        color          : transparent;
-        -webkit-text-stroke : 1px var(--moon-bright);
-        opacity        : 0.15;
-        margin-bottom  : var(--sp-sm);
-        pointer-events : none;
-        user-select    : none;
-      }
-
-      & h1 {
-        font-family   : var(--font-heading);
-        font-size     : clamp(2rem, 6vw, 3.5rem);
-        line-height   : 1.15;
-        color         : var(--text-primary);
-        margin-bottom : var(--sp-lg);
-
-        & em {
-          color      : var(--moon-bright);
-          font-style : normal;
-          display    : block;
+        /* deep radial glow from centre */
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 70% 60% at 50% 50%,
+                    rgba(245, 200, 66, 0.06) 0%,
+                    transparent 65%);
+            pointer-events: none;
         }
-      }
 
-      & p {
-        font-size     : 1rem;
-        line-height   : 1.75;
-        color         : var(--text-secondary);
-        margin-bottom : var(--sp-xl);
-        max-width     : 520px;
-        margin-left   : auto;
-        margin-right  : auto;
-      }
-
-      /* navigation — three links */
-      & nav {
-        display        : flex;
-        flex-direction : column;
-        align-items    : center;
-        gap            : var(--sp-sm);
-
-        /* third link — plain inline style */
-        & a:not(.btn-primary):not(.btn-ghost) {
-          color           : var(--moon-bright);
-          font-size       : 0.88rem;
-          font-weight     : 600;
-          text-decoration : none;
-          border-bottom   : 1px solid transparent;
-          transition      : color var(--transition),
-                            border-color var(--transition);
-          padding-top     : var(--sp-xs);
-
-          &:hover {
-            color        : var(--moon-pale);
-            border-color : var(--moon-pale);
-          }
+        /* noise texture */
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 256px;
+            pointer-events: none;
         }
-      }
+
+        /* aria-hidden decorative div */
+        &>div:first-child {
+            display: none;
+        }
+
+        /* main content */
+        &>div:nth-child(2) {
+            position: relative;
+            z-index: 1;
+            max-width: 640px;
+            text-align: center;
+            margin: 0 auto;
+
+            /* "404" — large eyebrow number */
+            &>span {
+                display: block;
+                font-family: var(--font-heading);
+                font-size: clamp(5rem, 20vw, 12rem);
+                line-height: 1;
+                color: transparent;
+                -webkit-text-stroke: 1px var(--moon-bright);
+                opacity: 0.15;
+                margin-bottom: var(--sp-sm);
+                pointer-events: none;
+                user-select: none;
+            }
+
+            & h1 {
+                font-family: var(--font-heading);
+                font-size: clamp(2rem, 6vw, 3.5rem);
+                line-height: 1.15;
+                color: var(--text-primary);
+                margin-bottom: var(--sp-lg);
+
+                & em {
+                    color: var(--moon-bright);
+                    font-style: normal;
+                    display: block;
+                }
+            }
+
+            & p {
+                font-size: 1rem;
+                line-height: 1.75;
+                color: var(--text-secondary);
+                margin-bottom: var(--sp-xl);
+                max-width: 520px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            /* navigation — three links */
+            & nav {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: var(--sp-sm);
+
+                /* third link — plain inline style */
+                & a:not(.btn-primary):not(.btn-ghost) {
+                    color: var(--moon-bright);
+                    font-size: 0.88rem;
+                    font-weight: 600;
+                    text-decoration: none;
+                    border-bottom: 1px solid transparent;
+                    transition: color var(--transition),
+                        border-color var(--transition);
+                    padding-top: var(--sp-xs);
+
+                    &:hover {
+                        color: var(--moon-pale);
+                        border-color: var(--moon-pale);
+                    }
+                }
+            }
+        }
     }
-  }
 
 
-  /* -----------------------------------------------------------
+    /* -----------------------------------------------------------
      FLOATING DEITY SYMBOLS
      Six <span> elements positioned absolutely around the page.
      Each has custom properties set inline:
@@ -2508,64 +4215,84 @@ END OF CULTURAL CONTEXT  PAGE
        --es-y        top %
        --es-delay    animation delay
      ----------------------------------------------------------- */
-  & .error-symbols {
-    position       : absolute;
-    inset          : 0;
-    pointer-events : none;
-    overflow       : hidden;
+    & .error-symbols {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
 
-    & span {
-      position    : absolute;
-      font-size   : var(--es-size, 4rem);
-      left        : var(--es-x, 50%);
-      top         : var(--es-y, 50%);
-      color       : var(--es-colour, var(--moon-bright));
-      opacity     : 0;
-      filter      : blur(1px);
-      animation   : symbolFloat 6s ease-in-out infinite;
-      animation-delay : var(--es-delay, 0s);
-      line-height : 1;
+        & span {
+            position: absolute;
+            font-size: var(--es-size, 4rem);
+            left: var(--es-x, 50%);
+            top: var(--es-y, 50%);
+            color: var(--es-colour, var(--moon-bright));
+            opacity: 0;
+            filter: blur(1px);
+            animation: symbolFloat 6s ease-in-out infinite;
+            animation-delay: var(--es-delay, 0s);
+            line-height: 1;
+        }
     }
-  }
 
-  @keyframes symbolFloat {
-    0%   { opacity : 0;    transform : translateY(8px)  scale(0.9); }
-    20%  { opacity : 0.12; }
-    50%  { opacity : 0.08; transform : translateY(-8px) scale(1.05); }
-    80%  { opacity : 0.12; }
-    100% { opacity : 0;    transform : translateY(8px)  scale(0.9); }
-  }
+    @keyframes symbolFloat {
+        0% {
+            opacity: 0;
+            transform: translateY(8px) scale(0.9);
+        }
+
+        20% {
+            opacity: 0.12;
+        }
+
+        50% {
+            opacity: 0.08;
+            transform: translateY(-8px) scale(1.05);
+        }
+
+        80% {
+            opacity: 0.12;
+        }
+
+        100% {
+            opacity: 0;
+            transform: translateY(8px) scale(0.9);
+        }
+    }
 
 
-  /* -----------------------------------------------------------
+    /* -----------------------------------------------------------
      TABLET 640px+
      ----------------------------------------------------------- */
-  @media ( min-width: 40em ) {
+    @media (min-width: 40em) {
 
-    & .error-hero > div:nth-child(2) nav {
-      flex-direction : row;
-      justify-content: center;
-      flex-wrap      : wrap;
+        & .error-hero>div:nth-child(2) nav {
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
     }
-  }
 
 
-  /* -----------------------------------------------------------
+    /* -----------------------------------------------------------
      ACCESSIBILITY
      ----------------------------------------------------------- */
-  @media ( prefers-reduced-motion: reduce ) {
-    & .error-symbols span {
-      animation : none;
-      opacity   : 0.05;
+    @media (prefers-reduced-motion: reduce) {
+        & .error-symbols span {
+            animation: none;
+            opacity: 0.05;
+        }
+
+        & * {
+            transition: none !important;
+        }
     }
 
-    & * { transition : none !important; }
-  }
-
-  & a:focus-visible {
-    outline        : 3px solid var(--moon-bright);
-    outline-offset : 3px;
-    border-radius  : 3px;
-  }
+    & a:focus-visible {
+        outline: 3px solid var(--moon-bright);
+        outline-offset: 3px;
+        border-radius: 3px;
+    }
 }
+
 /* END OF ERROR PAGE */

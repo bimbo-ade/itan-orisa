@@ -1,872 +1,706 @@
 <?php
 /**
- * single-god.php
- * Individual god page template.
+ * single-god.php — Complete rebuild
  *
- * --god CSS variable is set via inline <style> so WordPress
- * can pass the ACF colour value into CSS scope per post.
- * All other styling lives in single-god.css.
+ * Structure (drama-first, reference-last):
+ *   1.  Hero
+ *   2.  Quick Facts Bar
+ *   3.  Intro + Pull Quote
+ *   4.  Life Journey Timeline
+ *   5.  Love Triangle — Full Bleed
+ *   6.  Three Teaser Cards
+ *   7.  Powers & Symbols
+ *   8.  Relationships
+ *   9.  Mid-Page Quote Break
+ *   10. Worship Today
+ *   11. In Culture
+ *   12. FAQ  (absorbs: names, background, comparisons, trivia, places)
+ *   13. Legacy Quote
+ *   14. Cross-God Navigation
  *
- * Section trigger pattern:
- * Every section checks its heading field first.
- * If the heading is empty the entire section is skipped.
- * This means the template scales to any god automatically.
+ * --god and --god-rgb drive the entire page atmosphere.
+ * Both set via inline <style> from the god_color ACF field.
  */
 
 get_header();
 
-while (have_posts()):
-    the_post();
+while ( have_posts() ) : the_post();
 
-    $god_color = get_field('god_color') ?: '#FF6B4A';
-    $god_tagline = get_field('god_tagline') ?: '';
-    $god_eyebrow = get_field('hero_eyebrow') ?: 'Yoruba Mythology &middot; Orisha';
-    $hero_voice = get_field('hero_voice_line');
+$god_color = get_field('god_color') ?: '#FF6B4A';
+$hex       = ltrim( $god_color, '#' );
+if ( strlen($hex) === 3 ) $hex = $hex[0].$hex[0].$hex[1].$hex[1].$hex[2].$hex[2];
+$r = hexdec( substr($hex,0,2) );
+$g = hexdec( substr($hex,2,2) );
+$b = hexdec( substr($hex,4,2) );
+?>
+
+<style>
+:root {
+    --god     : <?php echo esc_attr( $god_color ); ?>;
+    --god-rgb : <?php echo "$r, $g, $b"; ?>;
+}
+</style>
+
+<div class="single-god">
+
+    <?php
+    // ============================================================
+    // TOP NAV BREADCRUMB
+    // ============================================================
     ?>
+    <nav class="god-topnav">
+        <a href="<?php echo esc_url( get_post_type_archive_link( get_post_type() ) ); ?>">
+            <span aria-hidden="true">&larr;</span> All Orishas
+        </a>
+        <span>Orishas / <strong><?php the_title(); ?></strong></span>
+    </nav>
 
-    <style>
-        :root {
-            --god:
-                <?php echo esc_attr($god_color); ?>
-            ;
-            --god-light:
-                <?php echo esc_attr($god_color); ?>
-            ;
-        }
-    </style>
+    <?php
+    // ============================================================
+    // 1. HERO
+    // ============================================================
+    $hero_image  = get_field('hero_image');
+    $god_tagline = get_field('god_tagline');
+    $hero_eyebrow= get_field('hero_eyebrow') ?: 'Yoruba Mythology &middot; Orisha';
+    $hero_voice  = get_field('hero_voice_line');
+    $lt_page     = get_page_by_path('love-triangle');
+    $lt_url      = $lt_page ? get_permalink($lt_page->ID) : '#';
+    ?>
+    <section class="god-hero">
 
-    <div class="single-god">
+        <?php if ( $hero_image ) : ?>
+        <div class="god-hero-image" aria-hidden="true">
+            <img src="<?php echo esc_url( $hero_image['url'] ); ?>"
+                 alt="<?php echo esc_attr( $hero_image['alt'] ); ?>">
+        </div>
+        <?php endif; ?>
 
-        <?php
-        // ----------------------------------------------------------------
-        // TOP NAV
-        // ----------------------------------------------------------------
-        ?>
-        <nav class="god-topnav">
-            <a href="<?php echo esc_url(get_post_type_archive_link(get_post_type())); ?>">
-                <span aria-hidden="true">&larr;</span> All Orishas
-            </a>
-            <span>Orishas / <strong><?php the_title(); ?></strong></span>
-        </nav>
+        <div class="god-hero-atmosphere" aria-hidden="true"></div>
+        <div class="god-hero-grid"       aria-hidden="true"></div>
 
-        <?php
-        // ----------------------------------------------------------------
-        // HERO
-        // ----------------------------------------------------------------
-        ?>
-        <section class="god-hero">
-            <?php if (has_post_thumbnail()): ?>
-                <div aria-hidden="true">
-                    <?php the_post_thumbnail('full'); ?>
-                    <div aria-hidden="true"></div><!-- overlay -->
-                </div>
+        <div class="god-hero-content">
+            <span><?php echo wp_kses_post( $hero_eyebrow ); ?></span>
+            <h1><?php the_title(); ?></h1>
+
+            <?php if ( $god_tagline ) : ?>
+                <p class="god-tagline"><?php echo esc_html( $god_tagline ); ?></p>
             <?php endif; ?>
 
-            <div aria-hidden="true"></div><!-- aura -->
-            <div aria-hidden="true"></div><!-- aura outer -->
+            <?php if ( $hero_voice ) : ?>
+                <blockquote class="god-voice">
+                    &ldquo;<?php echo esc_html( $hero_voice ); ?>&rdquo;
+                </blockquote>
+            <?php endif; ?>
 
-            <div class="god-hero-content">
-                <span><?php echo wp_kses_post($god_eyebrow); ?></span>
-                <h1><?php the_title(); ?></h1>
-
-                <?php if ($god_tagline): ?>
-                    <p class="god-tagline"><?php echo esc_html($god_tagline); ?></p>
-                <?php endif; ?>
-
-                <?php if ($hero_voice): ?>
-                    <p class="hero-voice">&ldquo;<?php echo esc_html($hero_voice); ?>&rdquo;</p>
-                <?php endif; ?>
-
-                <div>
-                    <a href="#triangle" class="btn-primary">The Love Triangle</a>
-                    <a href="#story" class="btn-ghost">Read Story</a>
-                </div>
+            <div class="god-hero-cta">
+                <a href="#god-story"    class="btn-primary">Discover the Story</a>
+                <a href="#god-triangle" class="btn-ghost">The Love Triangle</a>
             </div>
-        </section>
+        </div>
 
-        <?php
-        // ----------------------------------------------------------------
-        // AT A GLANCE
-        // ----------------------------------------------------------------
-        $fact_fields = [
-            'Name' => get_field('fact_name') ?: get_the_title(),
-            'Type' => get_field('fact_type') ?: 'Orisha (Deity)',
-            'Culture' => get_field('fact_culture') ?: 'Yoruba',
-            'Domain' => get_field('fact_domain'),
-            'Symbol' => get_field('fact_symbol'),
-            'Sacred Colours' => get_field('fact_colors'),
-            'Sacred Number' => get_field('fact_number'),
-            'Associated Animal' => get_field('fact_animal'),
-            'Status' => get_field('fact_status'),
-        ];
-        $facts_filled = array_filter($fact_fields);
-        ?>
-        <?php if ($facts_filled): ?>
-            <section class="god-glance">
-                <h2>At a Glance</h2>
-                <div class="facts-grid">
-                    <?php foreach ($facts_filled as $label => $value): ?>
-                        <div>
-                            <span><?php echo esc_html($label); ?></span>
-                            <strong><?php echo esc_html($value); ?></strong>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </section>
+        <div class="god-hero-scroll" aria-hidden="true"><span></span></div>
+
+    </section>
+
+    <?php
+    // ============================================================
+    // 2. QUICK FACTS BAR
+    // Horizontal strip — replaces the At a Glance grid.
+    // Uses quick_facts repeater (up to 6 items).
+    // ============================================================
+    $quick_facts = [];
+    for ( $i = 1; $i <= 6; $i++ ) {
+        $label = get_field("quick_fact_{$i}_label");
+        $value = get_field("quick_fact_{$i}_value");
+        if ( $label && $value ) {
+            $quick_facts[] = [
+                'label' => $label,
+                'value' => $value,
+                'icon'  => get_field("quick_fact_{$i}_icon") ?: '',
+            ];
+        }
+    }
+    ?>
+    <?php if ( $quick_facts ) : ?>
+    <div class="god-facts-bar">
+        <?php foreach ( $quick_facts as $fact ) : ?>
+        <div>
+            <?php if ( $fact['icon'] ) : ?>
+                <span aria-hidden="true"><?php echo esc_html( $fact['icon'] ); ?></span>
+            <?php endif; ?>
+            <small><?php echo esc_html( $fact['label'] ); ?></small>
+            <strong><?php echo esc_html( $fact['value'] ); ?></strong>
+        </div>
+        <?php endforeach; ?>
+    </div>
+    <?php endif; ?>
+
+    <?php
+    // ============================================================
+    // 3. INTRO + PULL QUOTE
+    // Split layout — 3 sentences left, dramatic quote right.
+    // ============================================================
+    $intro_heading = get_field('intro_heading');
+    $intro_content = get_field('intro_content');
+    $intro_quote   = get_field('intro_quote');
+    $intro_quote_attr = get_field('intro_quote_attr');
+    ?>
+    <?php if ( $intro_heading || $intro_content ) : ?>
+    <section class="god-intro" id="god-story">
+        <div>
+            <?php if ( $intro_heading ) : ?>
+                <h2><?php echo wp_kses_post( $intro_heading ); ?></h2>
+            <?php endif; ?>
+            <?php if ( $intro_content ) : ?>
+                <div><?php echo wp_kses_post( $intro_content ); ?></div>
+            <?php endif; ?>
+        </div>
+
+        <?php if ( $intro_quote ) : ?>
+        <div>
+            <blockquote>
+                &ldquo;<?php echo wp_kses_post( $intro_quote ); ?>&rdquo;
+            </blockquote>
+            <?php if ( $intro_quote_attr ) : ?>
+                <cite>&mdash; <?php echo esc_html( $intro_quote_attr ); ?></cite>
+            <?php endif; ?>
+        </div>
         <?php endif; ?>
+    </section>
+    <?php endif; ?>
 
-        <?php
-        // ----------------------------------------------------------------
-        // NAMES & TITLES
-        // ----------------------------------------------------------------
-        $titles_heading = get_field('titles_heading');
-        ?>
-        <?php if ($titles_heading): ?>
-            <section class="sg-section sg-section--alt">
-                <span><?php echo esc_html(get_field('titles_eyebrow') ?: 'Names &amp; Titles'); ?></span>
-                <h2><?php echo wp_kses_post($titles_heading); ?></h2>
-
-                <?php $pronunciation = get_field('titles_pronunciation'); ?>
-                <?php if ($pronunciation): ?>
-                    <small>Pronounced: <?php echo esc_html($pronunciation); ?></small>
-                <?php endif; ?>
-
-                <div class="titles-grid">
-                    <?php
-                    $spellings_raw = get_field('titles_alt_spellings');
-                    if ($spellings_raw):
-                        $spellings = array_filter(array_map('trim', explode("\n", $spellings_raw)));
-                        ?>
-                        <div>
-                            <h4>Alternative Spellings</h4>
-                            <div class="tag-row">
-                                <?php foreach ($spellings as $s): ?>
-                                    <span><?php echo esc_html($s); ?></span>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-
-                    <?php
-                    $honorifics_raw = get_field('titles_honorifics');
-                    if ($honorifics_raw):
-                        $honorifics = array_filter(array_map('trim', explode("\n", $honorifics_raw)));
-                        ?>
-                        <div>
-                            <h4>Honorific Titles</h4>
-                            <div class="tag-row">
-                                <?php foreach ($honorifics as $h): ?>
-                                    <span><?php echo esc_html($h); ?></span>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </section>
-        <?php endif; ?>
-
-        <?php
-        // ----------------------------------------------------------------
-        // WHO IS [GOD]?
-        // ----------------------------------------------------------------
-        $intro_heading = get_field('intro_heading');
-        ?>
-        <?php if ($intro_heading): ?>
-            <section class="sg-section">
-                <span><?php echo esc_html(get_field('intro_eyebrow') ?: 'Who Is ' . get_the_title() . '?'); ?></span>
-                <h2><?php echo wp_kses_post($intro_heading); ?></h2>
-                <?php $intro_content = get_field('intro_content'); ?>
-                <?php if ($intro_content): ?>
-                    <div class="sg-prose"><?php echo wp_kses_post($intro_content); ?></div>
-                <?php endif; ?>
-            </section>
-        <?php endif; ?>
-
-        <?php
-        // ----------------------------------------------------------------
-        // ETHNIC & RELIGIOUS BACKGROUND
-        // ----------------------------------------------------------------
-        $background_heading = get_field('background_heading');
-        ?>
-        <?php if ($background_heading): ?>
-            <section class="sg-section sg-section--alt">
-                <span><?php echo esc_html(get_field('background_eyebrow') ?: 'Ethnic &amp; Religious Background'); ?></span>
-                <h2><?php echo wp_kses_post($background_heading); ?></h2>
-
-                <?php
-                $background_rows = [
-                    'Ethnic Group' => get_field('background_ethnic_group'),
-                    'Traditional Religion' => get_field('background_religion'),
-                    'Regions of Worship' => get_field('background_regions'),
-                    'Diaspora Traditions' => get_field('background_diaspora_traditions'),
-                ];
-                foreach ($background_rows as $label => $raw):
-                    if (!$raw)
-                        continue;
-                    $items = array_filter(array_map('trim', explode(',', $raw)));
-                    ?>
-                    <div class="bg-row">
-                        <h4><?php echo esc_html($label); ?></h4>
-                        <div class="tag-row">
-                            <?php foreach ($items as $item): ?>
-                                <span><?php echo esc_html($item); ?></span>
-                            <?php endforeach; ?>
-                        </div>
+    <?php
+    // ============================================================
+    // 4. LIFE JOURNEY TIMELINE
+    // Horizontal stages — replaces the numbered myths list.
+    // Up to 6 stages. Each: icon/image, stage name, one sentence.
+    // ============================================================
+    $timeline_heading = get_field('timeline_heading');
+    $timeline_stages  = [];
+    for ( $i = 1; $i <= 6; $i++ ) {
+        $stage = get_field("timeline_{$i}_stage");
+        if ( $stage ) {
+            $timeline_stages[] = [
+                'stage' => $stage,
+                'desc'  => get_field("timeline_{$i}_desc")  ?: '',
+                'icon'  => get_field("timeline_{$i}_icon")  ?: '✦',
+                'image' => get_field("timeline_{$i}_image") ?: null,
+            ];
+        }
+    }
+    ?>
+    <?php if ( $timeline_stages ) : ?>
+    <section class="god-timeline">
+        <div class="god-timeline-inner">
+            <?php if ( $timeline_heading ) : ?>
+                <h2><?php echo wp_kses_post( $timeline_heading ); ?></h2>
+            <?php endif; ?>
+            <div class="god-timeline-track">
+                <div class="god-timeline-line" aria-hidden="true"></div>
+                <?php foreach ( $timeline_stages as $i => $stage ) : ?>
+                <div class="god-timeline-stage">
+                    <div class="god-timeline-node">
+                        <?php if ( $stage['image'] ) : ?>
+                            <img src="<?php echo esc_url( $stage['image']['url'] ); ?>"
+                                 alt="<?php echo esc_attr( $stage['stage'] ); ?>">
+                        <?php else : ?>
+                            <span aria-hidden="true"><?php echo esc_html( $stage['icon'] ); ?></span>
+                        <?php endif; ?>
                     </div>
+                    <div class="god-timeline-content">
+                        <strong><?php echo esc_html( $stage['stage'] ); ?></strong>
+                        <?php if ( $stage['desc'] ) : ?>
+                            <p><?php echo esc_html( $stage['desc'] ); ?></p>
+                        <?php endif; ?>
+                    </div>
+                </div>
                 <?php endforeach; ?>
-            </section>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
+
+    <?php
+    // ============================================================
+    // 5. LOVE TRIANGLE — FULL BLEED
+    // Not a card — a cinematic visual moment.
+    // Full-width atmospheric image, minimal text, one CTA.
+    // ============================================================
+    $tri_bg      = get_field('triangle_bg_image');
+    $tri_eyebrow = get_field('triangle_eyebrow')     ?: 'The Story In Focus';
+    $tri_heading = get_field('triangle_heading');
+    $tri_sub     = get_field('triangle_subtitle');
+    $tri_link    = get_field('triangle_read_link')   ?: $lt_url;
+    $tri_cta     = get_field('triangle_cta_label')   ?: 'Discover the Story';
+    ?>
+    <?php if ( $tri_heading ) : ?>
+    <section class="god-triangle-bleed" id="god-triangle">
+
+        <?php if ( $tri_bg ) : ?>
+        <div class="god-triangle-bg" aria-hidden="true">
+            <img src="<?php echo esc_url( $tri_bg['url'] ); ?>"
+                 alt="">
+        </div>
         <?php endif; ?>
 
-        <?php
-        // ----------------------------------------------------------------
-        // DOMAINS & POWERS
-        // ----------------------------------------------------------------
-        $domains_heading = get_field('domains_heading');
-        ?>
-        <?php if ($domains_heading): ?>
-            <section class="sg-section">
-                <span><?php echo esc_html(get_field('domains_eyebrow') ?: 'Domains &amp; Powers'); ?></span>
-                <h2><?php echo wp_kses_post($domains_heading); ?></h2>
-                <?php $domains_intro = get_field('domains_intro'); ?>
-                <?php if ($domains_intro): ?>
-                    <p><?php echo esc_html($domains_intro); ?></p><?php endif; ?>
+        <div class="god-triangle-overlay" aria-hidden="true"></div>
 
-                <?php
-                $domains_raw = get_field('domains_list');
-                if ($domains_raw):
-                    $domains = array_filter(array_map('trim', explode(',', $domains_raw)));
-                    ?>
-                    <div class="tag-row">
-                        <?php foreach ($domains as $d): ?><span><?php echo esc_html($d); ?></span><?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
+        <div class="god-triangle-content">
+            <small><?php echo esc_html( $tri_eyebrow ); ?></small>
+            <h2><?php echo wp_kses_post( $tri_heading ); ?></h2>
+            <?php if ( $tri_sub ) : ?>
+                <p><?php echo esc_html( $tri_sub ); ?></p>
+            <?php endif; ?>
+            <a href="<?php echo esc_url( $tri_link ); ?>" class="btn-primary">
+                <?php echo esc_html( $tri_cta ); ?>
+            </a>
+        </div>
 
-                <?php
-                $prayer_items_exist = false;
-                for ($i = 1; $i <= 6; $i++) {
-                    if (get_field("domains_prayer_{$i}_title")) {
-                        $prayer_items_exist = true;
-                        break;
-                    }
-                }
-                ?>
-                <?php if ($prayer_items_exist): ?>
-                    <h4>People Traditionally Prayed For</h4>
-                    <div class="icon-grid icon-grid--3">
-                        <?php for ($i = 1; $i <= 6; $i++):
-                            $pr_title = get_field("domains_prayer_{$i}_title");
-                            if (!$pr_title)
-                                continue;
-                            $pr_icon = get_field("domains_prayer_{$i}_icon");
-                            ?>
-                            <div class="icon-card">
-                                <?php if ($pr_icon): ?><span><?php echo esc_html($pr_icon); ?></span><?php endif; ?>
-                                <h3><?php echo esc_html($pr_title); ?></h3>
-                            </div>
-                        <?php endfor; ?>
-                    </div>
-                <?php endif; ?>
-            </section>
-        <?php endif; ?>
+    </section>
+    <?php endif; ?>
 
-        <?php
-        // ----------------------------------------------------------------
-        // HISTORICAL ORIGINS
-        // ----------------------------------------------------------------
-        $history_heading = get_field('history_heading');
-        ?>
-        <?php if ($history_heading): ?>
-            <section class="sg-section sg-section--alt two-col" id="story">
+    <?php
+    // ============================================================
+    // 6. THREE TEASER CARDS
+    // Three configurable content teasers.
+    // Fully ACF-driven — any three areas of the god's content.
+    // ============================================================
+    $teasers = [];
+    for ( $i = 1; $i <= 3; $i++ ) {
+        $t_heading = get_field("teaser_{$i}_heading");
+        if ( $t_heading ) {
+            $teasers[] = [
+                'heading' => $t_heading,
+                'body'    => get_field("teaser_{$i}_body")      ?: '',
+                'link'    => get_field("teaser_{$i}_link")      ?: '#',
+                'cta'     => get_field("teaser_{$i}_cta_label") ?: 'Explore',
+                'icon'    => get_field("teaser_{$i}_icon")      ?: '',
+            ];
+        }
+    }
+    ?>
+    <?php if ( count($teasers) >= 1 ) : ?>
+    <div class="god-teasers">
+        <?php foreach ( $teasers as $teaser ) : ?>
+        <div>
+            <?php if ( $teaser['icon'] ) : ?>
+                <span aria-hidden="true"><?php echo esc_html( $teaser['icon'] ); ?></span>
+            <?php endif; ?>
+            <h3><?php echo esc_html( $teaser['heading'] ); ?></h3>
+            <?php if ( $teaser['body'] ) : ?>
+                <p><?php echo esc_html( $teaser['body'] ); ?></p>
+            <?php endif; ?>
+            <a href="<?php echo esc_url( $teaser['link'] ); ?>">
+                <?php echo esc_html( $teaser['cta'] ); ?> &rarr;
+            </a>
+        </div>
+        <?php endforeach; ?>
+    </div>
+    <?php endif; ?>
+
+    <?php
+    // ============================================================
+    // 7. POWERS & SYMBOLS
+    // Horizontal icon strip — each item: icon + name + one line.
+    // ============================================================
+    $symbols_heading = get_field('symbols_heading');
+    $symbols = [];
+    for ( $i = 1; $i <= 8; $i++ ) {
+        $s_title = get_field("symbol_{$i}_title");
+        if ( $s_title ) {
+            $symbols[] = [
+                'title' => $s_title,
+                'icon'  => get_field("symbol_{$i}_icon") ?: '',
+                'desc'  => get_field("symbol_{$i}_desc") ?: '',
+            ];
+        }
+    }
+
+    $domains_raw = get_field('domains_list');
+    $domains = $domains_raw
+        ? array_filter( array_map('trim', explode(',', $domains_raw)) )
+        : [];
+    ?>
+    <?php if ( $symbols || $domains ) : ?>
+    <section class="god-powers" id="god-powers">
+        <div class="god-powers-inner">
+            <small><?php echo esc_html( get_field('domains_eyebrow') ?: 'Domains &amp; Powers' ); ?></small>
+            <?php if ( $symbols_heading ) : ?>
+                <h2><?php echo wp_kses_post( $symbols_heading ); ?></h2>
+            <?php endif; ?>
+
+            <?php if ( $domains ) : ?>
+            <div class="god-domains">
+                <?php foreach ( $domains as $d ) : ?>
+                    <span><?php echo esc_html( $d ); ?></span>
+                <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
+
+            <?php if ( $symbols ) : ?>
+            <div class="god-symbols-strip">
+                <?php foreach ( $symbols as $sym ) : ?>
                 <div>
-                    <span><?php echo esc_html(get_field('history_eyebrow') ?: 'Historical Origins'); ?></span>
-                    <h2><?php echo wp_kses_post($history_heading); ?></h2>
-                    <?php $history_content = get_field('history_content'); ?>
-                    <?php if ($history_content): ?>
-                        <div class="sg-prose"><?php echo wp_kses_post($history_content); ?></div>
+                    <?php if ( $sym['icon'] ) : ?>
+                        <div aria-hidden="true"><?php echo esc_html( $sym['icon'] ); ?></div>
                     <?php endif; ?>
-
-                    <?php $quote = get_field('history_quote'); ?>
-                    <?php if ($quote): ?>
-                        <div class="quote-block">
-                            <p><?php echo esc_html($quote); ?></p>
-                            <?php $quote_source = get_field('history_quote_source'); ?>
-                            <?php if ($quote_source): ?>
-                                <p><?php echo esc_html($quote_source); ?></p><?php endif; ?>
-                        </div>
+                    <h4><?php echo esc_html( $sym['title'] ); ?></h4>
+                    <?php if ( $sym['desc'] ) : ?>
+                        <p><?php echo esc_html( $sym['desc'] ); ?></p>
                     <?php endif; ?>
                 </div>
+                <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
+        </div>
+    </section>
+    <?php endif; ?>
 
-                <div>
-                    <?php
-                    $history_image = get_field('history_image');
-                    $symbol_emoji = get_field('history_symbol_emoji');
-                    $symbol_label = get_field('history_symbol_label');
+    <?php
+    // ============================================================
+    // 8. RELATIONSHIPS
+    // Portrait cards — name, role, one-line teaser, link to god page.
+    // Graceful fallback: emoji icon if no portrait image.
+    // ============================================================
+    $relations_heading = get_field('relations_heading');
+    $relations = [];
+    for ( $i = 1; $i <= 6; $i++ ) {
+        $r_name = get_field("relation_{$i}_name");
+        if ( $r_name ) {
+            $r_god_post = get_field("relation_{$i}_god_link");
+            $relations[] = [
+                'name'   => $r_name,
+                'role'   => get_field("relation_{$i}_role")   ?: '',
+                'teaser' => get_field("relation_{$i}_teaser") ?: '',
+                'image'  => get_field("relation_{$i}_image")  ?: null,
+                'icon'   => get_field("relation_{$i}_icon")   ?: '✦',
+                'url'    => $r_god_post ? get_permalink($r_god_post->ID) : '#',
+            ];
+        }
+    }
+    ?>
+    <?php if ( $relations ) : ?>
+    <section class="god-relations" id="god-relations">
+        <div class="god-relations-inner">
+            <small><?php echo esc_html( get_field('relations_eyebrow') ?: 'Relationships' ); ?></small>
+            <?php if ( $relations_heading ) : ?>
+                <h2><?php echo wp_kses_post( $relations_heading ); ?></h2>
+            <?php endif; ?>
+            <div class="god-relations-grid">
+                <?php foreach ( $relations as $rel ) : ?>
+                <a href="<?php echo esc_url( $rel['url'] ); ?>" class="god-relation-card">
+
+                    <div class="god-relation-portrait">
+                        <?php if ( $rel['image'] ) : ?>
+                            <img src="<?php echo esc_url( $rel['image']['url'] ); ?>"
+                                 alt="<?php echo esc_attr( $rel['name'] ); ?>">
+                        <?php else : ?>
+                            <span aria-hidden="true"><?php echo esc_html( $rel['icon'] ); ?></span>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="god-relation-body">
+                        <strong><?php echo esc_html( $rel['name'] ); ?></strong>
+                        <?php if ( $rel['role'] ) : ?>
+                            <small><?php echo esc_html( strtoupper($rel['role']) ); ?></small>
+                        <?php endif; ?>
+                        <?php if ( $rel['teaser'] ) : ?>
+                            <p><?php echo esc_html( $rel['teaser'] ); ?></p>
+                        <?php endif; ?>
+                        <span>Learn More &rarr;</span>
+                    </div>
+
+                </a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
+
+    <?php
+    // ============================================================
+    // 9. MID-PAGE QUOTE BREAK
+    // Full bleed — Yoruba proverb or deity quote.
+    // Visual breathing room between dense sections.
+    // ============================================================
+    $midpage_quote      = get_field('midpage_quote');
+    $midpage_quote_attr = get_field('midpage_quote_attr');
+    ?>
+    <?php if ( $midpage_quote ) : ?>
+    <div class="god-midquote">
+        <div aria-hidden="true"></div>
+        <blockquote><?php echo wp_kses_post( $midpage_quote ); ?></blockquote>
+        <?php if ( $midpage_quote_attr ) : ?>
+            <cite>&mdash; <?php echo esc_html( $midpage_quote_attr ); ?></cite>
+        <?php endif; ?>
+    </div>
+    <?php endif; ?>
+
+    <?php
+    // ============================================================
+    // 10. WORSHIP TODAY
+    // Condensed — location tags, brief text, up to 3 images.
+    // ============================================================
+    $worship_heading   = get_field('worship_heading');
+    $worship_intro     = get_field('worship_intro');
+    $worship_locations = get_field('worship_locations');
+    $worship_images    = [];
+    for ( $i = 1; $i <= 3; $i++ ) {
+        $wi = get_field("worship_image_{$i}");
+        if ( $wi ) $worship_images[] = $wi;
+    }
+    $worship_items_exist = false;
+    for ( $i = 1; $i <= 8; $i++ ) {
+        if ( get_field("worship_{$i}_title") ) { $worship_items_exist = true; break; }
+    }
+    ?>
+    <?php if ( $worship_heading || $worship_intro ) : ?>
+    <section class="god-worship" id="god-worship">
+        <div class="god-worship-inner">
+            <div class="god-worship-text">
+                <small><?php echo esc_html( get_field('worship_eyebrow') ?: 'Worship &amp; Rituals' ); ?></small>
+                <?php if ( $worship_heading ) : ?>
+                    <h2><?php echo wp_kses_post( $worship_heading ); ?></h2>
+                <?php endif; ?>
+                <?php if ( $worship_intro ) : ?>
+                    <div><?php echo wp_kses_post( $worship_intro ); ?></div>
+                <?php endif; ?>
+
+                <?php if ( $worship_items_exist ) : ?>
+                <div class="god-worship-list">
+                    <?php for ( $i = 1; $i <= 8; $i++ ) :
+                        $w_title = get_field("worship_{$i}_title");
+                        if ( ! $w_title ) continue;
+                        $w_icon  = get_field("worship_{$i}_icon") ?: '';
+                        $w_desc  = get_field("worship_{$i}_desc") ?: '';
                     ?>
-                    <?php if ($history_image): ?>
-                        <img src="<?php echo esc_url($history_image['url']); ?>"
-                            alt="<?php echo esc_attr($history_image['alt']); ?>">
-                    <?php elseif ($symbol_emoji): ?>
-                        <div class="symbol-block">
-                            <div class="symbol-circle">
-                                <span><?php echo esc_html($symbol_emoji); ?></span>
-                                <div aria-hidden="true"></div><!-- ring -->
-                                <div aria-hidden="true"></div><!-- ring outer -->
-                            </div>
-                            <?php if ($symbol_label): ?>
-                                <p><?php echo esc_html($symbol_label); ?></p>
+                    <div>
+                        <?php if ( $w_icon ) : ?>
+                            <span aria-hidden="true"><?php echo esc_html( $w_icon ); ?></span>
+                        <?php endif; ?>
+                        <div>
+                            <strong><?php echo esc_html( $w_title ); ?></strong>
+                            <?php if ( $w_desc ) : ?>
+                                <p><?php echo esc_html( $w_desc ); ?></p>
                             <?php endif; ?>
                         </div>
-                    <?php else: ?>
-                        <div class="history-placeholder">
-                            <span aria-hidden="true">&#127963;</span>
-                            <p>Image coming soon</p>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </section>
-        <?php endif; ?>
-
-        <?php
-        // ----------------------------------------------------------------
-        // ORIGIN STORY & MAJOR MYTHS
-        // ----------------------------------------------------------------
-        $myths_heading = get_field('myths_heading');
-        ?>
-        <?php if ($myths_heading): ?>
-            <section class="sg-section">
-                <span><?php echo esc_html(get_field('myths_eyebrow') ?: 'Origin Story &amp; Major Myths'); ?></span>
-                <h2><?php echo wp_kses_post($myths_heading); ?></h2>
-                <div class="numbered-list">
-                    <?php
-                    $myth_count = 0;
-                    for ($i = 1; $i <= 6; $i++):
-                        $m_title = get_field("myth_{$i}_title");
-                        if (!$m_title)
-                            continue;
-                        $myth_count++;
-                        $m_desc = get_field("myth_{$i}_desc");
-                        ?>
-                        <div>
-                            <span><?php echo str_pad($myth_count, 2, '0', STR_PAD_LEFT); ?></span>
-                            <div>
-                                <h4><?php echo esc_html($m_title); ?></h4>
-                                <?php if ($m_desc): ?>
-                                    <p><?php echo wp_kses_post($m_desc); ?></p><?php endif; ?>
-                            </div>
-                        </div>
-                    <?php endfor; ?>
-                </div>
-            </section>
-        <?php endif; ?>
-
-        <?php
-        // ----------------------------------------------------------------
-        // FAMILY & RELATIONSHIPS
-        // ----------------------------------------------------------------
-        $family_heading = get_field('family_heading');
-        ?>
-        <?php if ($family_heading): ?>
-            <section class="sg-section sg-section--alt">
-                <span><?php echo esc_html(get_field('family_eyebrow') ?: 'Family &amp; Relationships'); ?></span>
-                <h2><?php echo wp_kses_post($family_heading); ?></h2>
-
-                <?php $lineage = get_field('family_lineage'); ?>
-                <?php if ($lineage): ?>
-                    <div class="sg-prose"><?php echo wp_kses_post($lineage); ?></div>
-                <?php endif; ?>
-
-                <?php $fam_cols = get_field('family_columns') ?: '3'; ?>
-                <div class="card-grid card-grid--<?php echo esc_attr($fam_cols); ?>">
-                    <?php for ($i = 1; $i <= 6; $i++):
-                        $f_name = get_field("family_{$i}_name");
-                        if (!$f_name)
-                            continue;
-                        $f_role = get_field("family_{$i}_role");
-                        $f_desc = get_field("family_{$i}_desc");
-                        $f_icon = get_field("family_{$i}_icon");
-                        ?>
-                        <div class="bordered-card">
-                            <?php if ($f_icon): ?><span><?php echo esc_html($f_icon); ?></span><?php endif; ?>
-                            <h3><?php echo esc_html($f_name); ?></h3>
-                            <?php if ($f_role): ?><small><?php echo esc_html($f_role); ?></small><?php endif; ?>
-                            <?php if ($f_desc): ?>
-                                <p><?php echo esc_html($f_desc); ?></p><?php endif; ?>
-                        </div>
-                    <?php endfor; ?>
-                </div>
-            </section>
-        <?php endif; ?>
-
-        <?php
-        // ----------------------------------------------------------------
-        // PERSONALITY & CHARACTERISTICS
-        // ----------------------------------------------------------------
-        $personality_heading = get_field('personality_heading');
-        ?>
-        <?php if ($personality_heading): ?>
-            <section class="sg-section">
-                <span><?php echo esc_html(get_field('personality_eyebrow') ?: 'Personality &amp; Characteristics'); ?></span>
-                <h2><?php echo wp_kses_post($personality_heading); ?></h2>
-
-                <div class="personality-grid">
-                    <?php
-                    $strengths_raw = get_field('personality_strengths');
-                    if ($strengths_raw):
-                        $strengths = array_filter(array_map('trim', explode("\n", $strengths_raw)));
-                        ?>
-                        <div>
-                            <h3>Strengths</h3>
-                            <ul>
-                                <?php foreach ($strengths as $s): ?>
-                                    <li><?php echo esc_html($s); ?></li><?php endforeach; ?>
-                            </ul>
-                        </div>
-                    <?php endif; ?>
-
-                    <?php
-                    $weaknesses_raw = get_field('personality_weaknesses');
-                    if ($weaknesses_raw):
-                        $weaknesses = array_filter(array_map('trim', explode("\n", $weaknesses_raw)));
-                        ?>
-                        <div>
-                            <h3>Weaknesses</h3>
-                            <ul>
-                                <?php foreach ($weaknesses as $w): ?>
-                                    <li><?php echo esc_html($w); ?></li><?php endforeach; ?>
-                            </ul>
-                        </div>
-                    <?php endif; ?>
-                </div>
-
-                <?php $reputation = get_field('personality_reputation'); ?>
-                <?php if ($reputation): ?>
-                    <div class="sg-prose"><?php echo wp_kses_post($reputation); ?></div>
-                <?php endif; ?>
-            </section>
-        <?php endif; ?>
-
-        <?php
-        // ----------------------------------------------------------------
-        // SYMBOLS & SACRED OBJECTS
-        // ----------------------------------------------------------------
-        $symbols_heading = get_field('symbols_heading');
-        ?>
-        <?php if ($symbols_heading): ?>
-            <section class="sg-section sg-section--alt">
-                <span><?php echo esc_html(get_field('symbols_eyebrow') ?: 'Symbols &amp; Sacred Objects'); ?></span>
-                <h2><?php echo wp_kses_post($symbols_heading); ?></h2>
-                <?php $sym_cols = get_field('symbols_columns') ?: '4'; ?>
-                <div class="icon-grid icon-grid--<?php echo esc_attr($sym_cols); ?>">
-                    <?php for ($i = 1; $i <= 8; $i++):
-                        $s_title = get_field("symbol_{$i}_title");
-                        if (!$s_title)
-                            continue;
-                        $s_icon = get_field("symbol_{$i}_icon");
-                        $s_desc = get_field("symbol_{$i}_desc");
-                        ?>
-                        <div class="icon-card">
-                            <?php if ($s_icon): ?><span><?php echo esc_html($s_icon); ?></span><?php endif; ?>
-                            <h3><?php echo esc_html($s_title); ?></h3>
-                            <?php if ($s_desc): ?>
-                                <p><?php echo esc_html($s_desc); ?></p><?php endif; ?>
-                        </div>
-                    <?php endfor; ?>
-                </div>
-            </section>
-        <?php endif; ?>
-
-        <?php
-        // ----------------------------------------------------------------
-        // WORSHIP & RITUALS
-        // ----------------------------------------------------------------
-        $worship_heading = get_field('worship_heading');
-        ?>
-        <?php if ($worship_heading): ?>
-            <section class="sg-section">
-                <span><?php echo esc_html(get_field('worship_eyebrow') ?: 'Worship &amp; Rituals'); ?></span>
-                <h2><?php echo wp_kses_post($worship_heading); ?></h2>
-                <?php $worship_intro = get_field('worship_intro'); ?>
-                <?php if ($worship_intro): ?>
-                    <div class="sg-prose"><?php echo wp_kses_post($worship_intro); ?></div>
-                <?php endif; ?>
-                <div class="numbered-list">
-                    <?php
-                    $w_count = 0;
-                    for ($i = 1; $i <= 8; $i++):
-                        $w_title = get_field("worship_{$i}_title");
-                        if (!$w_title)
-                            continue;
-                        $w_count++;
-                        $w_desc = get_field("worship_{$i}_desc");
-                        ?>
-                        <div>
-                            <span><?php echo str_pad($w_count, 2, '0', STR_PAD_LEFT); ?></span>
-                            <div>
-                                <h4><?php echo esc_html($w_title); ?></h4>
-                                <?php if ($w_desc): ?>
-                                    <p><?php echo wp_kses_post($w_desc); ?></p><?php endif; ?>
-                            </div>
-                        </div>
-                    <?php endfor; ?>
-                </div>
-            </section>
-        <?php endif; ?>
-
-        <?php
-        // ----------------------------------------------------------------
-        // FESTIVALS & CELEBRATIONS
-        // ----------------------------------------------------------------
-        $festival_heading = get_field('festival_heading');
-        ?>
-        <?php if ($festival_heading): ?>
-            <section class="sg-section sg-section--alt">
-                <span><?php echo esc_html(get_field('festival_eyebrow') ?: 'Festivals &amp; Celebrations'); ?></span>
-                <h2><?php echo wp_kses_post($festival_heading); ?></h2>
-                <?php $festival_content = get_field('festival_content'); ?>
-                <?php if ($festival_content): ?>
-                    <div class="sg-prose"><?php echo wp_kses_post($festival_content); ?></div>
-                <?php endif; ?>
-                <?php $activities_raw = get_field('festival_activities'); ?>
-                <?php if ($activities_raw):
-                    $activities = array_filter(array_map('trim', explode(',', $activities_raw)));
-                    ?>
-                    <div class="tag-row">
-                        <?php foreach ($activities as $a): ?><span><?php echo esc_html($a); ?></span><?php endforeach; ?>
                     </div>
+                    <?php endfor; ?>
+                </div>
                 <?php endif; ?>
-            </section>
-        <?php endif; ?>
 
-        <?php
-        // ----------------------------------------------------------------
-        // SACRED PLACES & SHRINES
-        // ----------------------------------------------------------------
-        $places_heading = get_field('places_heading');
-        ?>
-        <?php if ($places_heading): ?>
-            <section class="sg-section">
-                <span><?php echo esc_html(get_field('places_eyebrow') ?: 'Sacred Places &amp; Shrines'); ?></span>
-                <h2><?php echo wp_kses_post($places_heading); ?></h2>
-                <?php $places_cols = get_field('places_columns') ?: '3'; ?>
-                <div class="card-grid card-grid--<?php echo esc_attr($places_cols); ?>">
-                    <?php for ($i = 1; $i <= 6; $i++):
-                        $p_name = get_field("place_{$i}_name");
-                        if (!$p_name)
-                            continue;
-                        $p_desc = get_field("place_{$i}_desc");
-                        $p_icon = get_field("place_{$i}_icon");
-                        ?>
-                        <div class="bordered-card">
-                            <?php if ($p_icon): ?><span><?php echo esc_html($p_icon); ?></span><?php endif; ?>
-                            <h3><?php echo esc_html($p_name); ?></h3>
-                            <?php if ($p_desc): ?>
-                                <p><?php echo esc_html($p_desc); ?></p><?php endif; ?>
-                        </div>
-                    <?php endfor; ?>
+                <?php if ( $worship_locations ) :
+                    $locations = array_filter( array_map('trim', explode(',', $worship_locations)) );
+                ?>
+                <div class="god-worship-locations">
+                    <?php foreach ( $locations as $loc ) : ?>
+                        <span>&#128205; <?php echo esc_html( $loc ); ?></span>
+                    <?php endforeach; ?>
                 </div>
-            </section>
-        <?php endif; ?>
-
-        <?php
-        // ----------------------------------------------------------------
-        // CULTURAL IMPORTANCE
-        // ----------------------------------------------------------------
-        $culture_heading = get_field('culture_heading');
-        ?>
-        <?php if ($culture_heading): ?>
-            <section class="sg-section sg-section--alt">
-                <span><?php echo esc_html(get_field('culture_eyebrow') ?: 'Cultural Importance'); ?></span>
-                <h2><?php echo wp_kses_post($culture_heading); ?></h2>
-                <?php $culture_content = get_field('culture_content'); ?>
-                <?php if ($culture_content): ?>
-                    <div class="sg-prose"><?php echo wp_kses_post($culture_content); ?></div>
                 <?php endif; ?>
-                <?php $culture_areas_raw = get_field('culture_areas'); ?>
-                <?php if ($culture_areas_raw):
-                    $culture_areas = array_filter(array_map('trim', explode(',', $culture_areas_raw)));
-                    ?>
-                    <div class="tag-row">
-                        <?php foreach ($culture_areas as $area): ?><span><?php echo esc_html($area); ?></span><?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-            </section>
-        <?php endif; ?>
+            </div>
 
-        <?php
-        // ----------------------------------------------------------------
-        // MODERN INFLUENCE
-        // ----------------------------------------------------------------
-        $modern_heading = get_field('modern_heading');
-        ?>
-        <?php if ($modern_heading): ?>
-            <section class="sg-section">
-                <span><?php echo esc_html(get_field('modern_eyebrow') ?: 'Modern Influence'); ?></span>
-                <h2><?php echo wp_kses_post($modern_heading); ?></h2>
-                <?php $mod_cols = get_field('modern_columns') ?: '6'; ?>
-                <div class="icon-grid icon-grid--<?php echo esc_attr($mod_cols); ?> icon-grid--compact">
-                    <?php for ($i = 1; $i <= 8; $i++):
-                        $m_title = get_field("modern_{$i}_title");
-                        if (!$m_title)
-                            continue;
-                        $m_icon = get_field("modern_{$i}_icon");
-                        ?>
-                        <div class="icon-card">
-                            <?php if ($m_icon): ?><span><?php echo esc_html($m_icon); ?></span><?php endif; ?>
-                            <h3><?php echo esc_html($m_title); ?></h3>
-                        </div>
-                    <?php endfor; ?>
-                </div>
-            </section>
-        <?php endif; ?>
-
-        <?php
-        // ----------------------------------------------------------------
-        // IN THE AFRICAN DIASPORA
-        // ----------------------------------------------------------------
-        $diaspora_heading = get_field('diaspora_heading');
-        ?>
-        <?php if ($diaspora_heading): ?>
-            <section class="sg-section sg-section--alt">
-                <span><?php echo esc_html(get_field('diaspora_eyebrow') ?: 'In the African Diaspora'); ?></span>
-                <h2><?php echo wp_kses_post($diaspora_heading); ?></h2>
-                <?php $diaspora_intro = get_field('diaspora_intro'); ?>
-                <?php if ($diaspora_intro): ?>
-                    <p><?php echo esc_html($diaspora_intro); ?></p><?php endif; ?>
-                <?php $d_cols = get_field('diaspora_columns') ?: '3'; ?>
-                <div class="card-grid card-grid--<?php echo esc_attr($d_cols); ?>">
-                    <?php for ($i = 1; $i <= 6; $i++):
-                        $d_region = get_field("diaspora_{$i}_region");
-                        if (!$d_region)
-                            continue;
-                        $d_icon = get_field("diaspora_{$i}_icon");
-                        $d_name = get_field("diaspora_{$i}_local_name");
-                        $d_desc = get_field("diaspora_{$i}_desc");
-                        ?>
-                        <div class="bordered-card">
-                            <?php if ($d_icon): ?><span><?php echo esc_html($d_icon); ?></span><?php endif; ?>
-                            <h3><?php echo esc_html($d_region); ?></h3>
-                            <?php if ($d_desc): ?>
-                                <p><?php echo esc_html($d_desc); ?></p><?php endif; ?>
-                            <?php if ($d_name): ?><small>Known as <?php echo esc_html($d_name); ?></small><?php endif; ?>
-                        </div>
-                    <?php endfor; ?>
-                </div>
-            </section>
-        <?php endif; ?>
-
-        <?php
-        // ----------------------------------------------------------------
-        // COMPARISONS WITH OTHER MYTHOLOGIES
-        // ----------------------------------------------------------------
-        $compare_heading = get_field('compare_heading');
-        ?>
-        <?php if ($compare_heading): ?>
-            <section class="sg-section">
-                <span><?php echo esc_html(get_field('compare_eyebrow') ?: 'Comparisons With Other Mythologies'); ?></span>
-                <h2><?php echo wp_kses_post($compare_heading); ?></h2>
-                <table class="compare-table">
-                    <thead>
-                        <tr>
-                            <th><?php the_title(); ?></th>
-                            <th>Other Mythology</th>
-                            <th>Shared Theme</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php for ($i = 1; $i <= 6; $i++):
-                            $c_other = get_field("compare_{$i}_figure");
-                            if (!$c_other)
-                                continue;
-                            $c_origin = get_field("compare_{$i}_origin");
-                            $c_theme = get_field("compare_{$i}_theme");
-                            ?>
-                            <tr>
-                                <td><?php the_title(); ?></td>
-                                <td><?php echo esc_html($c_other); ?><?php if ($c_origin)
-                                         echo ' (' . esc_html($c_origin) . ')'; ?>
-                                </td>
-                                <td><?php echo esc_html($c_theme); ?></td>
-                            </tr>
-                        <?php endfor; ?>
-                    </tbody>
-                </table>
-                <?php $compare_note = get_field('compare_note'); ?>
-                <?php if ($compare_note): ?>
-                    <p class="compare-note"><?php echo esc_html($compare_note); ?></p><?php endif; ?>
-            </section>
-        <?php endif; ?>
-
-        <?php
-        // ----------------------------------------------------------------
-        // INTERESTING FACTS
-        // ----------------------------------------------------------------
-        $trivia_heading = get_field('trivia_heading');
-        ?>
-        <?php if ($trivia_heading): ?>
-            <section class="sg-section sg-section--alt">
-                <span><?php echo esc_html(get_field('trivia_eyebrow') ?: 'Interesting Facts'); ?></span>
-                <h2><?php echo wp_kses_post($trivia_heading); ?></h2>
-                <div class="trivia-list">
-                    <?php for ($i = 1; $i <= 8; $i++):
-                        $fact = get_field("trivia_{$i}");
-                        if (!$fact)
-                            continue;
-                        ?>
-                        <div>
-                            <span aria-hidden="true">&#9670;</span>
-                            <p><?php echo wp_kses_post($fact); ?></p>
-                        </div>
-                    <?php endfor; ?>
-                </div>
-            </section>
-        <?php endif; ?>
-
-        <?php
-        // ----------------------------------------------------------------
-        // FREQUENTLY ASKED QUESTIONS
-        // ----------------------------------------------------------------
-        $faq_heading = get_field('faq_heading');
-        ?>
-        <?php if ($faq_heading): ?>
-            <section class="sg-section">
-                <span><?php echo esc_html(get_field('faq_eyebrow') ?: 'Frequently Asked Questions'); ?></span>
-                <h2><?php echo wp_kses_post($faq_heading); ?></h2>
-                <div class="faq-list">
-                    <?php for ($i = 1; $i <= 8; $i++):
-                        $q = get_field("faq_{$i}_question");
-                        if (!$q)
-                            continue;
-                        $a = get_field("faq_{$i}_answer");
-                        ?>
-                        <div>
-                            <p><strong>Q.</strong> <?php echo esc_html($q); ?></p>
-                            <?php if ($a): ?>
-                                <p><?php echo wp_kses_post($a); ?></p><?php endif; ?>
-                        </div>
-                    <?php endfor; ?>
-                </div>
-            </section>
-        <?php endif; ?>
-
-        <?php
-        // ----------------------------------------------------------------
-        // LOVE TRIANGLE FEATURE CARD
-        // ----------------------------------------------------------------
-        $triangle_heading = get_field('triangle_heading');
-        ?>
-        <?php if ($triangle_heading): ?>
-            <section class="triangle-section" id="triangle">
-                <span><?php echo esc_html(get_field('triangle_eyebrow') ?: 'The Story In Focus'); ?></span>
-                <h2><?php echo wp_kses_post($triangle_heading); ?></h2>
-                <?php $triangle_intro = get_field('triangle_intro'); ?>
-                <?php if ($triangle_intro): ?>
-                    <p><?php echo esc_html($triangle_intro); ?></p><?php endif; ?>
-
-                <div class="triangle-card">
-                    <div aria-hidden="true"></div><!-- band -->
-                    <div>
-                        <?php $tri_tag = get_field('triangle_tag'); ?>
-                        <?php if ($tri_tag): ?><small><?php echo esc_html($tri_tag); ?></small><?php endif; ?>
-
-                        <?php $tri_title = get_field('triangle_story_title'); ?>
-                        <?php if ($tri_title): ?>
-                            <h3><?php echo esc_html($tri_title); ?></h3><?php endif; ?>
-
-                        <?php $tri_excerpt = get_field('triangle_excerpt'); ?>
-                        <?php if ($tri_excerpt): ?>
-                            <p><?php echo esc_html($tri_excerpt); ?></p><?php endif; ?>
-
-                        <?php $cast = get_field('triangle_cast'); ?>
-                        <?php if ($cast): ?>
-                            <div class="tag-row">
-                                <?php foreach ($cast as $member):
-                                    $cast_name = $member['cast_name'] ?? '';
-                                    $cast_color = $member['cast_color'] ?? '#FF6B4A';
-                                    if (!$cast_name)
-                                        continue;
-                                    ?>
-                                    <span style="--cp:<?php echo esc_attr($cast_color); ?>;">
-                                        <span aria-hidden="true"></span><?php echo esc_html($cast_name); ?>
-                                    </span>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
-
-                        <div>
-                            <small><?php echo esc_html(get_field('triangle_meta_label') ?: 'Part of the Ìtàn Òrìṣà story series'); ?></small>
-                            <?php $triangle_link = get_field('triangle_read_link'); ?>
-                            <a href="<?php echo $triangle_link ? esc_url($triangle_link) : '#'; ?>" class="btn-primary">
-                                Read the Full Story
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        <?php endif; ?>
-
-        <?php
-        // ----------------------------------------------------------------
-        // LEGACY / CLOSING QUOTE
-        // ----------------------------------------------------------------
-        $legacy_quote = get_field('legacy_quote');
-        ?>
-        <?php if ($legacy_quote): ?>
-            <section class="god-legacy">
-                <blockquote><?php echo wp_kses_post($legacy_quote); ?></blockquote>
-                <?php $legacy_attr = get_field('legacy_attribution'); ?>
-                <?php if ($legacy_attr): ?>
-                    <p><?php echo esc_html($legacy_attr); ?></p><?php endif; ?>
-            </section>
-        <?php endif; ?>
-
-        <?php
-        // ----------------------------------------------------------------
-        // CROSS-GOD NAVIGATION
-        // ----------------------------------------------------------------
-        $cross_god_1 = get_field('cross_nav_god_1');
-        $cross_god_2 = get_field('cross_nav_god_2');
-        ?>
-        <?php if ($cross_god_1 || $cross_god_2): ?>
-            <section class="cross-nav">
-                <span>Continue the Story</span>
-                <h2><?php the_title(); ?>'s Story Doesn&#8217;t End Here</h2>
+            <?php if ( $worship_images ) : ?>
+            <div class="god-worship-images">
+                <?php foreach ( $worship_images as $wi ) : ?>
                 <div>
-                    <?php if ($cross_god_1):
-                        $g1_icon = get_field('cross_nav_icon', $cross_god_1->ID) ?: '✨';
-                        $g1_tag = get_field('cross_nav_god_1_tag');
-                        ?>
-                        <a href="<?php echo esc_url(get_permalink($cross_god_1->ID)); ?>">
-                            <div><?php echo esc_html($g1_icon); ?></div>
-                            <div>
-                                <small>Next Up</small>
-                                <strong><?php echo esc_html($cross_god_1->post_title); ?></strong>
-                                <?php if ($g1_tag): ?>
-                                    <p><?php echo esc_html($g1_tag); ?></p><?php endif; ?>
-                            </div>
-                            <span aria-hidden="true">&rarr;</span>
-                        </a>
-                    <?php endif; ?>
-
-                    <?php if ($cross_god_2):
-                        $g2_icon = get_field('cross_nav_icon', $cross_god_2->ID) ?: '✨';
-                        $g2_tag = get_field('cross_nav_god_2_tag');
-                        ?>
-                        <a href="<?php echo esc_url(get_permalink($cross_god_2->ID)); ?>">
-                            <div><?php echo esc_html($g2_icon); ?></div>
-                            <div>
-                                <small>Also In This Story</small>
-                                <strong><?php echo esc_html($cross_god_2->post_title); ?></strong>
-                                <?php if ($g2_tag): ?>
-                                    <p><?php echo esc_html($g2_tag); ?></p><?php endif; ?>
-                            </div>
-                            <span aria-hidden="true">&rarr;</span>
-                        </a>
-                    <?php endif; ?>
+                    <img src="<?php echo esc_url( $wi['url'] ); ?>"
+                         alt="<?php echo esc_attr( $wi['alt'] ); ?>"
+                         loading="lazy">
                 </div>
-            </section>
-        <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
+        </div>
+    </section>
+    <?php endif; ?>
 
-    </div><!-- .single-god -->
+    <?php
+    // ============================================================
+    // 11. IN CULTURE
+    // Grid of media appearances — film, game, music, art, book.
+    // Image cards with type badge.
+    // ============================================================
+    $culture_heading = get_field('in_culture_heading');
+    $culture_items   = [];
+    for ( $i = 1; $i <= 8; $i++ ) {
+        $c_title = get_field("culture_{$i}_title");
+        if ( $c_title ) {
+            $culture_items[] = [
+                'title'   => $c_title,
+                'type'    => get_field("culture_{$i}_type")    ?: '',
+                'creator' => get_field("culture_{$i}_creator") ?: '',
+                'image'   => get_field("culture_{$i}_image")   ?: null,
+                'icon'    => get_field("culture_{$i}_icon")    ?: '✦',
+            ];
+        }
+    }
+    ?>
+    <?php if ( $culture_items ) : ?>
+    <section class="god-culture" id="god-culture">
+        <div class="god-culture-inner">
+            <small><?php echo esc_html( get_field('in_culture_eyebrow') ?: 'In Culture' ); ?></small>
+            <?php if ( $culture_heading ) : ?>
+                <h2><?php echo wp_kses_post( $culture_heading ); ?></h2>
+            <?php endif; ?>
+            <div class="god-culture-grid">
+                <?php foreach ( $culture_items as $item ) : ?>
+                <div class="god-culture-card">
+                    <div class="god-culture-card-media">
+                        <?php if ( $item['image'] ) : ?>
+                            <img src="<?php echo esc_url( $item['image']['url'] ); ?>"
+                                 alt="<?php echo esc_attr( $item['title'] ); ?>"
+                                 loading="lazy">
+                        <?php else : ?>
+                            <span aria-hidden="true"><?php echo esc_html( $item['icon'] ); ?></span>
+                        <?php endif; ?>
+                        <?php if ( $item['type'] ) : ?>
+                            <span class="god-culture-badge">
+                                <?php echo esc_html( $item['type'] ); ?>
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                    <div class="god-culture-card-body">
+                        <strong><?php echo esc_html( $item['title'] ); ?></strong>
+                        <?php if ( $item['creator'] ) : ?>
+                            <small><?php echo esc_html( $item['creator'] ); ?></small>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
+
+    <?php
+    // ============================================================
+    // 12. FAQ
+    // Absorbs: names & titles, background, comparisons, trivia,
+    // sacred places, cultural importance — all as Q&A.
+    // Up to 12 questions.
+    // ============================================================
+    $faq_heading = get_field('faq_heading');
+    $faqs = [];
+    for ( $i = 1; $i <= 12; $i++ ) {
+        $q = get_field("faq_{$i}_question");
+        if ( $q ) {
+            $faqs[] = [
+                'q' => $q,
+                'a' => get_field("faq_{$i}_answer") ?: '',
+            ];
+        }
+    }
+    ?>
+    <?php if ( $faqs ) : ?>
+    <section class="god-faq" id="god-faq">
+        <div class="god-faq-inner">
+            <small><?php echo esc_html( get_field('faq_eyebrow') ?: 'Frequently Asked Questions' ); ?></small>
+            <?php if ( $faq_heading ) : ?>
+                <h2><?php echo wp_kses_post( $faq_heading ); ?></h2>
+            <?php endif; ?>
+            <div class="god-faq-list">
+                <?php foreach ( $faqs as $faq ) : ?>
+                <details>
+                    <summary>
+                        <span><?php echo esc_html( $faq['q'] ); ?></span>
+                        <span aria-hidden="true">+</span>
+                    </summary>
+                    <?php if ( $faq['a'] ) : ?>
+                        <div><?php echo wp_kses_post( $faq['a'] ); ?></div>
+                    <?php endif; ?>
+                </details>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
+
+    <?php
+    // ============================================================
+    // 13. LEGACY QUOTE — full-bleed cinematic closing moment
+    // ============================================================
+    $legacy_quote = get_field('legacy_quote');
+    $legacy_attr  = get_field('legacy_attribution');
+    ?>
+    <?php if ( $legacy_quote ) : ?>
+    <section class="god-legacy">
+        <div aria-hidden="true"></div>
+        <blockquote><?php echo wp_kses_post( $legacy_quote ); ?></blockquote>
+        <?php if ( $legacy_attr ) : ?>
+            <cite><?php echo esc_html( $legacy_attr ); ?></cite>
+        <?php endif; ?>
+    </section>
+    <?php endif; ?>
+
+    <?php
+    // ============================================================
+    // 14. CROSS-GOD NAVIGATION
+    // Deity colour per card via --gc.
+    // Relationship teaser tag per card.
+    // ============================================================
+    $cross_god_1 = get_field('cross_nav_god_1');
+    $cross_god_2 = get_field('cross_nav_god_2');
+    ?>
+    <?php if ( $cross_god_1 || $cross_god_2 ) : ?>
+    <section class="god-crossnav">
+        <small>Continue the Story</small>
+        <h2><?php the_title(); ?>&rsquo;s Story Doesn&rsquo;t End Here</h2>
+        <div>
+            <?php
+            $cross_gods = [
+                ['post' => $cross_god_1, 'label' => 'Next Up',           'tag_field' => 'cross_nav_god_1_tag'],
+                ['post' => $cross_god_2, 'label' => 'Also In This Story', 'tag_field' => 'cross_nav_god_2_tag'],
+            ];
+            foreach ( $cross_gods as $cg ) :
+                if ( ! $cg['post'] ) continue;
+                $cg_color  = get_field('god_color',    $cg['post']->ID) ?: '#f5c842';
+                $cg_icon   = get_field('cross_nav_icon', $cg['post']->ID) ?: '✦';
+                $cg_tag    = get_field($cg['tag_field']);
+                $cg_image  = get_field('hero_image',   $cg['post']->ID);
+            ?>
+            <a href="<?php echo esc_url( get_permalink($cg['post']->ID) ); ?>"
+               style="--gc:<?php echo esc_attr($cg_color); ?>;">
+
+                <div class="god-crossnav-portrait">
+                    <?php if ( $cg_image ) : ?>
+                        <img src="<?php echo esc_url($cg_image['url']); ?>"
+                             alt="<?php echo esc_attr($cg['post']->post_title); ?>"
+                             loading="lazy">
+                    <?php else : ?>
+                        <span aria-hidden="true"><?php echo esc_html($cg_icon); ?></span>
+                    <?php endif; ?>
+                    <div aria-hidden="true"></div>
+                </div>
+
+                <div class="god-crossnav-body">
+                    <small><?php echo esc_html($cg['label']); ?></small>
+                    <strong><?php echo esc_html($cg['post']->post_title); ?></strong>
+                    <?php if ( $cg_tag ) : ?>
+                        <p><?php echo esc_html($cg_tag); ?></p>
+                    <?php endif; ?>
+                    <span aria-hidden="true">&rarr;</span>
+                </div>
+
+            </a>
+            <?php endforeach; ?>
+        </div>
+    </section>
+    <?php endif; ?>
+
+</div><!-- .single-god -->
+
+<script>
+(function () {
+    /* FAQ accordion — native <details> with animated height */
+    document.querySelectorAll('.god-faq details').forEach(function (d) {
+        d.addEventListener('toggle', function () {
+            var plus = d.querySelector('summary span:last-child');
+            if (plus) plus.textContent = d.open ? '−' : '+';
+        });
+    });
+})();
+</script>
 
 <?php endwhile; ?>
 <?php get_footer(); ?>

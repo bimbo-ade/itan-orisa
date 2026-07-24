@@ -2,15 +2,7 @@
 /**
  * archive-story.php
  * Archive template for the 'story' custom post type.
- *
- * Classes used:
- *   .stories-page  — root wrapper
- *   .stories-hero  — hero section
- *   .stories-grid  — card grid
- *
- * Character pills derived from post tags.
- * Tag your story posts with god slugs (sango, oya, ogun)
- * in WordPress admin — pills appear automatically.
+
  */
 
 get_header();
