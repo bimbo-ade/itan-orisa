@@ -2,25 +2,7 @@
 /**
  * Template Name: Cultural Context Page
  *
- * Entirely educational — no personal narrative.
- * Rule: if it says "the Yoruba people" — it belongs here.
- *
- * Classes used:
- *   .cc-page             — root wrapper
- *   .cc-hero             — hero section
- *   .cc-sticky-nav       — sticky section navigation
- *   .cc-nav-link         — individual nav link (JS adds .active)
- *   .cc-body             — wraps all sections
- *   .cc-section          — each content section (modifier: --alt)
- *   .cc-fact-strip       — stat blocks (Section 1)
- *   .cc-orisha-grid      — deity pill grid (Section 2)
- *   .cc-diaspora-strip   — horizontal country scroll (Section 4)
- *   .cc-tag-cloud        — contemporary culture tags (Section 6)
- *   .cc-sources-list     — sources and reading (Section 7)
- *   .cc-cta              — closing CTA
- *
- * Everything inside those components is targeted
- * by tag or position in CSS — no extra classes needed.
+ * 
  */
 
 get_header();
@@ -62,22 +44,38 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
             </div>
             <div>
                 <h2>Who Are the Yoruba People?</h2>
-                <p>The Yoruba are one of the largest ethnic groups in Africa, numbering over 40 million people. They
-                    originate primarily from south-western Nigeria, with significant populations in the Republic of
-                    Benin and Togo. Their civilisation is among the most ancient in sub-Saharan Africa &#8212; the city
-                    of Ile-Ife, considered the spiritual birthplace of the Yoruba people, is believed to be where human
-                    existence itself began, according to Yoruba cosmology.</p>
-                <p>Yoruba society has historically been organised around a system of city-states, each with its own Oba
-                    (king) and a rich tradition of governance, art, trade, and spiritual practice. The Oyo Empire, which
-                    reached its peak between the 17th and 19th centuries, was one of the largest and most powerful
-                    states in West African history &#8212; and the political context from which several of the most
-                    important Orisha stories emerge.</p>
-                <p>Yoruba culture is notable for its sophisticated artistic tradition &#8212; terracotta and bronze
-                    sculptures from Ile-Ife dating to the 12th century are considered among the finest examples of
-                    naturalistic art in the pre-colonial world. This artistic sensibility extends to their oral and
-                    spiritual tradition, where stories are not simply recounted but performed, layered, and alive.</p>
+                <p>When people hear the word Yoruba, they often think of Ile-Ife, the Oyo Empire, or Oduduwa. But what
+                    if the story began much earlier?
 
-                <div class="cc-fact-strip">
+                    The Yoruba are one of Africa's largest ethnic groups, with a population of over 45 million people.
+                    They are found mainly in southwestern Nigeria, as well as parts of Benin and Togo. Through the
+                    transatlantic slave trade and later migrations, Yoruba descendants also established vibrant
+                    communities in Brazil, Cuba, Haiti, Trinidad and Tobago, the United States, and many other parts of
+                    the world.
+
+                    Yet behind this well-known history lies a deeper story—one preserved in oral traditions and passed
+                    down through generations.</p>
+                <p>According to some Yoruba oral traditions, the Yoruba people existed long before the rise of Ile-Ife
+                    and the Oyo Empire.
+
+                    These traditions speak of sixteen independent confederate communities, each governed by its own king
+                    and leadership. Rather than existing as a single kingdom, these communities are said to have formed
+                    an alliance to promote peace, cooperation, and collective prosperity.</p>
+                <p>One of the most fascinating chapters in Yoruba history concerns the arrival of Oduduwa.
+
+                    While many traditions celebrate Oduduwa as the founding father of the Yoruba people, another oral
+                    and historical account presents a different narrative. In this version, Oduduwa arrived as a visitor
+                    from the eastern forests. He gradually gained the trust of the local people through his knowledge of
+                    healing, herbal medicine, organization, and community leadership.
+
+                    Over time, he learned the language and customs of the people and became respected by both the
+                    inhabitants and their rulers. His wisdom eventually earned him the opportunity to address the
+                    leaders of the confederate communities at Ile-Ero, where he advised them on governance, peace, and
+                    development.
+
+                    As his influence grew, so did the number of people who supported his leadership.</p>
+
+                <!-- <div class="cc-fact-strip">
                     <div>
                         <strong>40M+</strong>
                         <span>Yoruba speakers worldwide</span>
@@ -90,7 +88,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                         <strong>~12th C</strong>
                         <span>Ile-Ife terracotta sculptures</span>
                     </div>
-                </div>
+                </div> -->
             </div>
         </section>
 
@@ -100,29 +98,27 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                 <small>The Divine Forces</small>
             </div>
             <div>
-                <h2>What Are the Orishas?</h2>
-                <p>Orishas (&#210;r&#236;&#351;&#224;) are the divine forces at the centre of Yoruba religious
-                    cosmology. They are not gods in the remote, untouchable sense of the word &#8212; they are
-                    intermediaries between the supreme deity Ol&#243;d&#249;mar&#232; and human beings, governing the
-                    forces of nature, aspects of human experience, and the space between the living and the ancestral
-                    dead.</p>
-                <p>The Yoruba tradition recognises hundreds of Orishas, each with distinct domains, symbols, colours,
-                    sacred numbers, and modes of worship. Some are associated with natural phenomena &#8212;
-                    &#350;&#224;ng&#243; with thunder, Ọya with storms and wind, Yemoja with the ocean, Ọ&#351;un with
-                    rivers. Others govern human experience &#8212; Esu mediates communication and crossroads, Obatala
-                    governs creation and moral clarity, Ogun presides over iron, labour, and war.</p>
+                <h2>Who Are the Orishas?</h2>
+                <p>The Orishas are divine spiritual beings in the traditional Yoruba religion. They serve different
+                    purposes for and with human beings. Unlike Olódùmarè, who is believed to be the creator of the
+                    universe, the Orishas oversee different aspects of life and nature. According to historical
+                    accounts, there are 201 gods in Yoruba culture</p>
+                <p>
+                    The worship of Orishas emphasizes morality, respect for nature, community, and harmony with
+                    spiritual forces. Today, Orisha worship continues both in West Africa and throughout the African
+                    diaspora.</p>
                 <p>What distinguishes the Orishas from many other mythological figures is their psychological
-                    complexity. They are not archetypes of virtue &#8212; they have flaws, make mistakes, experience
+                    complexity. They are not archetypes of virtue they have flaws, make mistakes, experience
                     jealousy and grief, and their stories do not always resolve neatly. This complexity is not a modern
                     interpretation: it is intrinsic to how they have always been told.</p>
 
                 <div class="cc-orisha-grid">
-                    <div style="--oc:#D32F2F;"> &#350;&#224;ng&#243; &#8212; Thunder</div>
-                    <div style="--oc:#6A1B9A;">Ọya &#8212; Storms</div>
-                    <div style="--oc:#2E7D32;"> Ogun &#8212; Iron</div>
-                    <div style="--oc:#1565C0;"> Yemoja &#8212; Ocean</div>
-                    <div style="--oc:#F9A825;">Ọ&#351;un &#8212; Rivers</div>
-                    <div style="--oc:#E8EAF4;"> Obatala &#8212; Creation</div>
+                    <div style="--oc:#D32F2F;"> &#350;&#224;ng&#243; - Thunder</div>
+                    <div style="--oc:#6A1B9A;">Ọya - Storms</div>
+                    <div style="--oc:#2E7D32;"> Ogun - Iron</div>
+                    <div style="--oc:#1565C0;"> Yemoja - Ocean</div>
+                    <div style="--oc:#F9A825;">Ọ&#351;un - Rivers</div>
+                    <div style="--oc:#E8EAF4;"> Obatala - Creation</div>
                 </div>
             </div>
         </section>
@@ -134,23 +130,26 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
             </div>
             <div>
                 <h2>Oral Tradition and Its Vulnerability</h2>
-                <p>Yoruba mythology was not written down &#8212; it was performed. The primary vehicle for these stories
-                    is If&#225;, an intricate divination system that encodes hundreds of narratives (od&#249;) governing
-                    every aspect of human experience. If&#225; priests (babalawos) spend years learning this oral
-                    corpus, and the system was inscribed on UNESCO&#8217;s Intangible Cultural Heritage list in 2008.
+                <p>Despite its importance, Yoruba oral tradition faces several challenges:
+
+                    The decline in the number of fluent Yoruba speakers and diverse branches of Yoruba among young
+                    people.
+
+                    Urbanization and modernization.
+
+                    The dominance of English in schools.
+
+                    Religious changes that discourage traditional practices.
+
+                    The death of elderly custodians without proper documentation and proper passing down of cultural
+                    heritage to the young ones.
+
+                    Limited written and digital preservation.
+
+
+                    If these traditions are not documented, valuable historical and cultural knowledge may disappear.
                 </p>
-                <p>But oral traditions are inherently vulnerable. They depend on living practitioners, on communities
-                    that value transmission, and on conditions that allow knowledge to pass from generation to
-                    generation. Colonisation, Christianisation, and the disruption caused by the Transatlantic Slave
-                    Trade all placed enormous pressure on the continuity of Yoruba spiritual knowledge &#8212; in some
-                    regions, dramatically reducing the number of practitioners who could carry it forward.</p>
-                <p>What survived did so through extraordinary resilience. In West Africa, the tradition persisted
-                    despite missionary suppression. In the diaspora, it was encoded into new forms &#8212;
-                    Candombl&#233;, Santer&#237;a, Vodou &#8212; where Orisha identities were sometimes masked beneath
-                    Catholic saint names in a form of spiritual camouflage that allowed the tradition to continue when
-                    direct practice would have been dangerous.</p>
-                <p>This context matters when engaging with these stories. They are not ancient curiosities that have
-                    been safely preserved. They are living knowledge that has been actively fought for.</p>
+
             </div>
         </section>
 
@@ -161,22 +160,41 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
             </div>
             <div>
                 <h2>How These Stories Crossed the World</h2>
-                <p>Between the 16th and 19th centuries, the Transatlantic Slave Trade forcibly displaced millions of
-                    Yoruba people across the Atlantic. They arrived in the Caribbean, in South America, and in North
-                    America &#8212; stripped of legal identity but not of memory. The Orishas travelled with them.</p>
-                <p>In Cuba, Yoruba religion became Luc&#250;m&#237;, also known as Santer&#237;a or Regla de Ocha.
-                    Orishas were syncretised with Catholic saints &#8212; &#350;&#224;ng&#243; became St Barbara, Ọya
-                    became Our Lady of Candelaria. The practice survives and thrives today, with millions of
-                    practitioners across Cuba, the United States, and the Cuban diaspora.</p>
-                <p>In Brazil, it became Candombl&#233; &#8212; one of the most vibrant Afro-Brazilian spiritual
-                    traditions, centred particularly in the state of Bahia. &#350;&#224;ng&#243; is Xang&#244;, Ọya is
-                    Ians&#227;, Ọ&#351;un is Oxum. The Orishas retained their identities across the translation.</p>
-                <p>In Trinidad and Tobago, the Orisha tradition (also called Shango) has been practised since the 19th
-                    century and received formal religious recognition in 1998. The scale of this diaspora spread is
-                    remarkable: a tradition that originated in West Africa now has millions of practitioners across
-                    multiple continents.</p>
+                <p>Yoruba culture spread globally mainly through the transatlantic slave trade between the sixteenth and
+                    nineteenth centuries. Enslaved Yoruba people carried their beliefs, language, music, stories, and
+                    religious practices to the Americas and the Caribbean.
 
-                <div class="cc-diaspora-strip">
+                    Today, Yoruba influence can be seen in:</p>
+                <p>Religion
+
+                    Santería (Cuba)
+
+                    Candomblé (Brazil)
+
+                    Trinidad Orisha religion
+
+                    Lukumí traditions
+
+
+                    These religions preserve many Yoruba gods, rituals, songs, and ceremonies.
+
+                    Music
+
+                    Yoruba rhythms have influenced Afro-Cuban music, samba, jazz, reggae, Afrobeat, and many modern
+                    musical styles.
+
+                    Literature
+
+                    Writers such as Wole Soyinka, Amos Tutuola, and D. O. Fagunwa introduced Yoruba mythology and
+                    philosophy to international audiences.
+
+                    Film and Popular Culture
+
+                    Yoruba mythology appears in Hollywood films, comics, novels, and video games. Characters inspired by
+                    Shango, Ogun, and Oshun have become internationally recognized.
+                </p>
+
+                <!-- <div class="cc-diaspora-strip">
                     <div>
                         <span>&#127475;&#127468;</span>
                         <strong>Nigeria</strong>
@@ -206,7 +224,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                         <strong>USA</strong>
                         <span>If&#225; revival</span>
                     </div>
-                </div>
+                </div> -->
             </div>
         </section>
 
@@ -217,24 +235,39 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
             </div>
             <div>
                 <h2>Why the Visibility Gap Exists</h2>
-                <p>Greek and Norse mythology dominate the digital landscape &#8212; games, films, interactive platforms,
-                    streaming series. Yoruba mythology, despite being equally rich and structurally complex, does not.
-                    Understanding why requires looking at the structural conditions that shape which cultural content
-                    gets adapted and amplified.</p>
-                <p>The first factor is colonial knowledge hierarchies. European academic institutions have spent
-                    centuries treating Western mythologies as the default reference points for comparative religion and
-                    literature. African oral traditions were frequently categorised as folklore rather than mythology
-                    &#8212; a distinction that carried significant implications for how seriously they were studied and
-                    how broadly they were disseminated.</p>
-                <p>The second factor is the digital production gap. The games, films, and platforms that have made Greek
-                    and Norse mythology globally familiar were produced primarily by American and European studios. The
-                    infrastructure for producing equivalent content about African mythologies &#8212; the studios, the
-                    investment, the institutional knowledge &#8212; is newer and still developing.</p>
-                <p>The third factor is the complexity of diaspora identity. For communities whose connection to Yoruba
-                    tradition runs through the trauma of the slave trade, the question of how to engage with and
-                    represent these stories publicly is not simple. None of these factors mean the gap is permanent.
-                    They mean that closing it requires deliberate effort &#8212; and that the effort is worth making.
+                <p>Although Yoruba civilization has made enormous contributions to world culture, it often receives less
+                    international attention than ancient civilizations such as Egypt, Greece, or Rome.
+
+                    Reasons include:
+
+                    Colonial education systems prioritized European history.
+
+                    Many Yoruba traditions remained oral instead of written and visually recorded.
+
+                    Limited funding for African historical research.
+
+                    Western media rarely highlights African indigenous cultures.
+
+                    Many important Yoruba manuscripts remain untranslated.
+
+                    Inadequate preservation of historical sites and cultural heritage.
+
+
+                    Bridging these gaps requires:
+
+                    Increased academic research.
+
+                    Digital preservation both visual and audio.
+
+                    Translation of Yoruba texts and learning of Yoruba language for proper assimilation.
+
+                    Government investment in museums and archives.
+
+                    Teaching African history in schools.
+
+                    Supporting local scholars and storytellers.
                 </p>
+
             </div>
         </section>
 
@@ -245,30 +278,46 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
             </div>
             <div>
                 <h2>Yoruba Mythology in Contemporary Culture</h2>
-                <p>Despite the structural barriers described above, Yoruba mythology has a growing contemporary presence
-                    &#8212; and that presence is accelerating.</p>
-                <p>In literature, Nnedi Okorafor&#8217;s work &#8212; particularly <em>Lagoon</em> (2014), set in Lagos
-                    and engaging directly with Nigerian mythology &#8212; and Wole Soyinka&#8217;s plays, which draw
-                    extensively on Orisha narrative, represent the tradition in serious literary fiction. In popular
-                    music, Beyonc&#233;&#8217;s <em>Lemonade</em> (2016) made explicit use of Ọ&#351;un imagery,
-                    introducing the Orisha to a global mainstream audience. Burna Boy and other Afrobeats artists
-                    regularly reference Yoruba spiritual concepts in their work.</p>
-                <p>In gaming, the Orishas have appeared in titles including <em>Smite</em>, and independent developers
-                    have increasingly turned to African mythologies. The global success of Black Panther&#8217;s
-                    fictional Wakandan mythology demonstrated the scale of audience appetite for African-rooted
-                    storytelling. UNESCO recognition of If&#225; in 2008 gave the tradition international institutional
-                    acknowledgment.</p>
+                <p> 
+Yoruba mythology continues to influence modern society.
+ 
+Its influence can be found in:
+ 
+Literature
+ 
+Authors continue to use Yoruba myths in novels, poetry, and drama. Nobel Prize winner Wole Soyinka frequently draws from Yoruba cosmology.
+ 
+Custodian of cultural practices should also help enlighten younglings about myths, proverbs and majorly the indigenous practice of cultural displays and practices for record and future reference purposes.
+ 
+Movies
+ 
+Films such as Black Panther incorporate visual and cultural elements inspired by Yoruba traditions. Nigerian Yoruba-language films also portray traditional beliefs and legends.
+ 
+Music
+ 
+Artists including King Sunny Ade, Asa, Burna Boy, and others reference Yoruba spirituality, proverbs, and history in their music.
+ 
+Fashion
+ 
+Traditional Yoruba clothing such as Agbada, Aso Oke, Gele, and Adire has gained international popularity.
+ 
+Technology and Social Media
+ 
+Young creators now use YouTube, TikTok, podcasts, and online archives to preserve Yoruba language, folktales, and mythology for future generations.
+ 
+Yoruba mythology remains a living tradition that continues to inspire creativity, identity, and cultural pride around the world.
+ </p>
 
-                <div class="cc-tag-cloud">
+                <!-- <div class="cc-tag-cloud">
                     <span>Nnedi Okorafor</span>
-                    <span>Beyonc&#233; &#8212; Lemonade</span>
+                    <span>Beyonc&#233; Lemonade</span>
                     <span>Wole Soyinka</span>
                     <span>Burna Boy</span>
                     <span>Smite (game)</span>
                     <span>UNESCO If&#225; recognition</span>
                     <span>Afrofuturism</span>
                     <span>Candombl&#233; revival</span>
-                </div>
+                </div> -->
             </div>
         </section>
 
@@ -282,7 +331,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                 <p>The content on this site draws on the following sources. This is a starting point for readers who
                     want to go further.</p>
 
-                <div class="cc-sources-list">
+                <!-- <div class="cc-sources-list">
                     <div>
                         <h3>Academic Foundations</h3>
                         <ul>
@@ -312,9 +361,9 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                             <li>UNESCO. <em>If&#225; Divination System.</em> Inscribed 2008.</li>
                         </ul>
                     </div>
-                </div>
+                </div> -->
 
-              
+
             </div>
         </section>
 

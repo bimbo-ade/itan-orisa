@@ -1512,7 +1512,7 @@ END OF HOME PAGE
     --god-soft: rgba(var(--god-rgb), 0.10);
     --god-mid: rgba(var(--god-rgb), 0.20);
     --god-strong: rgba(var(--god-rgb), 0.45);
-    --god-border: rgba(var(--god-rgb), 0.30);
+    --god-border: rgba(var(--god-rgb), 0.90);
     --god-glow: rgba(var(--god-rgb), 0.18);
 
 
@@ -1829,14 +1829,15 @@ END OF HOME PAGE
         max-width: var(--content-width);
         margin-inline: auto;
 
-        padding: 3rem var(--sp-md);
+        padding: 5rem var(--sp-md);
 
-        /* text-align: center; */
     }
 
 
     .god-summary small {
         margin-bottom: 0.8rem;
+        font-family: var(--font-heading);
+        font-size: clamp(1.5rem, 7vw, 2.5rem);letter-spacing: 0;
     }
 
 
@@ -2163,7 +2164,6 @@ END OF HOME PAGE
         color: var(--text-primary);
 
         font-family: var(--font-heading);
-        font-size: 0.9rem;
     }
 
 
@@ -2172,7 +2172,6 @@ END OF HOME PAGE
 
         color: var(--text-secondary);
 
-        font-size: 0.95rem;
     }
 }
 
@@ -2252,7 +2251,6 @@ END OF HOME PAGE
 
         color: var(--text-secondary);
 
-        font-size: 0.95rem;
         line-height: 1.5;
     }
 
@@ -2294,7 +2292,7 @@ END OF HOME PAGE
 .single-god {
 
     .god-myths-inner {
-        max-width: 800px;
+        max-width: 950px;
     }
 
 
@@ -2342,7 +2340,6 @@ END OF HOME PAGE
         color: var(--text-primary);
 
         font-family: var(--font-heading);
-        font-size: 0.95rem;
     }
 
 
@@ -2351,7 +2348,6 @@ END OF HOME PAGE
 
         color: var(--text-secondary);
 
-        font-size: 0.95rem;
     }
 }
 
@@ -2505,7 +2501,6 @@ END OF HOME PAGE
 
     .god-worship-col>p {
         color: var(--text-secondary);
-        font-size: 0.95rem;
     }
 
 
@@ -2517,7 +2512,7 @@ END OF HOME PAGE
 
         color: var(--moon-warm);
 
-        font-size: 0.6rem;
+        font-size: 0.8rem;
         font-weight: 700;
         letter-spacing: 0.15em;
         text-transform: uppercase;
@@ -2549,7 +2544,7 @@ END OF HOME PAGE
 
     .god-offerings-grid small {
         color: var(--text-secondary);
-        font-size: 0.8rem;
+        font-size: 0.9rem;
         letter-spacing: 0;
         text-transform: none;
     }
@@ -2581,7 +2576,7 @@ END OF HOME PAGE
         margin-top: 0.2rem;
 
         color: var(--text-muted);
-        font-size: 0.8rem;
+        font-size: 0.9rem;
     }
 
 
@@ -2589,7 +2584,7 @@ END OF HOME PAGE
         flex-shrink: 0;
 
         color: var(--moon-warm);
-        font-size: 0.8rem;
+        font-size: 0.9rem;
     }
 }
 
@@ -2768,14 +2763,13 @@ END OF HOME PAGE
         margin-bottom: 1.2rem;
 
         color: var(--text-secondary);
-        font-size: 0.95rem;
     }
 
 
     .god-triangle-content a {
         color: var(--moon-bright);
 
-        font-size: 0.7rem;
+        font-size: 0.8rem;
         font-weight: 700;
         letter-spacing: 0.1em;
         text-transform: uppercase;
@@ -2795,7 +2789,7 @@ END OF HOME PAGE
 .single-god {
 
     .god-faq-inner {
-        max-width: 800px;
+        max-width: 950px;
     }
 
     .god-faq h2 {
@@ -2824,7 +2818,6 @@ END OF HOME PAGE
 
         color: var(--text-primary);
 
-        font-size: 0.95rem;
 
         list-style: none;
     }
@@ -2835,7 +2828,6 @@ END OF HOME PAGE
     }
 
     .god-faq details p {
-        font-size: 0.95rem;
         color: var(--text-secondary);
     }
 
@@ -2902,15 +2894,6 @@ END OF HOME PAGE
     }
 
 
-    .god-crossnav-prev {
-        text-align: left;
-    }
-
-
-    .god-crossnav-next {
-        text-align: right;
-    }
-
 
     .god-crossnav-prev:hover,
     .god-crossnav-next:hover {
@@ -2937,7 +2920,7 @@ END OF HOME PAGE
     .god-crossnav span:not(.god-crossnav-mark) {
         color: var(--text-secondary);
 
-        font-size: 0.7rem;
+        font-size: 0.86rem;
     }
 
 
@@ -2986,7 +2969,7 @@ END OF HOME PAGE
             padding: 8rem var(--sp-lg) 4.5rem;
         }
 
- 
+
         .god-hero-content h1 {
             font-size: clamp(4.5rem, 13vw, 7rem);
         }
@@ -3007,11 +2990,12 @@ END OF HOME PAGE
             gap: 1rem;
         }
 
- .god-symbol-media {
-        aspect-ratio: 1 / 1;
-    }
+        .god-symbol-media {
+            aspect-ratio: 1 / 1;
+        }
+
         .god-powers-grid {
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
         }
 
 
@@ -3111,7 +3095,7 @@ END OF HOME PAGE
         }
 
 
-       
+
 
         .god-powers-grid {
             grid-template-columns: repeat(4, 1fr);
@@ -3221,7 +3205,7 @@ END OF HOME PAGE
         }
 
 
-   
+
         .god-culture-row {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -3707,7 +3691,7 @@ END OF SINGLE GOD AND SINGLE STORY
      ----------------------------------------------------------- */
     & .cc-sticky-nav {
         position: sticky;
-        top: 69px;
+        top: 67px;
         left: 0;
         z-index: 90;
         display: flex;

@@ -1,21 +1,7 @@
 <?php
 /**
  * front-page.php
- * WordPress uses this automatically as the static homepage.
- *
- * All content hardcoded. Dynamic URLs fetched from WordPress directly.
- *
- * Classes used:
- *   .hp              — root wrapper
- *   .hp-hero         — hero section
- *   .hp-story        — featured story section
- *   .hp-story-card   — story card component
- *   .hp-gods         — god cards section
- *   .hp-culture      — cultural grounding section
- *   .hp-pantheon     — pantheon teaser section
- *   .hp-about        — about teaser section
- *
- * Everything inside targeted by tag or position in CSS.
+ * 
  */
 
 get_header();

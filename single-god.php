@@ -1,21 +1,7 @@
 <?php
 /**
- * single-god.php — v4
- *
- * Structure (matches the ÀṢẸ YORÙBÁ mockup):
- *   1. Hero (with pronunciation guide)
- *   2. Quick Facts (divided row, capped at 5)
- *   3. Symbols (photo card grid)
- *   4. The Journey (numbered, connected, horizontal-scroll cards
- *      — this IS the compressed myth, keep desc to one sentence)
- *   5. Love Triangle (split-image banner)
- *   6. Relationships + Worship Today (one combined row)
- *   7. In Pop Culture
- *   8. FAQ (genuine FAQs only, capped at 6)
- *   9. Prev / Next Orisha footer strip
- *
- * Same ACF field naming convention as prior versions where the
- * data hasn't changed shape. New/changed fields are noted inline.
+ * single-god.php 
+ 
  */
 
 get_header();
@@ -52,21 +38,11 @@ while (have_posts()):
         // (e.g. "shan-GO"). Skip the field and it just won't render.
         // ============================================================
         $hero_image = get_field('hero_image');
-        // Optional. A separately-cropped/composed image for portrait
-        // screens — see the note above the CSS var block for why this
-        // matters more than object-position once the aspect ratios are
-        // far apart (e.g. a 1920x1080 landscape hero on a phone).
         $hero_image_mobile = get_field('hero_image_mobile');
         $god_tagline = get_field('god_tagline');
         $hero_eyebrow = get_field('hero_eyebrow') ?: 'Orisha &middot; Thunder &amp; Lightning';
         $pronunciation = get_field('hero_pronunciation');
-        // e.g. "center 20%" or "top" — controls the object-position crop point.
-        // Leave blank to default to "center". Use this when object-fit:cover
-        // is cropping through the subject's head, feet, or a key detail.
         $hero_focal = get_field('hero_focal_point') ?: 'center';
-        // Mobile gets its own focal point on purpose — a narrow, tall crop
-        // loses far more of the image than a wide desktop crop does, so
-        // the same position often doesn't work for both.
         $hero_focal_mobile = get_field('hero_focal_point_mobile') ?: $hero_focal;
         ?>
         <style>
@@ -102,7 +78,7 @@ while (have_posts()):
                     <p class="god-tagline"><?php echo esc_html($god_tagline); ?></p>
                 <?php endif; ?>
                 <div class="god-hero-cta">
-                    <a href="#god-journey" class="btn-primary">Explore His Story &rarr;</a>
+                    <a href="#god-journey" class="btn-primary">Explore Story &rarr;</a>
                     <a href="#god-kinship" class="btn-ghost">Honor <?php the_title(); ?></a>
                 </div>
             </div>
@@ -162,7 +138,7 @@ while (have_posts()):
         $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
         $story_page = get_field('full_story_link'); // optional link to a Stories post
     
-        $journey_heading = get_field('timeline_heading') ?: 'The Journey Of';
+        $journey_heading = get_field('timeline_heading');
         $stages = [];
         for ($i = 1; $i <= 6; $i++) {
             $stage = get_field("timeline_{$i}_stage");
@@ -261,7 +237,7 @@ while (have_posts()):
         // what he CAN DO, not physical emblems. Icon + short desc only,
         // no images needed.
         // ============================================================
-        $powers_heading = get_field('powers_heading') ?: 'Powers &amp; Abilities';
+        $powers_heading = get_field('powers_heading') ;
         $powers = [];
         for ($i = 1; $i <= 8; $i++) {
             $p_title = get_field("power_{$i}_title");
@@ -302,7 +278,7 @@ while (have_posts()):
         // than the compressed life-arc. Keep each desc to 1-2
         // sentences — this is a reference list, not narrative prose.
         // ============================================================
-        $myths_heading = get_field('myths_heading') ?: 'The Stories That Made Him';
+        $myths_heading = get_field('myths_heading');
         $myths = [];
         for ($i = 1; $i <= 6; $i++) {
             $m_title = get_field("myth_{$i}_title");
@@ -353,7 +329,7 @@ while (have_posts()):
         }
 
         $kinship_image = get_field('worship_image_1');
-        $worship_heading = get_field('worship_heading') ?: 'Worship Today';
+        $worship_heading = get_field('worship_heading');
         $worship_intro = get_field('worship_intro');
         $offerings = [];
         for ($i = 1; $i <= 8; $i++) {

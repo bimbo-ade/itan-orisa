@@ -2,15 +2,7 @@
 /**
  * archive-god.php
  * Archive template for the 'god' custom post type.
- *
- * Classes used:
- *   .gods-page     — root wrapper
- *   .gods-hero     — hero section
- *   .gods-grid     — card grid
- *
- * Each card is a plain <article> with minimal structure.
- * Colour derived from post slug — no ACF needed.
- * Everything inside targeted by tag in CSS.
+
  */
 
 get_header();
