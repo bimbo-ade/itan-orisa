@@ -177,7 +177,7 @@ while (have_posts()):
                         </div>
                     <?php endforeach; ?>
                 </div>
-                <p class="god-journey-hint">&larr; Scroll Horizontally &rarr;</p>
+                <p class="god-journey-hint">&larr; Scroll &rarr;</p>
 
                 <?php if ($story_page): ?>
                     <div class="god-journey-footer">
@@ -252,7 +252,7 @@ while (have_posts()):
         ?>
         <?php if ($powers): ?>
             <section class="god-powers" id="god-powers">
-                <small>What He Commands</small>
+                <small>What god name Commands</small>
                 <h2><?php echo wp_kses_post($powers_heading); ?></h2>
                 <div class="god-powers-grid">
                     <?php foreach ($powers as $power): ?>
@@ -290,7 +290,7 @@ while (have_posts()):
         <?php if ($myths): ?>
             <section class="god-myths" id="god-myths">
                 <div class="god-myths-inner">
-                    <small>Origin Story &amp; Major Myths</small>
+                    <small>Major Myths</small>
                     <h2><?php echo wp_kses_post($myths_heading); ?></h2>
                     <?php foreach ($myths as $i => $myth): ?>
                         <div class="god-myth-item">

@@ -43,52 +43,70 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                 <small>Foundation</small>
             </div>
             <div>
-                <h2>Who Are the Yoruba People?</h2>
-                <p>When people hear the word Yoruba, they often think of Ile-Ife, the Oyo Empire, or Oduduwa. But what
-                    if the story began much earlier?
 
-                    The Yoruba are one of Africa's largest ethnic groups, with a population of over 45 million people.
-                    They are found mainly in southwestern Nigeria, as well as parts of Benin and Togo. Through the
-                    transatlantic slave trade and later migrations, Yoruba descendants also established vibrant
-                    communities in Brazil, Cuba, Haiti, Trinidad and Tobago, the United States, and many other parts of
-                    the world.
+                <p>The Yoruba are one of Africa's largest ethnic groups, over 45 million people spanning southwestern
+                    Nigeria, Benin, and Togo. Through the transatlantic slave trade and later migrations, their
+                    descendants
+                    also built lasting communities in Brazil, Cuba, Haiti, Trinidad, and the United States. Even the
+                    founding of their civilization has more than one telling — some traditions credit Oduduwa as father
+                    of
+                    the Yoruba people, others remember him as an outsider who earned his place through wisdom rather
+                    than
+                    birthright.</p>
 
-                    Yet behind this well-known history lies a deeper story—one preserved in oral traditions and passed
-                    down through generations.</p>
-                <p>According to some Yoruba oral traditions, the Yoruba people existed long before the rise of Ile-Ife
-                    and the Oyo Empire.
-
-                    These traditions speak of sixteen independent confederate communities, each governed by its own king
-                    and leadership. Rather than existing as a single kingdom, these communities are said to have formed
-                    an alliance to promote peace, cooperation, and collective prosperity.</p>
-                <p>One of the most fascinating chapters in Yoruba history concerns the arrival of Oduduwa.
-
-                    While many traditions celebrate Oduduwa as the founding father of the Yoruba people, another oral
-                    and historical account presents a different narrative. In this version, Oduduwa arrived as a visitor
-                    from the eastern forests. He gradually gained the trust of the local people through his knowledge of
-                    healing, herbal medicine, organization, and community leadership.
-
-                    Over time, he learned the language and customs of the people and became respected by both the
-                    inhabitants and their rulers. His wisdom eventually earned him the opportunity to address the
-                    leaders of the confederate communities at Ile-Ero, where he advised them on governance, peace, and
-                    development.
-
-                    As his influence grew, so did the number of people who supported his leadership.</p>
-
-                <!-- <div class="cc-fact-strip">
+                <details class="cc-deeper">
+                    <summary>
+                        <span>Go deeper: the sixteen communities &amp; the full Oduduwa story</span>
+                        <span aria-hidden="true">+</span>
+                    </summary>
                     <div>
-                        <strong>40M+</strong>
-                        <span>Yoruba speakers worldwide</span>
+                        <h3>Before Ile-Ife</h3>
+                        <p>Some Yoruba oral traditions hold that the people existed long before Ile-Ife and the Oyo
+                            Empire,
+                            organized instead as sixteen independent communities, each with its own king, allied for
+                            peace
+                            and shared prosperity rather than ruled as one kingdom:</p>
+                        <ul class="cc-communities-list">
+                            <li>Ijugbe</li>
+                            <li>Iraye</li>
+                            <li>Iwinrin</li>
+                            <li>Ideta (Idita)</li>
+                            <li>Oke-Oja</li>
+                            <li>Iloromu</li>
+                            <li>Imojubi</li>
+                            <li>Parakin</li>
+                            <li>Ido</li>
+                            <li>Odin (Odun)</li>
+                            <li>Oke-Awo</li>
+                            <li>Iloran</li>
+                            <li>Omologun</li>
+                        </ul>
+                        <p class="cc-communities-note">Three further communities — Ita Yemoo, Idio, and Orun Oba Ado —
+                            appear in some traditions but remain subjects of ongoing investigation. Some accounts also
+                            hold
+                            these early communities spoke a language called Ikedu, echoes of which some scholars argue
+                            survive in the modern Ilaje dialect.</p>
+
+                        <h3>The Arrival of Oduduwa</h3>
+                        <p>One account presents Oduduwa as a visitor from the eastern forests who gradually earned the
+                            trust
+                            of the local people through knowledge of healing, herbal medicine, and community leadership.
+                            Over time he learned the local language and customs, and his wisdom eventually earned him
+                            the
+                            chance to address the leaders of the confederate communities at Ile-Ero — advising them on
+                            governance, peace, and development. As his influence grew, so did the number of people who
+                            supported his leadership.</p>
+
+                        <h3>Migration &amp; the Birth of New Kingdoms</h3>
+                        <p>Like many civilizations, the Yoruba experienced rivalry and political struggle. Oral
+                            tradition
+                            describes a supremacy conflict that divided the confederate communities, sending many groups
+                            migrating to new territories that would grow into kingdoms such as Oyo, Ijebu, Egba, Ondo,
+                            Ekiti, and Ijesa. It's why Yoruba dialects still sound like family — similar, but each
+                            carrying
+                            its own accent shaped by centuries of separate movement.</p>
                     </div>
-                    <div>
-                        <strong>3</strong>
-                        <span>Primary West African nations</span>
-                    </div>
-                    <div>
-                        <strong>~12th C</strong>
-                        <span>Ile-Ife terracotta sculptures</span>
-                    </div>
-                </div> -->
+                </details>
             </div>
         </section>
 
@@ -149,6 +167,21 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
 
                     If these traditions are not documented, valuable historical and cultural knowledge may disappear.
                 </p>
+
+                <p>Before writing became widespread, the Yoruba preserved their history through oral tradition — elders,
+                    priests, kings, storytellers, and praise singers carrying knowledge from one generation to the next.
+                    This tradition takes many forms:</p>
+
+                <div class="cc-oral-types">
+                    <span>Folktales</span>
+                    <span>Proverbs (Òwe)</span>
+                    <span>Myths &amp; Legends</span>
+                    <span>Praise Poetry (Oríkì)</span>
+                    <span>Ifá Verses (Odù Ifá)</span>
+                    <span>Cultural Attire</span>
+                    <span>Food</span>
+                    <span>Songs &amp; Chants</span>
+                </div>
 
             </div>
         </section>
@@ -251,7 +284,8 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                     Many important Yoruba manuscripts remain untranslated.
 
                     Inadequate preservation of historical sites and cultural heritage.
-
+                </p>
+                <p>
 
                     Bridging these gaps requires:
 
@@ -278,35 +312,43 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
             </div>
             <div>
                 <h2>Yoruba Mythology in Contemporary Culture</h2>
-                <p> 
-Yoruba mythology continues to influence modern society.
- 
-Its influence can be found in:
- 
-Literature
- 
-Authors continue to use Yoruba myths in novels, poetry, and drama. Nobel Prize winner Wole Soyinka frequently draws from Yoruba cosmology.
- 
-Custodian of cultural practices should also help enlighten younglings about myths, proverbs and majorly the indigenous practice of cultural displays and practices for record and future reference purposes.
- 
-Movies
- 
-Films such as Black Panther incorporate visual and cultural elements inspired by Yoruba traditions. Nigerian Yoruba-language films also portray traditional beliefs and legends.
- 
-Music
- 
-Artists including King Sunny Ade, Asa, Burna Boy, and others reference Yoruba spirituality, proverbs, and history in their music.
- 
-Fashion
- 
-Traditional Yoruba clothing such as Agbada, Aso Oke, Gele, and Adire has gained international popularity.
- 
-Technology and Social Media
- 
-Young creators now use YouTube, TikTok, podcasts, and online archives to preserve Yoruba language, folktales, and mythology for future generations.
- 
-Yoruba mythology remains a living tradition that continues to inspire creativity, identity, and cultural pride around the world.
- </p>
+                <p>
+                    Yoruba mythology continues to influence modern society.
+
+                    Its influence can be found in:
+
+                    Literature
+
+                    Authors continue to use Yoruba myths in novels, poetry, and drama. Nobel Prize winner Wole Soyinka
+                    frequently draws from Yoruba cosmology.
+
+                    Custodian of cultural practices should also help enlighten younglings about myths, proverbs and
+                    majorly the indigenous practice of cultural displays and practices for record and future reference
+                    purposes. </p>
+
+                <p> Movies
+
+                    Films such as Black Panther incorporate visual and cultural elements inspired by Yoruba traditions.
+                    Nigerian Yoruba-language films also portray traditional beliefs and legends.
+
+                    Music
+
+                    Artists including King Sunny Ade, Asa, Burna Boy, and others reference Yoruba spirituality,
+                    proverbs, and history in their music.
+
+                    Fashion
+
+                    Traditional Yoruba clothing such as Agbada, Aso Oke, Gele, and Adire has gained international
+                    popularity.
+
+                    Technology and Social Media
+
+                    Young creators now use YouTube, TikTok, podcasts, and online archives to preserve Yoruba language,
+                    folktales, and mythology for future generations.
+
+                    Yoruba mythology remains a living tradition that continues to inspire creativity, identity, and
+                    cultural pride around the world.
+                </p>
 
                 <!-- <div class="cc-tag-cloud">
                     <span>Nnedi Okorafor</span>
@@ -320,52 +362,105 @@ Yoruba mythology remains a living tradition that continues to inspire creativity
                 </div> -->
             </div>
         </section>
+<section class="cc-section" id="cc-sources">
+    <div>
+        <span>07</span>
+        <small>Go Deeper</small>
+    </div>
 
-        <section class="cc-section" id="cc-sources">
+    <div>
+        <h2>Sources &amp; Further Reading</h2>
+
+        <p>
+            The content on this site draws on the following books and historical
+            sources. These references provide a starting point for readers who
+            want to explore Yoruba history, mythology, religion, and culture in
+            greater depth.
+        </p>
+
+        <div class="cc-sources-list">
+
             <div>
-                <span>07</span>
-                <small>Go Deeper</small>
+                <h3>Foundational Histories</h3>
+                <ul>
+                    <li>
+                        Johnson, S. (1921).
+                        <a href="https://openlibrary.org/books/OL13446224M/The_history_of_the_Yorubas"  rel="noopener noreferrer">
+                            <em>The History of the Yorubas</em>
+                        </a>
+                        |
+                        <a href="https://archive.org/details/historyofyorubas00john"  rel="noopener noreferrer">
+                            Internet Archive
+                        </a>
+                    </li>
+
+                    <li>
+                        Law, R. (1977).
+                        <a href="https://books.google.com/books?id=jfJfQgAACAAJ&dq=The+Oyo+Empire+c.1600%E2%80%931836"  rel="noopener noreferrer">
+                            <em>The Oyo Empire c.1600–1836</em>
+                        </a>
+                    </li>
+
+                    <li>
+                        Akinruntan, F. O. (2016).
+                        <em>A History of the Oldest Kingdom in Yorubaland.</em>
+                    </li>
+                </ul>
             </div>
+
             <div>
-                <h2>Sources &amp; Further Reading</h2>
-                <p>The content on this site draws on the following sources. This is a starting point for readers who
-                    want to go further.</p>
+                <h3>Religion &amp; Cosmology</h3>
+                <ul>
+                    <li>
+                        Abimbola, W. (1976).
+                        <a href="https://books.google.com/books?id=M73AQgAACAAJ&dq=If%C3%A1:+An+Exposition+of+If%C3%A1+Literary+Corpus"  rel="noopener noreferrer">
+                            <em>Ifá: An Exposition of Ifá Literary Corpus</em>
+                        </a>
+                    </li>
 
-                <!-- <div class="cc-sources-list">
-                    <div>
-                        <h3>Academic Foundations</h3>
-                        <ul>
-                            <li>Bascom, William. <em>Ifa Divination: Communication Between Gods and Men in West
-                                    Africa.</em> Indiana University Press, 1969.</li>
-                            <li>Idowu, E. Bolaji. <em>Ol&#243;d&#249;mar&#232;: God in Yoruba Belief.</em> Longmans,
-                                1962.</li>
-                            <li>Abiodun, Rowland. <em>Yoruba Art and Language.</em> Cambridge University Press, 2014.
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3>Diaspora and Religion</h3>
-                        <ul>
-                            <li>Brandon, George. <em>Santeria from Africa to the New World.</em> Indiana University
-                                Press, 1993.</li>
-                            <li>Matory, J. Lorand. <em>Black Atlantic Religion.</em> Princeton University Press, 2005.
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3>Contemporary &amp; Cultural</h3>
-                        <ul>
-                            <li>Okorafor, Nnedi. <em>Lagoon.</em> Hodder &amp; Stoughton, 2014.</li>
-                            <li>Soyinka, Wole. <em>Myth, Literature and the African World.</em> Cambridge University
-                                Press, 1976.</li>
-                            <li>UNESCO. <em>If&#225; Divination System.</em> Inscribed 2008.</li>
-                        </ul>
-                    </div>
-                </div> -->
+                    <li>
+                        Mbiti, J. S. (1990).
+                        <a href="https://books.google.com/books?id=eTUpo9lH-fYC&printsec=frontcover&dq=African+Religions+and+Philosophy"  rel="noopener noreferrer">
+                            <em>African Religions and Philosophy</em>
+                        </a>
+                    </li>
 
-
+                    <li>
+                        Peel, J. D. Y. (2000).
+                        <a href="https://books.google.com/books?id=CGouTXIOjXgC&printsec=frontcover&dq=Religious+Encounter+and+the+Making+of+the+Yoruba"  rel="noopener noreferrer">
+                            <em>Religious Encounter and the Making of the Yoruba</em>
+                        </a>
+                    </li>
+                </ul>
             </div>
-        </section>
+
+            <div>
+                <h3>Art, Culture &amp; Literature</h3>
+                <ul>
+                    <li>
+                        Drewal, H. J., Pemberton III, J., &amp; Abiodun, R. (1989).
+                        <a href="https://books.google.com/books?id=UhaSQwAACAAJ&dq=Nine+Centuries+of+African+Art+and+Thought"  rel="noopener noreferrer">
+                            <em>Yoruba: Nine Centuries of African Art and Thought</em>
+                        </a>
+                    </li>
+
+                    <li>
+                        Bascom, W. (1969).
+                        <em>The Yoruba of Southwestern Nigeria.</em>
+                    </li>
+
+                    <li>
+                        Soyinka, W. (1976).
+                        <a href="https://books.google.com/books?id=8OGgm-ZvASAC&printsec=frontcover&dq=Myth,+Literature+and+the+African+World"  rel="noopener noreferrer">
+                            <em>Myth, Literature and the African World</em>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
 
     </div>
 

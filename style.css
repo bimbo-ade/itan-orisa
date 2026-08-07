@@ -63,7 +63,9 @@ Version: 1.0
     padding: 0;
     box-sizing: border-box;
 }
-
+html {
+    scroll-padding-top: 65px;
+}
 body {
     background: var(--night-deepest);
     color: var(--text-primary);
@@ -1506,7 +1508,6 @@ END OF HOME PAGE
 
     color: var(--text-primary);
     font-family: var(--font-body);
-    line-height: 1.7;
 
     /* Allows every Orisha to inherit their own colour */
     --god-soft: rgba(var(--god-rgb), 0.10);
@@ -1554,7 +1555,6 @@ END OF HOME PAGE
         padding: 7rem var(--sp-md) 3.5rem;
 
         background: var(--night-deepest);
-        /* overflow: hidden; */
     }
 
 
@@ -1624,7 +1624,7 @@ END OF HOME PAGE
         width: 100%;
         max-width: var(--max-width);
         margin-inline: auto;
-
+        padding-bottom: 1rem;
         position: relative;
         z-index: 2;
     }
@@ -1829,7 +1829,7 @@ END OF HOME PAGE
         max-width: var(--content-width);
         margin-inline: auto;
 
-        padding: 5rem var(--sp-md);
+        padding: 7rem var(--sp-md);
 
     }
 
@@ -1837,7 +1837,8 @@ END OF HOME PAGE
     .god-summary small {
         margin-bottom: 0.8rem;
         font-family: var(--font-heading);
-        font-size: clamp(1.5rem, 7vw, 2.5rem);letter-spacing: 0;
+        font-size: clamp(1.5rem, 7vw, 2.5rem);
+        letter-spacing: 0;
     }
 
 
@@ -1865,7 +1866,7 @@ END OF HOME PAGE
     .god-kinship,
     .god-culture,
     .god-faq {
-        padding: var(--sp-xl) var(--sp-md);
+        padding: var(--sp-2xl) var(--sp-md);
     }
 
 
@@ -2018,8 +2019,7 @@ END OF HOME PAGE
 
 
     .god-journey-card:hover img {
-        transform: scale(1.04);
-        opacity: 0.9;
+        opacity: 1;
     }
 
 
@@ -2040,7 +2040,7 @@ END OF HOME PAGE
 
         color: var(--text-secondary);
 
-        font-size: 0.65rem;
+        font-size: 0.7rem;
         letter-spacing: 0.12em;
         text-align: center;
         text-transform: uppercase;
@@ -2105,21 +2105,11 @@ END OF HOME PAGE
 
         background: var(--night-mid);
         border: 1px solid rgba(255, 255, 255, 0.06);
-
-        transition:
-            transform var(--transition),
-            border-color var(--transition);
-    }
-
-
-    .god-symbol-card:hover {
-        transform: translateY(-3px);
-        border-color: var(--god-border);
+        margin-bottom: 1.5rem;
     }
 
 
     .god-symbol-media {
-        /* aspect-ratio: 1 / 1; */
 
         display: grid;
         place-items: center;
@@ -2141,10 +2131,6 @@ END OF HOME PAGE
         transition: transform 0.5s ease;
     }
 
-
-    .god-symbol-card:hover .god-symbol-media img {
-        transform: scale(1.05);
-    }
 
 
     .god-symbol-media>span {
@@ -2202,7 +2188,7 @@ END OF HOME PAGE
 
     .god-powers-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
 
         gap: 0.7rem;
     }
@@ -2460,7 +2446,7 @@ END OF HOME PAGE
 
         color: var(--text-secondary);
 
-        font-size: 0.72rem;
+        font-size: 0.82rem;
         line-height: 1.5;
     }
 
@@ -2566,7 +2552,7 @@ END OF HOME PAGE
         display: block;
 
         color: var(--text-primary);
-        font-size: 0.8rem;
+        font-size: 0.95rem;
     }
 
 
@@ -2812,7 +2798,7 @@ END OF HOME PAGE
         justify-content: space-between;
         gap: 1rem;
 
-        padding: 1.25rem 0;
+        padding: 1.8rem 0;
 
         cursor: pointer;
 
@@ -2892,6 +2878,17 @@ END OF HOME PAGE
             background var(--transition),
             padding var(--transition);
     }
+    .god-crossnav-next {
+        display: flex;
+        flex-direction: column;
+align-items: end;
+        padding: 1.75rem var(--sp-md);
+
+        transition:
+            background var(--transition),
+            padding var(--transition);
+    }
+
 
 
 
@@ -3689,7 +3686,8 @@ END OF SINGLE GOD AND SINGLE STORY
      top = main nav height so section nav sits below it.
      z-index 90 = below main nav (which should be 100+).
      ----------------------------------------------------------- */
-    & .cc-sticky-nav {
+
+ & .cc-sticky-nav {
         position: sticky;
         top: 67px;
         left: 0;
@@ -3759,14 +3757,14 @@ END OF SINGLE GOD AND SINGLE STORY
             display: flex;
             align-items: center;
             gap: var(--sp-sm);
-            margin-bottom: var(--sp-xs);
+            margin-bottom: var(--sp-md);
 
             /* large section number */
             & span {
                 font-family: var(--font-heading);
                 font-size: 2rem;
                 line-height: 1;
-                color: var(--night-light);
+                color: var(--text-secondary);
             }
 
             /* eyebrow label */
@@ -3825,42 +3823,110 @@ END OF SINGLE GOD AND SINGLE STORY
         }
     }
 
+    & .cc-deeper {
+        margin-top: 1.5rem;
+        border: 1px solid rgba(var(--moon-bright-rgb, 245, 200, 66), 0.25);
+        background: var(--night-deep, #0d1030);
 
-    /* -----------------------------------------------------------
-     FACT STRIP — Section 1
-     Three stat blocks inside .cc-fact-strip
-     ----------------------------------------------------------- */
-    & .cc-fact-strip {
-        display: flex;
-        flex-direction: column;
-        gap: var(--sp-md);
-        margin-top: var(--sp-lg);
-        padding: var(--sp-md);
-        background-color: var(--night-mid);
-        border-radius: var(--border-radius);
-        border: 1px solid var(--night-light);
 
-        /* each stat block */
-        &>div {
+        &[open] summary {
+            color: var(--moon-bright, #f5c842);
+            border-bottom: 1px solid rgba(var(--moon-bright-rgb, 245, 200, 66), 0.2);
+
+
+            & span:last-child {
+                transform: rotate(45deg);
+            }
+        }
+
+        & summary {
             display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            list-style: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary, #eef0f8);
+            transition: color 0.25s ease;
 
-            & strong {
-                font-family: var(--font-heading);
-                font-size: 1.2rem;
-                color: var(--moon-bright);
-                line-height: 1;
-                font-weight: normal;
+            &::-webkit-details-marker {
+                display: none;
             }
 
-            & span {
-                font-size: 0.78rem;
-                color: var(--text-secondary);
-                font-weight: 500;
+            &:hover {
+                color: var(--moon-bright, #f5c842);
+            }
+
+            & span:last-child {
+                flex-shrink: 0;
+                font-size: 1.1rem;
+                font-weight: 300;
+                color: var(--moon-bright, #f5c842);
+                transition: transform 0.2s ease;
+            }
+
+            & p {
+                font-size: 3rem;
+            }
+        }
+
+        &>div {
+            padding: 1.5rem 1.25rem;
+
+            & h3 {
+                font-family: var(--font-heading);
+                font-size: 1rem;
+                color: var(--moon-bright, #f5c842);
+                margin: 1.5rem 0 0.6rem;
+
+                &:first-child {
+                    margin-top: 0;
+                }
+            }
+
+            & p {
+                color: var(--text-secondary, #9aa3c8);
+                margin: 0 0 0.75rem;
             }
         }
     }
+
+    & .cc-communities-list {
+        list-style: none;
+        margin: 0 0 1rem;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem 1rem;
+
+        & li {
+            font-size: 0.85rem;
+            color: var(--text-primary, #eef0f8);
+            padding: 0.35rem 0 0.35rem 1rem;
+            border-bottom: 1px solid rgba(var(--moon-bright-rgb, 245, 200, 66), 0.12);
+            position: relative;
+
+            &::before {
+                content: '◆';
+                position: absolute;
+                left: 0;
+                font-size: 0.55rem;
+                color: var(--moon-bright, #f5c842);
+                top: 0.5rem;
+            }
+        }
+    }
+
+    & .cc-communities-note {
+        font-style: italic;
+        color: var(--text-muted, #5c6494);
+        margin: 0;
+    }
+
+
 
 
     /* -----------------------------------------------------------
@@ -3887,6 +3953,23 @@ END OF SINGLE GOD AND SINGLE STORY
             &:hover {
                 background-color: var(--night-muted);
             }
+        }
+    }
+
+    & .cc-oral-types {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin: 1.25rem 0 1.5rem;
+
+        & span {
+            padding: 0.45rem 1rem;
+            border: 1px solid rgba(var(--moon-bright-rgb, 245, 200, 66), 0.3);
+            background: rgba(var(--moon-bright-rgb, 245, 200, 66), 0.06);
+            border-radius: 100px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--moon-bright, #f5c842);
         }
     }
 
@@ -4122,8 +4205,7 @@ END OF SINGLE GOD AND SINGLE STORY
     @media (min-width: 60em) {
 
         & .cc-section {
-            /* grid-template-columns: 160px 1fr; */
-            padding: var(--sp-2xl) var(--sp-2xl);
+            padding: var(--sp-2xl);
         }
 
         & .cc-fact-strip strong {
@@ -4131,6 +4213,12 @@ END OF SINGLE GOD AND SINGLE STORY
         }
     }
 
+    @media (min-width: 90em) {
+
+        & .cc-section {
+            padding: var(--sp-2xl) 10rem;
+        }
+    }
 
     /* -----------------------------------------------------------
      ACCESSIBILITY
@@ -4375,4 +4463,111 @@ END OF SINGLE GOD AND SINGLE STORY
     }
 }
 
-/* END OF ERROR PAGE */
+/* END OF ERROR PAGE */.accessibility-page {
+
+    color: var(--text);
+    background: var(--bg);
+
+    .container {
+        width: min(1100px, 92%);
+        margin-inline: auto;
+    }
+
+    .accessibility-hero {
+
+        padding: 10rem 0 6rem;
+
+        .eyebrow {
+            color: var(--god);
+            text-transform: uppercase;
+            letter-spacing: .18em;
+            font-size: .8rem;
+            font-weight: 700;
+        }
+
+        h1 {
+            margin: 1rem 0;
+            max-width: 12ch;
+        }
+
+        .lead {
+            max-width: 65ch;
+            opacity: .85;
+            line-height: 1.8;
+        }
+    }
+
+    .accessibility-section {
+
+        padding: 5rem 0;
+        border-top: 1px solid rgba(255,255,255,.06);
+
+        h2 {
+            margin-bottom: 2rem;
+        }
+
+        p {
+            max-width: 70ch;
+            line-height: 1.8;
+        }
+    }
+
+    .accessibility-grid {
+
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+
+        article {
+
+            padding: 2rem;
+            background: rgba(255,255,255,.03);
+            border: 1px solid rgba(255,255,255,.08);
+
+            h3 {
+                margin-bottom: .75rem;
+            }
+
+            p {
+                margin: 0;
+            }
+
+        }
+
+    }
+
+    .accessibility-list {
+
+        display: grid;
+        gap: 1rem;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+
+        li {
+
+            padding: 1rem 1.25rem;
+            border-left: 3px solid var(--god);
+            background: rgba(255,255,255,.03);
+
+        }
+
+    }
+
+}
+
+@media (max-width: 48em) {
+
+    .accessibility-page {
+
+        .accessibility-hero {
+            padding: 7rem 0 4rem;
+        }
+
+        .accessibility-section {
+            padding: 3rem 0;
+        }
+
+    }
+
+}
