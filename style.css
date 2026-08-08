@@ -63,9 +63,11 @@ Version: 1.0
     padding: 0;
     box-sizing: border-box;
 }
+
 html {
     scroll-padding-top: 65px;
 }
+
 body {
     background: var(--night-deepest);
     color: var(--text-primary);
@@ -325,548 +327,725 @@ a:hover {
 }
 
 
-
-/* ============================================================
-    HOME PAGE
-
-     1. Hero
-     2. Featured Story
-     3. God Cards
-     4. Cultural Grounding
-     5. Pantheon Teaser
-     6. About Teaser
+/* =============================================================
+   HOME PAGE
    ============================================================= */
 
+.home-page {
+    --home-bg: #050505;
+    --home-border: rgba(218, 169, 65, 0.25);
+    --home-text: #f1eee7;
+    --home-muted: #aaa59a;
 
-.hp {
-    background-color: var(--night-deepest);
-    color: var(--text-primary);
-    font-family: var(--font-body);
-    overflow-x: hidden;
+    background: var(--home-bg);
+    color: var(--home-text);
+    overflow: hidden;
 
-    & * {
-        box-sizing: border-box;
-    }
-
-
-    /* -----------------------------------------------------------
-     SHARED — inner container used in every section
-     Direct child <div> of each <section> acts as the inner.
-     Max-width + centred + side padding.
-     ----------------------------------------------------------- */
-    & section>div:first-child {
-        width: 100%;
-        max-width: var(--max-width);
-        margin: 0 auto;
-        padding: 0 var(--sp-md);
-    }
-
-    /* Shared eyebrow label — first <p> inside each section's inner div */
-    & section>div:first-child>p:first-child {
+    img {
         display: block;
-        font-size: 0.7rem;
-        font-weight: 600;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--moon-bright);
-        margin-bottom: var(--sp-md);
+        width: 100%;
+        height: auto;
     }
 
-    /* Shared inline text link — <a> that is not a button */
-    & a:not(.btn-primary):not(.btn-ghost) {
-        color: var(--moon-bright);
-        font-size: 0.9rem;
-        font-weight: 600;
+    a {
+        color: inherit;
         text-decoration: none;
-        border-bottom: 1px solid transparent;
-        transition: color var(--transition),
-            border-color var(--transition);
+    }
 
-        &:hover {
-            color: var(--moon-warm);
-            border-color: var(--moon-pale);
-        }
+    /* ========================================================
+       SHARED
+    ======================================================== */
+
+    .home-eyebrow,
+    .home-section-heading small,
+    .home-triangle-content small,
+    .home-story-body small,
+    .home-context-text>small {
+        display: block;
+        color: var(--moon-bright);
+        font-size: 0.65rem;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
     }
 
 
-    /* -----------------------------------------------------------
-     1. HERO
-     ----------------------------------------------------------- */
-    & .hp-hero {
-        position: relative;
-        /* min-height: 100svh; */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: var(--sp-2xl) var(--sp-md);
-        overflow: hidden;
-        background-image: url('images/hero.svg');
-        background-size: cover;
-        background-position: center;
+    .home-section-heading {
+        display: grid;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
 
-        /* content div */
-        &>div {
-            position: relative;
-            z-index: 1;
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 0;
+        >div:first-child {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: var(--sp-md);
+            gap: 0.75rem;
 
-            /* "Yoruba Mythology — Nigeria, West Africa" kicker */
-            &>p {
-                font-size: 0.7rem;
-                font-weight: 600;
-                letter-spacing: 0.2em;
-                text-transform: uppercase;
+            span {
                 color: var(--moon-bright);
-                margin: 0;
-                border: none;
-                /* override shared link styles if needed */
+                font-size: 0.75rem;
             }
+        }
 
-            & h1 {
-                font-family: var(--font-body);
-                line-height: 1.05;
-                color: var(--text-primary);
-                margin: 0;
-                text-transform: none;
-                font-weight: normal;
-                font-size: 1.3rem;
+        h2 {
+            margin: 0.5rem 0 0;
+            color: var(--home-text);
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 7vw, 4rem);
 
-                /* site name — Ìtàn Òrìṣà */
-                & span {
-                    font-family: var(--font-heading);
-                    font-weight: 700;
-                    display: block;
-                    font-size: clamp(2.5rem, 10vw, 7rem);
-                    color: var(--moon-bright);
-                    margin-bottom: var(--sp-sm);
-                    letter-spacing: 0.02em;
-                }
+            line-height: 0.95;
+        }
 
-                /* tagline below site name */
-                /* font-size : clamp(1.8rem, 6vw, 3rem); */
-            }
+        p {
+            max-width: 38rem;
+            margin: 1rem 0 0;
+            color: var(--home-muted);
         }
     }
 
 
-    /* -----------------------------------------------------------
-     2. FEATURED STORY — LOVE TRIANGLE
-     Card has four direct children:
-       div:nth-child(1)  — overlay (gradient, aria-hidden)
-       div:nth-child(2)  — gradient band (aria-hidden)
-       div:nth-child(3)  — card body (h2, p, ul, a)
-       div:nth-child(4)  — image placeholder (aria-hidden)
-     ----------------------------------------------------------- */
-    & .hp-story {
-        padding: var(--sp-xl) 0;
-        background-color: var(--night-deep);
-        border-top: 1px solid var(--night-light);
-        border-bottom: 1px solid var(--night-light);
-    }
+    /* ========================================================
+       HERO
+    ======================================================== */
 
-    & .hp-story-card {
+    .home-hero {
         position: relative;
-        background-image: url('images/oya.png');
-        background-size: cover;
-        background-position: center;
-        border-radius: var(--border-radius);
+        min-height: 85svh;
+        display: grid;
+        place-items: center;
+        isolation: isolate;
         overflow: hidden;
-        border: 1px solid var(--night-light);
+        border-bottom: 1px solid var(--home-border);
 
-        /* overlay — dark gradient left to right */
-        &>div:nth-child(1) {
+        .home-hero-image,
+        .home-hero-atmosphere {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to right,
-                    rgba(0, 0, 0, 0.85) 40%,
-                    rgba(0, 0, 0, 0) 100%);
-            pointer-events: none;
         }
 
-        /* gradient band — top of card */
-        &>div:nth-child(2) {
-            position: relative;
-            z-index: 1;
-            height: 3px;
-            background: linear-gradient(90deg,
-                    #FF6B4A,
-                    #9B7FE0,
-                    #4FA876);
+        .home-hero-image {
+            z-index: -3;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+            }
         }
 
-        /* card body */
-        &>div:nth-child(3) {
-            position: relative;
-            z-index: 1;
-            padding: var(--sp-lg) var(--sp-md);
+        .home-hero-atmosphere {
+            z-index: -2;
+            background:
+                linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0.15),
+                    rgba(0, 0, 0, 0.55) 60%,
+                    var(--home-bg) 100%);
+        }
+
+        .home-hero-corner {
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            border-color: var(--moon-bright);
+            opacity: 0.7;
+
+            &.tl {
+                top: 1rem;
+                left: 1rem;
+                border-top: 1px solid;
+                border-left: 1px solid;
+            }
+
+            &.tr {
+                top: 1rem;
+                right: 1rem;
+                border-top: 1px solid;
+                border-right: 1px solid;
+            }
+        }
+
+        .home-hero-content {
+            width: min(90%, 850px);
+            padding: 6rem 0 4rem;
+            text-align: center;
+
+            .home-eyebrow {
+                margin-bottom: 1.25rem;
+            }
+
+            h1 {
+                max-width: 500px;
+                margin: 0 auto;
+                color: #f3e7c5;
+                font-size: clamp(2rem, 7vw, 4rem);
+                line-height: 1;
+                text-transform: uppercase;
+                text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+            }
+
+            p {
+                margin: 1.5rem auto 0;
+                color: #dedbd4;
+                max-width: 300px;
+            }
+        }
+
+        .home-hero-cta {
             display: flex;
             flex-direction: column;
-            gap: var(--sp-md);
-            max-width: 560px;
-
-            & h2 {
-                font-family: var(--font-heading);
-                font-size: clamp(1.8rem, 5vw, 3rem);
-                line-height: 1.1;
-                color: var(--text-primary);
-                margin: 0;
-            }
-
-            &>p {
-                color: var(--text-secondary);
-                margin: 0;
-            }
-
-            /* character pills — <ul> with <li style="--cp:colour"> */
-            & ul {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-                display: flex;
-                flex-wrap: wrap;
-                gap: var(--sp-xs);
-
-                & li {
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 0.4rem;
-                    padding: 0.35rem 0.85rem;
-                    border-radius: 100px;
-                    font-size: 0.78rem;
-                    font-weight: 600;
-                    color: var(--text-primary);
-                    background: rgba(255, 255, 255, 0.06);
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-
-                    /* colour dot */
-                    & span {
-                        display: block;
-                        width: 8px;
-                        height: 8px;
-                        border-radius: 50%;
-                        background: var(--cp, var(--moon-bright));
-                        flex-shrink: 0;
-                    }
-                }
-            }
-        }
-
-        /* image placeholder div — hidden on mobile, decorative on desktop */
-        &>div:nth-child(4) {
-            display: none;
+            gap: 0.75rem;
+            align-items: center;
+            margin-top: 2rem;
         }
     }
 
 
-    /* -----------------------------------------------------------
-     3. GOD CARDS
-     Section > div (inner) > p (label) > div (grid) > a (cards)
-     Each <a> has two direct children:
-       div   — name + domain
-       p     — personality line
-       span  — CTA arrow
-     ----------------------------------------------------------- */
-    & .hp-gods {
-        padding: var(--sp-xl) 0;
-        background-color: var(--night-deepest);
+    /* ========================================================
+       BUTTONS
+    ======================================================== */
 
-        /* grid wrapper — second div inside inner */
-        &>div>div {
-            display: flex;
-            flex-direction: column;
-            gap: var(--sp-md);
-            margin-top: var(--sp-md);
+
+
+    .btn-primary {
+        color: #080706;
+
+
+    }
+
+    .btn-ghost {
+        border: 1px solid var(--moon-bright);
+        color: var(--moon-bright);
+
+        &:hover {
+            color: #080706;
+        }
+    }
+
+
+    /* ========================================================
+       FEATURED GODS
+    ======================================================== */
+
+    .home-gods {
+        padding: 4rem var(--sp-md);
+        background: var(--home-bg);
+    }
+
+    .home-gods-grid {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .home-god-card {
+        position: relative;
+        min-height: 400px;
+        display: flex;
+        align-items: flex-end;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: #090909;
+
+        .home-god-media {
+            position: absolute;
+            inset: 0;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 500ms ease;
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background:
+                    linear-gradient(to top,
+                        rgba(0, 0, 0, 0.9),
+                        rgba(0, 0, 0, 0.05) 70%);
+            }
         }
 
-        /* each god card — <a> element */
-        & a {
-            display: flex;
-            flex-direction: column;
-            gap: var(--sp-sm);
-            padding: var(--sp-md);
-            background-color: var(--night-mid);
-            border: 1px solid var(--night-light);
-            border-top: 3px solid var(--gc, var(--moon-bright));
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            color: inherit;
-            transition: background var(--transition),
-                transform var(--transition);
+        .home-god-body {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            padding: 1.5rem;
+
+            strong {
+                display: block;
+                color: var(--card-color);
+                font-family: var(--font-heading);
+                font-size: clamp(2rem, 9vw, 4rem);
+
+                line-height: 0.9;
+                text-transform: uppercase;
+            }
+
+            span {
+                display: block;
+                margin-top: 0.7rem;
+                color: #dedbd4;
+                font-size: 0.75rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+            }
+
+            .home-card-arrow {
+                position: absolute;
+                right: 1.5rem;
+                bottom: 1.5rem;
+                margin: 0;
+                color: var(--card-color);
+                font-size: 1.2rem;
+                transition: transform 180ms ease;
+            }
+        }
+
+        &:hover {
+            .home-god-media img {
+                transform: scale(1.05);
+            }
+
+            .home-card-arrow {
+                transform: translateX(5px);
+            }
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--card-color);
+            outline-offset: 4px;
+        }
+    }
+
+    .home-gods-more {
+        margin-top: 1.5rem;
+        text-align: right;
+
+        a {
+            color: var(--moon-bright);
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+
+            span {
+                margin-left: 0.5rem;
+            }
 
             &:hover {
-                background-color: var(--night-muted);
-                transform: translateY(-3px);
-                border-color: var(--gc, var(--moon-bright));
+                text-decoration: underline;
+                text-underline-offset: 4px;
+            }
+        }
+    }
+
+
+    /* ========================================================
+       LOVE TRIANGLE
+    ======================================================== */
+
+    .home-triangle {
+        position: relative;
+        min-height: 520px;
+        display: grid;
+        place-items: center;
+        isolation: isolate;
+        overflow: hidden;
+        border-top: 1px solid var(--home-border);
+        border-bottom: 1px solid var(--home-border);
+
+        .home-triangle-side {
+            position: absolute;
+            inset: 0;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
             }
 
-            /* name + domain wrapper */
-            &>div {
-                & h3 {
-                    font-family: var(--font-heading);
-                    font-size: 1.8rem;
-                    line-height: 1;
-                    color: var(--gc, var(--moon-bright));
-                    margin-bottom: 0.25rem;
-                }
-
-                & p {
-                    font-size: 0.86rem;
-                    font-weight: 500;
-                    color: var(--text-secondary);
-                    margin: 0;
-                }
+            &.home-triangle-left {
+                clip-path: inset(0 50% 0 0);
             }
 
-            /* personality line */
-            &>p {
-                color: var(--text-secondary);
-                line-height: 1.65;
+            &.home-triangle-right {
+                clip-path: inset(0 0 0 50%);
+            }
+        }
+
+        .home-triangle-atmosphere {
+            position: absolute;
+            inset: 0;
+            /* z-index: -1; */
+            background:
+                linear-gradient(90deg,
+                    rgba(0, 0, 0, 0.5),
+                    rgba(0, 0, 0, 0.3),
+                    rgba(0, 0, 0, 0.5)),
+                linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0.1),
+                    rgba(0, 0, 0, 0.5));
+        }
+
+        .home-triangle-content {
+            position: relative;
+            z-index: 2;
+            width: min(90%, 700px);
+            padding: 3rem 1rem;
+            text-align: center;
+
+            small {
+                margin-bottom: 1.25rem;
+            }
+
+            h2 {
                 margin: 0;
-                flex: 1;
-            }
-
-            /* CTA arrow span */
-            &>span {
-                font-size: 0.88rem;
-                font-weight: 700;
-                color: var(--gc, var(--moon-bright));
-                transition: opacity var(--transition);
-            }
-
-            &:hover>span {
-                opacity: 0.75;
-            }
-        }
-    }
-
-
-    /* -----------------------------------------------------------
-     4. CULTURAL GROUNDING
-     Inner > p (label) > div (body) > h2 + p + a
-     ----------------------------------------------------------- */
-    & .hp-culture {
-        padding: var(--sp-xl) 0;
-        background-color: var(--night-deep);
-        border-top: 1px solid var(--night-light);
-        border-bottom: 1px solid var(--night-light);
-
-        /* body div */
-        &>div>div {
-            max-width: 640px;
-
-            & h2 {
+                color: #f1e2bd;
                 font-family: var(--font-heading);
-                font-size: clamp(1.8rem, 5vw, 3rem);
-                line-height: 1.1;
-                color: var(--text-primary);
-                margin-bottom: var(--sp-md);
+                font-size: clamp(2rem, 7vw, 4rem);
+
+                line-height: 1;
+                text-transform: uppercase;
+                text-shadow: 0 5px 30px rgba(0, 0, 0, 0.8);
             }
 
-            & p {
-                color: var(--text-secondary);
-                margin-bottom: var(--sp-md);
-            }
-        }
-    }
-
-
-    /* -----------------------------------------------------------
-     5. PANTHEON TEASER
-     Inner > p (label) > div (two-col) > div (text) + div (image)
-     ----------------------------------------------------------- */
-    & .hp-pantheon {
-        padding: var(--sp-xl) 0;
-        background-color: var(--night-deepest);
-
-        /* two-col content wrapper */
-        &>div>div {
-            display: flex;
-            flex-direction: column;
-            gap: var(--sp-xl);
-            align-items: center;
-
-            /* text body */
-            &>div:first-child {
-                max-width: 540px;
-
-                & h2 {
-                    font-family: var(--font-heading);
-                    font-size: clamp(2.5rem, 8vw, 5rem);
-                    line-height: 1;
-                    color: var(--text-primary);
-                    margin-bottom: var(--sp-md);
-
-                    & em {
-                        color: var(--moon-bright);
-                        font-style: normal;
-                        display: block;
-                    }
-                }
-
-                & p {
-                    color: var(--text-secondary);
-                    margin-bottom: var(--sp-lg);
-                }
-            }
-
-            /* image div */
-            &>div:last-child {
-                display: flex;
-                justify-content: center;
-
-                & img {
-                    width: 80%;
-                    max-width: 320px;
-                    height: auto;
-                    display: block;
-                }
+            p {
+                margin: 1.25rem 0 2rem;
+                color: #ddd;
             }
         }
     }
 
 
-    /* -----------------------------------------------------------
-     6. ABOUT TEASER
-     Inner > p (label) > div (body) > h2 + p + a
-     ----------------------------------------------------------- */
-    & .hp-about {
-        padding: var(--sp-xl) 0;
-        background-color: var(--night-deep);
-        border-top: 1px solid var(--night-light);
+    /* ========================================================
+       LATEST STORIES
+    ======================================================== */
 
-        /* body div */
-        &>div>div {
+    .home-stories {
+        padding: 4rem var(--sp-md);
+        background: #080808;
+        border-top: 1px solid var(--home-border);
+    }
+
+    .home-stories-header {
+        margin-bottom: 2rem;
+
+        .home-section-heading {
+            margin-bottom: 1.25rem;
+        }
+
+        & a {
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            color: var(--moon-bright);
+        }
+    }
+
+    .home-stories-view-all {
+        color: var(--moon-bright);
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+
+        &:hover {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+    }
+
+    .home-stories-grid {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .home-story-card {
+        display: block;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: #0d0d0d;
+
+        .home-story-media {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 500ms ease;
+            }
+
+            .home-story-overlay {
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(to top,
+                        rgba(0, 0, 0, 0.55),
+                        transparent);
+            }
+        }
+
+        .home-story-body {
+            padding: 1.25rem;
+
+            small {
+                margin-bottom: 0.75rem;
+            }
+
+            strong {
+                display: block;
+                color: #eee8d9;
+                font-family: var(--font-heading);
+                font-size: clamp(2rem, 7vw, 4rem);
+
+                line-height: 1;
+            }
+
+            span {
+                display: inline-block;
+                margin-top: 1rem;
+                color: var(--moon-bright);
+                font-size: 0.65rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+            }
+        }
+
+        &:hover {
+            .home-story-media img {
+                transform: scale(1.05);
+            }
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--moon-bright);
+            outline-offset: 4px;
+        }
+    }
+
+    .home-stories-empty {
+        padding: 3rem 0;
+        color: var(--home-muted);
+        text-align: center;
+    }
+
+
+    /* ========================================================
+       CULTURAL CONTEXT
+    ======================================================== */
+
+    .home-context {
+        padding: 4rem var(--sp-md);
+        background: var(--home-bg);
+    }
+
+    .home-context-inner {
+        display: grid;
+        gap: 2rem;
+    }
+
+    .home-context-image {
+        overflow: hidden;
+
+        img {
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+        }
+    }
+
+    .home-context-text {
+        align-self: center;
+
+        small {
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            margin: 0;
+            color: #eee8d9;
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 7vw, 4rem);
+
+            line-height: 0.95;
+        }
+
+        p {
             max-width: 600px;
-
-            & h2 {
-                font-family: var(--font-heading);
-                font-size: clamp(1.6rem, 4vw, 2.5rem);
-                line-height: 1.15;
-                color: var(--text-primary);
-                margin-bottom: var(--sp-md);
-            }
-
-            & p {
-                color: var(--text-secondary);
-                margin-bottom: var(--sp-md);
-            }
+            margin: 1.5rem 0;
+            color: var(--home-muted);
         }
     }
 
 
-    /* -----------------------------------------------------------
-     TABLET — 640px+
-     ----------------------------------------------------------- */
+    /* ========================================================
+       DIVIDER
+    ======================================================== */
+
+    .home-divider {
+        width: calc(100% - 2rem);
+        height: 1px;
+        margin: 0 auto;
+        background: var(--home-border);
+    }
+
+
+    /* ========================================================
+       TABLET
+    ======================================================== */
+
     @media (min-width: 40em) {
 
-        /* Story card body — more padding */
-        & .hp-story-card>div:nth-child(3) {
-            padding: var(--sp-xl);
+        .home-hero {
+            min-height: 90svh;
+
+            .home-hero-cta {
+                flex-direction: row;
+                justify-content: center;
+            }
         }
 
-        /* God cards — two column */
-        & .hp-gods>div>div {
-            display: grid;
+        .home-gods,
+        .home-stories,
+        .home-context {
+            padding: 6rem 2rem;
+        }
+
+        .home-gods-grid {
             grid-template-columns: repeat(2, 1fr);
         }
 
-        /* More padding on lower sections */
-        & .hp-culture,
-        & .hp-pantheon,
-        & .hp-about {
-            padding: var(--sp-2xl) 0;
+        .home-god-card {
+            min-height: 450px;
         }
+
+        .home-stories-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .home-context-inner {
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 3rem;
+        }
+
     }
 
 
-    /* -----------------------------------------------------------
-     DESKTOP — 1024px+
-     ----------------------------------------------------------- */
+    /* ========================================================
+       DESKTOP
+    ======================================================== */
+
     @media (min-width: 64em) {
 
-        /* God cards — three column */
-        & .hp-gods>div>div {
+        .home-hero {
+
+            .home-hero-content {
+                padding-top: 8rem;
+
+                h1 {
+                    font-size: clamp(5rem, 9vw, 6rem);
+                }
+            }
+
+            .home-hero-corner {
+                width: 70px;
+                height: 70px;
+
+                &.tl {
+                    top: 2rem;
+                    left: 2rem;
+                }
+
+                &.tr {
+                    top: 2rem;
+                    right: 2rem;
+                }
+            }
+        }
+
+
+        .home-gods,
+        .home-stories,
+        .home-context {
+            padding: 7rem max(3rem, calc((100vw - 1400px) / 2));
+        }
+
+
+        .home-gods-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+
+        .home-god-card {
+            min-height: 520px;
+        }
+
+
+        .home-triangle {
+            min-height: 650px;
+
+            .home-triangle-content {
+                h2 {
+                    font-size: clamp(4rem, 7vw, 7rem);
+                }
+            }
+        }
+
+
+        .home-stories-header {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+
+            .home-section-heading {
+                margin-bottom: 0;
+            }
+        }
+
+
+        .home-stories-grid {
             grid-template-columns: repeat(3, 1fr);
         }
 
-        /* Story card — horizontal layout */
-        & .hp-story-card {
-            display: flex;
 
-            /* gradient band flips to left vertical strip */
-            &>div:nth-child(2) {
-                width: 4px;
-                height: auto;
-                background: linear-gradient(180deg,
-                        #FF6B4A,
-                        #9B7FE0,
-                        #4FA876);
-                flex-shrink: 0;
-                order: -1;
-            }
+        .home-context-inner {
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 5rem;
+        }
 
-            &>div:nth-child(3) {
-                flex: 1;
-                padding: var(--sp-xl);
+
+        .home-context-image {
+            img {
+                aspect-ratio: 16 / 10;
             }
         }
 
-        /* Pantheon — side by side */
-        & .hp-pantheon>div>div {
-            flex-direction: row;
-            align-items: center;
-
-            &>div:last-child img {
-                max-width: 400px;
-                width: 100%;
-            }
-        }
-
-        /* Culture and about body wider */
-        & .hp-culture>div>div,
-        & .hp-about>div>div {
-            max-width: 720px;
-        }
     }
 
 
-    /* -----------------------------------------------------------
-     ACCESSIBILITY
-     ----------------------------------------------------------- */
+    /* ========================================================
+       REDUCED MOTION
+    ======================================================== */
+
     @media (prefers-reduced-motion: reduce) {
-        & * {
-            transition: none !important;
-            animation: none !important;
+
+        *,
+        *::before,
+        *::after {
+            scroll-behavior: auto !important;
+            transition-duration: 0.01ms !important;
+            animation-duration: 0.01ms !important;
         }
 
-        & .hp-gods a:hover {
-            transform: none;
-        }
     }
 
-    & a:focus-visible,
-    & .btn-primary:focus-visible,
-    & .btn-ghost:focus-visible {
-        outline: 3px solid var(--moon-bright);
-        outline-offset: 3px;
-        border-radius: 3px;
-    }
 }
 
 /* =================
 END OF HOME PAGE 
-END OF HOME PAGE 
-END OF HOME PAGE 
-END OF HOME PAGE 
-END OF HOME PAGE 
-
 ========================
  */
 
@@ -2878,10 +3057,11 @@ END OF HOME PAGE
             background var(--transition),
             padding var(--transition);
     }
+
     .god-crossnav-next {
         display: flex;
         flex-direction: column;
-align-items: end;
+        align-items: end;
         padding: 1.75rem var(--sp-md);
 
         transition:
@@ -3687,7 +3867,7 @@ END OF SINGLE GOD AND SINGLE STORY
      z-index 90 = below main nav (which should be 100+).
      ----------------------------------------------------------- */
 
- & .cc-sticky-nav {
+    & .cc-sticky-nav {
         position: sticky;
         top: 67px;
         left: 0;
@@ -4311,14 +4491,12 @@ END OF SINGLE GOD AND SINGLE STORY
             &>span {
                 display: block;
                 font-family: var(--font-heading);
-                font-size: clamp(5rem, 20vw, 12rem);
+                font-size: clamp(5rem, 20vw, 7rem);
                 line-height: 1;
-                color: transparent;
-                -webkit-text-stroke: 1px var(--moon-bright);
-                opacity: 0.15;
+                color: var(--moon-warm);
+                opacity: 0.5;
                 margin-bottom: var(--sp-sm);
-                pointer-events: none;
-                user-select: none;
+
             }
 
             & h1 {
@@ -4326,7 +4504,7 @@ END OF SINGLE GOD AND SINGLE STORY
                 font-size: clamp(2rem, 6vw, 3.5rem);
                 line-height: 1.15;
                 color: var(--text-primary);
-                margin-bottom: var(--sp-lg);
+                margin-bottom: var(--sp-md);
 
                 & em {
                     color: var(--moon-bright);
@@ -4336,10 +4514,9 @@ END OF SINGLE GOD AND SINGLE STORY
             }
 
             & p {
-                font-size: 1rem;
                 line-height: 1.75;
                 color: var(--text-secondary);
-                margin-bottom: var(--sp-xl);
+                margin-bottom: var(--sp-md);
                 max-width: 520px;
                 margin-left: auto;
                 margin-right: auto;
@@ -4373,60 +4550,6 @@ END OF SINGLE GOD AND SINGLE STORY
     }
 
 
-    /* -----------------------------------------------------------
-     FLOATING DEITY SYMBOLS
-     Six <span> elements positioned absolutely around the page.
-     Each has custom properties set inline:
-       --es-colour   hex colour
-       --es-size     font-size
-       --es-x        left %
-       --es-y        top %
-       --es-delay    animation delay
-     ----------------------------------------------------------- */
-    & .error-symbols {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        overflow: hidden;
-
-        & span {
-            position: absolute;
-            font-size: var(--es-size, 4rem);
-            left: var(--es-x, 50%);
-            top: var(--es-y, 50%);
-            color: var(--es-colour, var(--moon-bright));
-            opacity: 0;
-            filter: blur(1px);
-            animation: symbolFloat 6s ease-in-out infinite;
-            animation-delay: var(--es-delay, 0s);
-            line-height: 1;
-        }
-    }
-
-    @keyframes symbolFloat {
-        0% {
-            opacity: 0;
-            transform: translateY(8px) scale(0.9);
-        }
-
-        20% {
-            opacity: 0.12;
-        }
-
-        50% {
-            opacity: 0.08;
-            transform: translateY(-8px) scale(1.05);
-        }
-
-        80% {
-            opacity: 0.12;
-        }
-
-        100% {
-            opacity: 0;
-            transform: translateY(8px) scale(0.9);
-        }
-    }
 
 
     /* -----------------------------------------------------------
@@ -4435,7 +4558,6 @@ END OF SINGLE GOD AND SINGLE STORY
     @media (min-width: 40em) {
 
         & .error-hero>div:nth-child(2) nav {
-            flex-direction: row;
             justify-content: center;
             flex-wrap: wrap;
         }
@@ -4463,7 +4585,8 @@ END OF SINGLE GOD AND SINGLE STORY
     }
 }
 
-/* END OF ERROR PAGE */.accessibility-page {
+/* END OF ERROR PAGE */
+.accessibility-page {
 
     color: var(--text);
     background: var(--bg);
@@ -4500,7 +4623,7 @@ END OF SINGLE GOD AND SINGLE STORY
     .accessibility-section {
 
         padding: 5rem 0;
-        border-top: 1px solid rgba(255,255,255,.06);
+        border-top: 1px solid rgba(255, 255, 255, .06);
 
         h2 {
             margin-bottom: 2rem;
@@ -4516,13 +4639,13 @@ END OF SINGLE GOD AND SINGLE STORY
 
         display: grid;
         gap: 2rem;
-        grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 
         article {
 
             padding: 2rem;
-            background: rgba(255,255,255,.03);
-            border: 1px solid rgba(255,255,255,.08);
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .08);
 
             h3 {
                 margin-bottom: .75rem;
@@ -4548,7 +4671,7 @@ END OF SINGLE GOD AND SINGLE STORY
 
             padding: 1rem 1.25rem;
             border-left: 3px solid var(--god);
-            background: rgba(255,255,255,.03);
+            background: rgba(255, 255, 255, .03);
 
         }
 

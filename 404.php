@@ -57,14 +57,7 @@ $lt_url       = $lt_page ? get_permalink( $lt_page->ID ) : home_url( '/love-tria
 
         </div>
 
-        <div class="error-symbols" aria-hidden="true">
-            <span style="--es-colour:#D32F2F; --es-size:6rem;  --es-x:10%; --es-y:20%; --es-delay:0s;">&#9889;</span>
-            <span style="--es-colour:#6A1B9A; --es-size:4rem;  --es-x:80%; --es-y:15%; --es-delay:0.4s;">&#127786;</span>
-            <span style="--es-colour:#2E7D32; --es-size:5rem;  --es-x:70%; --es-y:70%; --es-delay:0.8s;">&#9876;</span>
-            <span style="--es-colour:#D32F2F; --es-size:3rem;  --es-x:20%; --es-y:75%; --es-delay:1.2s;">&#9889;</span>
-            <span style="--es-colour:#6A1B9A; --es-size:7rem;  --es-x:85%; --es-y:45%; --es-delay:0.2s;">&#127786;</span>
-            <span style="--es-colour:#2E7D32; --es-size:2.5rem;--es-x:5%;  --es-y:50%; --es-delay:0.6s;">&#9876;</span>
-        </div>
+       
 
     </section>
 
