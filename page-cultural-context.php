@@ -43,6 +43,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                 <small>Foundation</small>
             </div>
             <div>
+                <h2>Foundation</h2>
 
                 <p>The Yoruba are one of Africa's largest ethnic groups, over 45 million people spanning southwestern
                     Nigeria, Benin, and Togo. Through the transatlantic slave trade and later migrations, their
@@ -60,7 +61,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                         <span aria-hidden="true">+</span>
                     </summary>
                     <div>
-                        <h3>Before Ile-Ife</h3>
+                        <span>Before Ile-Ife</span>
                         <p>Some Yoruba oral traditions hold that the people existed long before Ile-Ife and the Oyo
                             Empire,
                             organized instead as sixteen independent communities, each with its own king, allied for
@@ -87,7 +88,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                             these early communities spoke a language called Ikedu, echoes of which some scholars argue
                             survive in the modern Ilaje dialect.</p>
 
-                        <h3>The Arrival of Oduduwa</h3>
+                        <span>The Arrival of Oduduwa</span>
                         <p>One account presents Oduduwa as a visitor from the eastern forests who gradually earned the
                             trust
                             of the local people through knowledge of healing, herbal medicine, and community leadership.
@@ -97,7 +98,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                             governance, peace, and development. As his influence grew, so did the number of people who
                             supported his leadership.</p>
 
-                        <h3>Migration &amp; the Birth of New Kingdoms</h3>
+                        <span>Migration &amp; the Birth of New Kingdoms</span>
                         <p>Like many civilizations, the Yoruba experienced rivalry and political struggle. Oral
                             tradition
                             describes a supremacy conflict that divided the confederate communities, sending many groups
@@ -362,105 +363,112 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                 </div> -->
             </div>
         </section>
-<section class="cc-section" id="cc-sources">
-    <div>
-        <span>07</span>
-        <small>Go Deeper</small>
-    </div>
-
-    <div>
-        <h2>Sources &amp; Further Reading</h2>
-
-        <p>
-            The content on this site draws on the following books and historical
-            sources. These references provide a starting point for readers who
-            want to explore Yoruba history, mythology, religion, and culture in
-            greater depth.
-        </p>
-
-        <div class="cc-sources-list">
-
+        <section class="cc-section" id="cc-sources">
             <div>
-                <h3>Foundational Histories</h3>
-                <ul>
-                    <li>
-                        Johnson, S. (1921).
-                        <a href="https://openlibrary.org/books/OL13446224M/The_history_of_the_Yorubas"  rel="noopener noreferrer">
-                            <em>The History of the Yorubas</em>
-                        </a>
-                        |
-                        <a href="https://archive.org/details/historyofyorubas00john"  rel="noopener noreferrer">
-                            Internet Archive
-                        </a>
-                    </li>
-
-                    <li>
-                        Law, R. (1977).
-                        <a href="https://books.google.com/books?id=jfJfQgAACAAJ&dq=The+Oyo+Empire+c.1600%E2%80%931836"  rel="noopener noreferrer">
-                            <em>The Oyo Empire c.1600–1836</em>
-                        </a>
-                    </li>
-
-                    <li>
-                        Akinruntan, F. O. (2016).
-                        <em>A History of the Oldest Kingdom in Yorubaland.</em>
-                    </li>
-                </ul>
+                <span>07</span>
+                <small>Go Deeper</small>
             </div>
 
             <div>
-                <h3>Religion &amp; Cosmology</h3>
-                <ul>
-                    <li>
-                        Abimbola, W. (1976).
-                        <a href="https://books.google.com/books?id=M73AQgAACAAJ&dq=If%C3%A1:+An+Exposition+of+If%C3%A1+Literary+Corpus"  rel="noopener noreferrer">
-                            <em>Ifá: An Exposition of Ifá Literary Corpus</em>
-                        </a>
-                    </li>
+                <h2>Sources &amp; Further Reading</h2>
 
-                    <li>
-                        Mbiti, J. S. (1990).
-                        <a href="https://books.google.com/books?id=eTUpo9lH-fYC&printsec=frontcover&dq=African+Religions+and+Philosophy"  rel="noopener noreferrer">
-                            <em>African Religions and Philosophy</em>
-                        </a>
-                    </li>
+                <p>
+                    The content on this site draws on the following books and historical
+                    sources. These references provide a starting point for readers who
+                    want to explore Yoruba history, mythology, religion, and culture in
+                    greater depth.
+                </p>
 
-                    <li>
-                        Peel, J. D. Y. (2000).
-                        <a href="https://books.google.com/books?id=CGouTXIOjXgC&printsec=frontcover&dq=Religious+Encounter+and+the+Making+of+the+Yoruba"  rel="noopener noreferrer">
-                            <em>Religious Encounter and the Making of the Yoruba</em>
-                        </a>
-                    </li>
-                </ul>
+                <div class="cc-sources-list">
+
+                    <div>
+                        <h3>Foundational Histories</h3>
+                        <ul>
+                            <li>
+                                Johnson, S. (1921).
+                                <a href="https://openlibrary.org/books/OL13446224M/The_history_of_the_Yorubas"
+                                    rel="noopener noreferrer">
+                                    <em>The History of the Yorubas</em>
+                                </a>
+                                |
+                                <a href="https://archive.org/details/historyofyorubas00john" rel="noopener noreferrer">
+                                    Internet Archive
+                                </a>
+                            </li>
+
+                            <li>
+                                Law, R. (1977).
+                                <a href="https://books.google.com/books?id=jfJfQgAACAAJ&dq=The+Oyo+Empire+c.1600%E2%80%931836"
+                                    rel="noopener noreferrer">
+                                    <em>The Oyo Empire c.1600–1836</em>
+                                </a>
+                            </li>
+
+                            <li>
+                                Akinruntan, F. O. (2016).
+                                <em>A History of the Oldest Kingdom in Yorubaland.</em>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3>Religion &amp; Cosmology</h3>
+                        <ul>
+                            <li>
+                                Abimbola, W. (1976).
+                                <a href="https://books.google.com/books?id=M73AQgAACAAJ&dq=If%C3%A1:+An+Exposition+of+If%C3%A1+Literary+Corpus"
+                                    rel="noopener noreferrer">
+                                    <em>Ifá: An Exposition of Ifá Literary Corpus</em>
+                                </a>
+                            </li>
+
+                            <li>
+                                Mbiti, J. S. (1990).
+                                <a href="https://books.google.com/books?id=eTUpo9lH-fYC&printsec=frontcover&dq=African+Religions+and+Philosophy"
+                                    rel="noopener noreferrer">
+                                    <em>African Religions and Philosophy</em>
+                                </a>
+                            </li>
+
+                            <li>
+                                Peel, J. D. Y. (2000).
+                                <a href="https://books.google.com/books?id=CGouTXIOjXgC&printsec=frontcover&dq=Religious+Encounter+and+the+Making+of+the+Yoruba"
+                                    rel="noopener noreferrer">
+                                    <em>Religious Encounter and the Making of the Yoruba</em>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3>Art, Culture &amp; Literature</h3>
+                        <ul>
+                            <li>
+                                Drewal, H. J., Pemberton III, J., &amp; Abiodun, R. (1989).
+                                <a href="https://books.google.com/books?id=UhaSQwAACAAJ&dq=Nine+Centuries+of+African+Art+and+Thought"
+                                    rel="noopener noreferrer">
+                                    <em>Yoruba: Nine Centuries of African Art and Thought</em>
+                                </a>
+                            </li>
+
+                            <li>
+                                Bascom, W. (1969).
+                                <em>The Yoruba of Southwestern Nigeria.</em>
+                            </li>
+
+                            <li>
+                                Soyinka, W. (1976).
+                                <a href="https://books.google.com/books?id=8OGgm-ZvASAC&printsec=frontcover&dq=Myth,+Literature+and+the+African+World"
+                                    rel="noopener noreferrer">
+                                    <em>Myth, Literature and the African World</em>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
             </div>
-
-            <div>
-                <h3>Art, Culture &amp; Literature</h3>
-                <ul>
-                    <li>
-                        Drewal, H. J., Pemberton III, J., &amp; Abiodun, R. (1989).
-                        <a href="https://books.google.com/books?id=UhaSQwAACAAJ&dq=Nine+Centuries+of+African+Art+and+Thought"  rel="noopener noreferrer">
-                            <em>Yoruba: Nine Centuries of African Art and Thought</em>
-                        </a>
-                    </li>
-
-                    <li>
-                        Bascom, W. (1969).
-                        <em>The Yoruba of Southwestern Nigeria.</em>
-                    </li>
-
-                    <li>
-                        Soyinka, W. (1976).
-                        <a href="https://books.google.com/books?id=8OGgm-ZvASAC&printsec=frontcover&dq=Myth,+Literature+and+the+African+World"  rel="noopener noreferrer">
-                            <em>Myth, Literature and the African World</em>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-        </div>
-    </div>
-</section>
+        </section>
 
     </div>
 

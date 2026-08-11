@@ -53,12 +53,9 @@ function itan_tag_colour($slug)
                     <?php endif; ?>
 
                     <div>
-                        <small>Story</small>
 
                         <h2>
-                            <a href="<?php the_permalink(); ?>" aria-label="Read <?php the_title_attribute(); ?>">
                                 <?php the_title(); ?>
-                            </a>
                         </h2>
 
                         <div>

@@ -50,24 +50,16 @@ function itan_god_colour($slug)
                     <?php endif; ?>
 
                     <div>
-                        <header>
-                            <span aria-hidden="true"></span>
-                            <small>Orisha</small>
-                        </header>
+                        
 
                         <h2>
-                            <a href="<?php the_permalink(); ?>" aria-label="Explore <?php the_title_attribute(); ?>">
-                                <?php the_title(); ?>
-                            </a>
+                            <?php the_title_attribute(); ?>
+                            
                         </h2>
 
                         <div>
                             <?php the_excerpt(); ?>
                         </div>
-
-                        <a href="<?php the_permalink(); ?>" aria-label="Explore <?php the_title_attribute(); ?>">
-                            Explore <?php the_title(); ?> &rarr;
-                        </a>
                     </div>
 
                 </article>

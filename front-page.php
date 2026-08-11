@@ -90,8 +90,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
             <div class="home-section-heading">
 
                 <div>
-                    <span>01</span>
-                    <small>The Orishas</small>
+                   
                 </div>
 
                 <div>
@@ -156,9 +155,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
                                 </span>
                             <?php endif; ?>
 
-                            <span class="home-card-arrow" aria-hidden="true">
-                                →
-                            </span>
+                            
 
                         </div>
 

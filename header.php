@@ -21,9 +21,8 @@ rel="stylesheet">
             <a href="<?php echo home_url(); ?>">Itan Orisa</a>
         </div>
 
-        <?php /* checkbox + label drive the mobile menu — no JS */ ?>
         <input type="checkbox" id="nav-toggle" class="nav-toggle">
-        <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle menu">
+        <label for="nav-toggle" class="nav-toggle-label" >
             <span></span><span></span><span></span>
         </label>
 

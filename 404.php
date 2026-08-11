@@ -37,7 +37,7 @@ $lt_url       = $lt_page ? get_permalink( $lt_page->ID ) : home_url( '/love-tria
             </h1>
 
             <p>
-                Whatever you were looking for, it hasn&#8217;t been found &#8212;
+                Whatever you were looking for, it hasn&#8217;t been found,
                 not by Ṣàngó&#8217;s lightning, Ọya&#8217;s winds,
                 or Ogun&#8217;s relentless search.
                 The page either doesn&#8217;t exist or has moved on.
@@ -50,9 +50,7 @@ $lt_url       = $lt_page ? get_permalink( $lt_page->ID ) : home_url( '/love-tria
                 <a href="<?php echo esc_url( $gods_archive ); ?>" class="btn-ghost">
                     Meet the Gods
                 </a>
-                <a href="<?php echo esc_url( $lt_url ); ?>">
-                    Read the Love Triangle &rarr;
-                </a>
+              
             </nav>
 
         </div>

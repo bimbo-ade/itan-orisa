@@ -208,7 +208,7 @@ while (have_posts()):
         ?>
         <?php if ($symbols): ?>
             <section class="god-symbols" id="god-symbols">
-                <small><?php echo esc_html($symbols_heading); ?>         <?php the_title(); ?></small>
+                <small><?php echo esc_html($symbols_heading); ?>        </small>
                 <div class="god-symbols-grid">
                     <?php foreach ($symbols as $sym): ?>
                         <div class="god-symbol-card">
@@ -252,8 +252,7 @@ while (have_posts()):
         ?>
         <?php if ($powers): ?>
             <section class="god-powers" id="god-powers">
-                <small>What god name Commands</small>
-                <h2><?php echo wp_kses_post($powers_heading); ?></h2>
+                <small>What  <?php the_title(); ?> Commands</small>
                 <div class="god-powers-grid">
                     <?php foreach ($powers as $power): ?>
                         <div class="god-power-card">
@@ -291,7 +290,6 @@ while (have_posts()):
             <section class="god-myths" id="god-myths">
                 <div class="god-myths-inner">
                     <small>Major Myths</small>
-                    <h2><?php echo wp_kses_post($myths_heading); ?></h2>
                     <?php foreach ($myths as $i => $myth): ?>
                         <div class="god-myth-item">
                             <span class="god-myth-number" aria-hidden="true"><?php echo esc_html($i + 1); ?></span>
@@ -389,7 +387,6 @@ while (have_posts()):
 
                     <div class="god-worship-col">
                         <small>Worship</small>
-                        <h3><?php echo esc_html($worship_heading); ?></h3>
                         <?php if ($worship_intro): ?>
                             <p><?php echo wp_kses_post($worship_intro); ?></p><?php endif; ?>
 
