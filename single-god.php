@@ -1,7 +1,7 @@
 <?php
 /**
  * single-god.php 
- 
+
  */
 
 get_header();
@@ -18,24 +18,15 @@ while (have_posts()):
     $b = hexdec(substr($hex, 4, 2));
     ?>
 
-    <style>
-        :root {
-            --god:
-                <?php echo esc_attr($god_color); ?>
-            ;
-            --god-rgb:
-                <?php echo "$r, $g, $b"; ?>
-            ;
-        }
-    </style>
 
-    <div class="single-god">
+
+    <div class="single-god"
+        style="--god: <?php echo esc_attr($god_color); ?>; --god-rgb: <?php echo esc_attr("$r, $g, $b"); ?>;">
+
 
         <?php
         // ============================================================
         // 1. HERO
-        // hero_pronunciation is new — a plain-English respelling
-        // (e.g. "shan-GO"). Skip the field and it just won't render.
         // ============================================================
         $hero_image = get_field('hero_image');
         $hero_image_mobile = get_field('hero_image_mobile');
@@ -45,16 +36,7 @@ while (have_posts()):
         $hero_focal = get_field('hero_focal_point') ?: 'center';
         $hero_focal_mobile = get_field('hero_focal_point_mobile') ?: $hero_focal;
         ?>
-        <style>
-            .single-god .god-hero-image img {
-                --hero-focal:
-                    <?php echo esc_attr($hero_focal); ?>
-                ;
-                --hero-focal-mobile:
-                    <?php echo esc_attr($hero_focal_mobile); ?>
-                ;
-            }
-        </style>
+       
         <section class="god-hero">
             <?php if ($hero_image): ?>
                 <div class="god-hero-image" aria-hidden="true">
@@ -117,9 +99,7 @@ while (have_posts()):
 
         <?php
         // ============================================================
-        // GOD SUMMARY — one sentence. Not a section, no heading — a
-        // narrative bridge between the facts bar and the visual
-        // sections. Keep this to a single sentence on purpose.
+        // GOD SUMMARY 
         // ============================================================
         $god_summary = get_field('god_summary');
         ?>
@@ -131,13 +111,12 @@ while (have_posts()):
         <?php endif; ?>
         <?php
         // ============================================================
-        // 4. THE JOURNEY — up to 6 acts. This carries the compressed
-        // myth in full. Keep timeline_{n}_desc to ONE sentence.
+        // 4. THE JOURNEY
         // ============================================================
         $lt_page = get_page_by_path('love-triangle');
         $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
-        $story_page = get_field('full_story_link'); // optional link to a Stories post
-    
+        $story_page = get_field('full_story_link');
+
         $journey_heading = get_field('timeline_heading');
         $stages = [];
         for ($i = 1; $i <= 6; $i++) {
@@ -154,7 +133,7 @@ while (have_posts()):
         <?php if ($stages): ?>
             <section class="god-journey" id="god-journey">
                 <div class="god-journey-header">
-                    <small><?php echo esc_html($journey_heading); ?>         <?php the_title(); ?></small>
+                    <h2><?php echo esc_html($journey_heading); ?>         <?php the_title(); ?></h2>
                 </div>
                 <div class="god-journey-track">
                     <?php foreach ($stages as $i => $stage): ?>
@@ -192,7 +171,7 @@ while (have_posts()):
         // ============================================================
         // 3. SYMBOLS — photo card grid, up to 8
         // ============================================================
-        $symbols_heading = get_field('symbols_heading') ?: 'Symbols Of';
+        $symbols_heading = get_field('symbols_heading') ?: 'Symbols Of ';
         $symbols = [];
         for ($i = 1; $i <= 8; $i++) {
             $s_title = get_field("symbol_{$i}_title");
@@ -208,7 +187,7 @@ while (have_posts()):
         ?>
         <?php if ($symbols): ?>
             <section class="god-symbols" id="god-symbols">
-                <small><?php echo esc_html($symbols_heading); ?>        </small>
+                <h2>Symbols Of <?php the_title(); ?> </h2>
                 <div class="god-symbols-grid">
                     <?php foreach ($symbols as $sym): ?>
                         <div class="god-symbol-card">
@@ -233,11 +212,9 @@ while (have_posts()):
 
         <?php
         // ============================================================
-        // POWERS & ABILITIES — up to 8. Distinct from Symbols: this is
-        // what he CAN DO, not physical emblems. Icon + short desc only,
-        // no images needed.
+        // POWERS & ABILITIES — 
         // ============================================================
-        $powers_heading = get_field('powers_heading') ;
+        $powers_heading = get_field('powers_heading');
         $powers = [];
         for ($i = 1; $i <= 8; $i++) {
             $p_title = get_field("power_{$i}_title");
@@ -252,7 +229,7 @@ while (have_posts()):
         ?>
         <?php if ($powers): ?>
             <section class="god-powers" id="god-powers">
-                <small>What  <?php the_title(); ?> Commands</small>
+                <h2>What <?php the_title(); ?> Commands</h2>
                 <div class="god-powers-grid">
                     <?php foreach ($powers as $power): ?>
                         <div class="god-power-card">
@@ -272,10 +249,7 @@ while (have_posts()):
 
         <?php
         // ============================================================
-        // ORIGIN STORY & MAJOR MYTHS — up to 6. Distinct from the
-        // Journey above: named, standalone legends/epithets rather
-        // than the compressed life-arc. Keep each desc to 1-2
-        // sentences — this is a reference list, not narrative prose.
+        // ORIGIN STORY & MAJOR MYTHS 
         // ============================================================
         $myths_heading = get_field('myths_heading');
         $myths = [];
@@ -289,7 +263,7 @@ while (have_posts()):
         <?php if ($myths): ?>
             <section class="god-myths" id="god-myths">
                 <div class="god-myths-inner">
-                    <small>Major Myths</small>
+                    <h2>Major Myths</h2>
                     <?php foreach ($myths as $i => $myth): ?>
                         <div class="god-myth-item">
                             <span class="god-myth-number" aria-hidden="true"><?php echo esc_html($i + 1); ?></span>
@@ -307,8 +281,7 @@ while (have_posts()):
 
         <?php
         // ============================================================
-        // 6. RELATIONSHIPS + WORSHIP TODAY — one combined row
-        // Relationships capped at 3 to fit the layout cleanly.
+        // 6. RELATIONSHIPS + WORSHIP TODAY — 
         // ============================================================
         $relations = [];
         for ($i = 1; $i <= 3; $i++) {
@@ -336,7 +309,6 @@ while (have_posts()):
                 $offerings[] = ['title' => $w_title, 'icon' => get_field("worship_{$i}_icon") ?: '✦'];
             }
         }
-        // Festivals — combined into the same column, up to 3.
         $festivals = [];
         for ($i = 1; $i <= 3; $i++) {
             $f_name = get_field("festival_{$i}_name");
@@ -355,7 +327,7 @@ while (have_posts()):
 
                     <?php if ($relations): ?>
                         <div class="god-relations-col">
-                            <small>The Relationships</small>
+                            <h2>The Relationships</h2>
                             <div class="god-relations-row">
                                 <?php foreach ($relations as $rel): ?>
                                     <a href="<?php echo esc_url($rel['url']); ?>" class="god-relation-card">
@@ -386,7 +358,7 @@ while (have_posts()):
                     <?php endif; ?>
 
                     <div class="god-worship-col">
-                        <small>Worship</small>
+                        <h2>Worship</h2>
                         <?php if ($worship_intro): ?>
                             <p><?php echo wp_kses_post($worship_intro); ?></p><?php endif; ?>
 
@@ -441,7 +413,7 @@ while (have_posts()):
         ?>
         <?php if ($culture_items): ?>
             <section class="god-culture" id="god-culture">
-                <small><?php the_title(); ?> In</small>
+                <h2><?php the_title(); ?> In</h2>
                 <h2>Pop Culture</h2>
                 <div class="god-culture-row">
                     <?php foreach ($culture_items as $item): ?>
@@ -506,7 +478,6 @@ while (have_posts()):
         <?php if ($faqs): ?>
             <section class="god-faq" id="god-faq">
                 <div class="god-faq-inner">
-                    <small>FAQ</small>
                     <h2>Frequently Asked Questions</h2>
                     <?php foreach ($faqs as $faq): ?>
                         <details>

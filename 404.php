@@ -1,16 +1,6 @@
 <?php
 /**
  * 404.php
- * Custom 404 error page for Ìtàn Òrìṣà.
- *
- * Stays on-theme — the gods didn't send you here.
- * Offers clear paths back into the site.
- *
- * Classes used:
- *   .error-page   — root wrapper
- *   .error-hero   — main content area
- *
- * Everything inside targeted by tag in CSS.
  */
 
 get_header();
@@ -18,7 +8,6 @@ get_header();
 $gods_archive = get_post_type_archive_link( 'god' )    ?: home_url( '/gods/' );
 $home_url     = home_url( '/' );
 $lt_page      = get_page_by_path( 'love-triangle' );
-$lt_url       = $lt_page ? get_permalink( $lt_page->ID ) : home_url( '/love-triangle/' );
 ?>
 
 <div class="error-page">

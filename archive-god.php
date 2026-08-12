@@ -1,7 +1,6 @@
 <?php
 /**
  * archive-god.php
- * Archive template for the 'god' custom post type.
 
  */
 

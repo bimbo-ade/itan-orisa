@@ -1,12 +1,7 @@
 <?php
 /**
  * Template Name: Accessibility
- *
- * Simple, utilitarian page   this isn't meant to be a visual
- * showcase like the god pages, it's a statement page people
- * need to be able to read easily. Content is normal block
- * editor content (the_content()) except for a couple of small
- * optional ACF fields for the intro line and last-updated date.
+
  */
 
 get_header();
@@ -34,9 +29,6 @@ while (have_posts()):
             <?php
             the_content();
 
-            // Fallback content if the page body is still empty  
-            // delete this whole if-block once you've written the
-            // real content in the block editor.
             if (!get_the_content()):
                 ?>
                 <h2>Our Commitment</h2>
@@ -65,9 +57,12 @@ while (have_posts()):
                 <h2>Feedback</h2>
                 <p>Accessibility is an ongoing process, and there may still be parts of the site that could be improved.
 
-If you experience difficulty using any part of Ìtàn Òrìṣà, I would genuinely like to hear about it. When getting in touch, it is helpful to include the page you were visiting, the device and browser you were using, and any assistive technology involved.
+                    If you experience difficulty using any part of Ìtàn Òrìṣà, I would genuinely like to hear about it. When
+                    getting in touch, it is helpful to include the page you were visiting, the device and browser you were
+                    using, and any assistive technology involved.
 
-Your feedback can help identify problems that may otherwise be missed and improve the experience for future visitors.</p>
+                    Your feedback can help identify problems that may otherwise be missed and improve the experience for future
+                    visitors.</p>
             <?php endif; ?>
         </div>
 

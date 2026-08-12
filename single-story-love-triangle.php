@@ -1,477 +1,219 @@
 <?php
 /**
- * Template Name: Love Triangle
-
+ * single-story-love-triangle.php
+ *
+ * WordPress loads this automatically for the Story post whose
+ * slug is "love-triangle" (single-story.php handles every other
+ * story). One-page immersive scroll experience.
+ *
+ * Everything from our review is folded in:
+ *  - Accessible chapter images (role="img" + aria-label, since a
+ *    CSS background-image has no native alt-text mechanism)
+ *  - get_stylesheet_directory_uri() instead of get_template_
+ *    directory_uri() (correct even if a child theme is added later)
+ *  - Word-by-word reveal on major headings (.love-split)
+ *  - Scroll-linked parallax on images and select text
+ *  - Ember particles, cursor glow, scroll progress bar + chapter rail
+ *  - The JS that actually makes .love-reveal work (was missing —
+ *    without it, everything below the hero was invisible)
  */
 
 get_header();
 
-
-// ============================================================
-// HERO
-// ============================================================
+/*
+|--------------------------------------------------------------------------
+| ACF CONTENT
+|--------------------------------------------------------------------------
+*/
 
 $hero_image = get_field('love_hero_image');
-$hero_heading = get_field('love_hero_heading') ?: 'She Left The Smith For The Storm';
+$hero_heading = get_field('love_hero_heading');
 $hero_intro = get_field('love_hero_intro');
 
-
-// ============================================================
-// INTRO
-// ============================================================
-
-$intro_heading = get_field('love_intro_heading') ?: 'Three Forces. Three Destinies. One Impossible Choice.';
+$intro_heading = get_field('love_intro_heading');
 $intro_text = get_field('love_intro_text');
 
-
-// ============================================================
-// CHARACTERS
-// ============================================================
-
 $ogun_image = get_field('love_ogun_image');
-$ogun_text  = get_field('love_ogun_text');
+$ogun_text = get_field('love_ogun_text');
 
-$oya_image  = get_field('love_oya_image');
-$oya_text   = get_field('love_oya_text');
+$oya_image = get_field('love_oya_image');
+$oya_text = get_field('love_oya_text');
 
 $sango_image = get_field('love_sango_image');
-$sango_text  = get_field('love_sango_text');
+$sango_text = get_field('love_sango_text');
+
+$beyond_heading = get_field('love_beyond_heading');
+$beyond_text = get_field('love_beyond_text');
+
+$ambient_sound = get_field('love_ambient_sound'); // File field, optional
 
 
-// ============================================================
-// CHAPTERS
-// ============================================================
+/*
+|--------------------------------------------------------------------------
+| CHAPTERS
+|--------------------------------------------------------------------------
+|
+| ACF Free doesn't have repeaters, so we manually collect the
+| six chapter field groups.
+|
+*/
 
 $chapters = [];
 
 for ($i = 1; $i <= 6; $i++) {
 
-    $chapters[$i] = [
-        'heading' => get_field("love_chapter_{$i}_heading"),
-        'text'    => get_field("love_chapter_{$i}_text"),
-        'image'   => get_field("love_chapter_{$i}_image"),
-    ];
+    $heading = get_field("love_chapter_{$i}_heading");
+    $text = get_field("love_chapter_{$i}_text");
+    $image = get_field("love_chapter_{$i}_image");
 
+    if ($heading || $text || $image) {
+        $chapters[] = [
+            'number' => sprintf('%02d', $i),
+            'heading' => $heading,
+            'text' => $text,
+            'image' => $image,
+        ];
+    }
 }
-
-
-// ============================================================
-// BEYOND THE STORY
-// ============================================================
-
-$beyond_heading = get_field('love_beyond_heading');
-$beyond_text    = get_field('love_beyond_text');
-
 ?>
 
-<main class="love-page">
+<main class="love-story">
 
-    <!-- ======================================================
+    <!-- =========================================================
+         AMBIENT EXPERIENCE (background grain/glow, not the FX layer)
+    ========================================================== -->
+
+    <div class="love-atmosphere" aria-hidden="true">
+        <div class="love-atmosphere-glow"></div>
+        <div class="love-atmosphere-noise"></div>
+    </div>
+
+
+    <!-- =========================================================
+         FX LAYER — embers, progress bar, chapter rail
+    ========================================================== -->
+
+    <canvas class="love-embers" aria-hidden="true"></canvas>
+
+    <div class="love-progress-bar" aria-hidden="true"></div>
+
+    <?php if ($chapters) : ?>
+    <nav class="love-chapter-rail" aria-label="Chapter progress">
+        <?php foreach ($chapters as $chapter) : ?>
+            <a href="#chapter-<?php echo esc_attr($chapter['number']); ?>"
+               data-chapter="<?php echo esc_attr($chapter['number']); ?>"
+               data-label="<?php echo esc_attr($chapter['heading']); ?>"></a>
+        <?php endforeach; ?>
+    </nav>
+    <?php endif; ?>
+
+
+    <!-- =========================================================
+         SOUND CONTROL — only renders if an ambient file is set
+    ========================================================== -->
+
+    <?php if ($ambient_sound) : ?>
+    <button
+        class="love-sound-toggle"
+        type="button"
+        aria-pressed="false"
+        aria-label="Turn story ambience on"
+    >
+        <span class="love-sound-icon" aria-hidden="true">◌</span>
+        <span class="love-sound-label">Sound off</span>
+    </button>
+    <?php endif; ?>
+
+
+    <!-- =========================================================
          HERO
-    ======================================================= -->
+    ========================================================== -->
 
     <section class="love-hero">
 
-        <?php if ($hero_image) : ?>
+        <?php if ($hero_image): ?>
 
-            <div class="love-hero__background" aria-hidden="true">
+            <div class="love-hero-media" aria-hidden="true">
+
                 <img
                     src="<?php echo esc_url($hero_image['url']); ?>"
                     alt=""
                 >
+
             </div>
 
         <?php endif; ?>
 
-        <div class="love-hero__overlay" aria-hidden="true"></div>
+        <div class="love-hero-overlay" aria-hidden="true"></div>
 
-        <div class="love-hero__content">
+        <div class="love-cursor-glow" aria-hidden="true"></div>
+
+        <div class="love-hero-content">
 
             <span class="love-eyebrow">
-                A Yorùbá Myth of Choice &amp; Consequence
+                An Ìtàn Òrìṣà
             </span>
 
-            <h1>
-                <?php echo wp_kses_post($hero_heading); ?>
-            </h1>
+            <?php if ($hero_heading): ?>
 
-            <?php if ($hero_intro) : ?>
+                <h1 class="love-split">
+                    <?php echo wp_kses_post($hero_heading); ?>
+                </h1>
+
+            <?php endif; ?>
+
+            <?php if ($hero_intro): ?>
 
                 <p>
-                    <?php echo esc_html($hero_intro); ?>
+                    <?php echo wp_kses_post($hero_intro); ?>
                 </p>
 
             <?php endif; ?>
 
-            <a href="#story" class="love-hero__scroll">
-                Begin The Story
-                <span aria-hidden="true">↓</span>
-            </a>
+            <div class="love-enter">
 
-        </div>
+                <span>Scroll to enter</span>
 
-    </section>
-
-
-    <!-- ======================================================
-         INTRODUCTION
-    ======================================================= -->
-
-    <section class="love-intro" id="story">
-
-        <div class="love-container">
-
-            <span class="love-eyebrow">
-                The Beginning
-            </span>
-
-            <h2>
-                <?php echo wp_kses_post($intro_heading); ?>
-            </h2>
-
-            <?php if ($intro_text) : ?>
-
-                <div class="love-intro__text">
-                    <?php echo wp_kses_post(wpautop($intro_text)); ?>
-                </div>
-
-            <?php endif; ?>
-
-        </div>
-
-    </section>
-
-
-    <!-- ======================================================
-         THREE FORCES
-    ======================================================= -->
-
-    <section class="love-forces">
-
-        <div class="love-container">
-
-            <div class="love-section-heading">
-
-                <span class="love-eyebrow">
-                    Three Forces
-                </span>
-
-                <h2>
-                    One Story.
-                </h2>
-
-            </div>
-
-
-            <div class="love-forces__grid">
-
-
-                <!-- OGUN -->
-
-                <article class="love-force love-force--ogun">
-
-                    <?php if ($ogun_image) : ?>
-
-                        <div class="love-force__image">
-
-                            <img
-                                src="<?php echo esc_url($ogun_image['url']); ?>"
-                                alt=""
-                                loading="lazy"
-                            >
-
-                        </div>
-
-                    <?php endif; ?>
-
-                    <div class="love-force__content">
-
-                        <span class="love-force__number">
-                            01
-                        </span>
-
-                        <h3>Ògún</h3>
-
-                        <span class="love-force__role">
-                            The Forger
-                        </span>
-
-                        <?php if ($ogun_text) : ?>
-
-                            <div class="love-force__text">
-                                <?php echo wp_kses_post(wpautop($ogun_text)); ?>
-                            </div>
-
-                        <?php endif; ?>
-
-                    </div>
-
-                </article>
-
-
-                <!-- OYA -->
-
-                <article class="love-force love-force--oya">
-
-                    <?php if ($oya_image) : ?>
-
-                        <div class="love-force__image">
-
-                            <img
-                                src="<?php echo esc_url($oya_image['url']); ?>"
-                                alt=""
-                                loading="lazy"
-                            >
-
-                        </div>
-
-                    <?php endif; ?>
-
-                    <div class="love-force__content">
-
-                        <span class="love-force__number">
-                            02
-                        </span>
-
-                        <h3>Ọ̀yá</h3>
-
-                        <span class="love-force__role">
-                            The Whirlwind
-                        </span>
-
-                        <?php if ($oya_text) : ?>
-
-                            <div class="love-force__text">
-                                <?php echo wp_kses_post(wpautop($oya_text)); ?>
-                            </div>
-
-                        <?php endif; ?>
-
-                    </div>
-
-                </article>
-
-
-                <!-- SANGO -->
-
-                <article class="love-force love-force--sango">
-
-                    <?php if ($sango_image) : ?>
-
-                        <div class="love-force__image">
-
-                            <img
-                                src="<?php echo esc_url($sango_image['url']); ?>"
-                                alt=""
-                                loading="lazy"
-                            >
-
-                        </div>
-
-                    <?php endif; ?>
-
-                    <div class="love-force__content">
-
-                        <span class="love-force__number">
-                            03
-                        </span>
-
-                        <h3>Ṣàngó</h3>
-
-                        <span class="love-force__role">
-                            The Thunderer
-                        </span>
-
-                        <?php if ($sango_text) : ?>
-
-                            <div class="love-force__text">
-                                <?php echo wp_kses_post(wpautop($sango_text)); ?>
-                            </div>
-
-                        <?php endif; ?>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ======================================================
-         CHAPTER NAVIGATION
-    ======================================================= -->
-
-    <nav class="love-chapters" aria-label="Story chapters">
-
-        <div class="love-container">
-
-            <div class="love-chapters__intro">
-
-                <span class="love-eyebrow">
-                    The Story
-                </span>
-
-                <span class="love-chapters__count">
-                    6 Chapters
-                </span>
-
-            </div>
-
-
-            <ol class="love-chapters__list">
-
-                <?php for ($i = 1; $i <= 6; $i++) : ?>
-
-                    <?php if (!empty($chapters[$i]['heading'])) : ?>
-
-                        <li>
-
-                            <a href="#chapter-<?php echo $i; ?>">
-
-                                <span>
-                                    <?php echo sprintf('%02d', $i); ?>
-                                </span>
-
-                                <strong>
-                                    <?php echo esc_html($chapters[$i]['heading']); ?>
-                                </strong>
-
-                            </a>
-
-                        </li>
-
-                    <?php endif; ?>
-
-                <?php endfor; ?>
-
-            </ol>
-
-        </div>
-
-    </nav>
-
-
-    <!-- ======================================================
-         FULL STORY
-    ======================================================= -->
-
-    <section class="love-story">
-
-        <div class="love-container">
-
-            <?php for ($i = 1; $i <= 6; $i++) : ?>
-
-                <?php
-
-                $chapter = $chapters[$i];
-
-                if (
-                    empty($chapter['heading']) &&
-                    empty($chapter['text'])
-                ) {
-                    continue;
-                }
-
-                $has_image = !empty($chapter['image']);
-
-                ?>
-
-                <article
-                    class="love-chapter love-chapter--<?php echo $i; ?> <?php echo $has_image ? 'has-image' : 'no-image'; ?>"
-                    id="chapter-<?php echo $i; ?>"
+                <span
+                    class="love-scroll-arrow"
+                    aria-hidden="true"
                 >
+                    ↓
+                </span>
 
-                    <div class="love-chapter__number">
-
-                        <span>
-                            <?php echo sprintf('%02d', $i); ?>
-                        </span>
-
-                    </div>
-
-
-                    <div class="love-chapter__content">
-
-                        <span class="love-eyebrow">
-                            Chapter <?php echo sprintf('%02d', $i); ?>
-                        </span>
-
-                        <?php if ($chapter['heading']) : ?>
-
-                            <h2>
-                                <?php echo wp_kses_post($chapter['heading']); ?>
-                            </h2>
-
-                        <?php endif; ?>
-
-                        <?php if ($chapter['text']) : ?>
-
-                            <div class="love-chapter__text">
-
-                                <?php echo wp_kses_post(wpautop($chapter['text'])); ?>
-
-                            </div>
-
-                        <?php endif; ?>
-
-                    </div>
-
-
-                    <?php if ($has_image) : ?>
-
-                        <figure class="love-chapter__image">
-
-                            <img
-                                src="<?php echo esc_url($chapter['image']['url']); ?>"
-                                alt=""
-                                loading="lazy"
-                            >
-
-                        </figure>
-
-                    <?php endif; ?>
-
-                </article>
-
-            <?php endfor; ?>
+            </div>
 
         </div>
 
     </section>
 
 
-    <!-- ======================================================
-         BEYOND THE STORY
-    ======================================================= -->
+    <!-- =========================================================
+         INTRODUCTION
+    ========================================================== -->
 
-    <?php if ($beyond_heading || $beyond_text) : ?>
+    <?php if ($intro_heading || $intro_text): ?>
 
-        <section class="love-beyond">
+        <section class="love-intro love-reveal">
 
-            <div class="love-container">
+            <div class="love-intro-inner">
 
-                <span class="love-eyebrow">
-                    Beyond The Story
+                <span class="love-section-number">
+                    00
                 </span>
 
-                <?php if ($beyond_heading) : ?>
+                <?php if ($intro_heading): ?>
 
-                    <h2>
-                        <?php echo wp_kses_post($beyond_heading); ?>
+                    <h2 class="love-split">
+                        <?php echo wp_kses_post($intro_heading); ?>
                     </h2>
 
                 <?php endif; ?>
 
-                <?php if ($beyond_text) : ?>
+                <?php if ($intro_text): ?>
 
-                    <div class="love-beyond__text">
-
-                        <?php echo wp_kses_post(wpautop($beyond_text)); ?>
-
+                    <div class="love-intro-copy love-parallax-fade">
+                        <?php echo wp_kses_post($intro_text); ?>
                     </div>
 
                 <?php endif; ?>
@@ -483,29 +225,321 @@ $beyond_text    = get_field('love_beyond_text');
     <?php endif; ?>
 
 
-    <!-- ======================================================
-         END
-    ======================================================= -->
+    <!-- =========================================================
+         THE THREE GODS
+    ========================================================== -->
 
-    <section class="love-ending">
+    <section class="love-gods">
 
-        <div class="love-container">
+        <div class="love-gods-intro">
 
-            <span aria-hidden="true">✦</span>
+            <span>Before the story begins</span>
 
-            <p>
-                Some stories are never truly over.
-            </p>
-
-            <small>
-                The story continues in memory.
-            </small>
+            <h2 class="love-split">
+                Three forces. One story.
+            </h2>
 
         </div>
 
+
+        <!-- OGUN -->
+
+        <?php if ($ogun_image || $ogun_text): ?>
+
+            <article class="love-god love-god--ogun">
+
+                <?php if ($ogun_image): ?>
+
+                    <div class="love-god-media">
+
+                        <img
+                            class="love-parallax-img"
+                            src="<?php echo esc_url($ogun_image['url']); ?>"
+                            alt="<?php echo esc_attr( $ogun_image['alt'] ?: 'Ògún, god of iron and the forge' ); ?>"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                <?php endif; ?>
+
+                <div class="love-god-content">
+
+                    <span>01</span>
+
+                    <h3 class="love-split">Ogun</h3>
+
+                    <?php if ($ogun_text): ?>
+
+                        <div>
+                            <?php echo wp_kses_post($ogun_text); ?>
+                        </div>
+
+                    <?php endif; ?>
+
+                </div>
+
+            </article>
+
+        <?php endif; ?>
+
+
+        <!-- OYA -->
+
+        <?php if ($oya_image || $oya_text): ?>
+
+            <article class="love-god love-god--oya">
+
+                <?php if ($oya_image): ?>
+
+                    <div class="love-god-media">
+
+                        <img
+                            class="love-parallax-img"
+                            src="<?php echo esc_url($oya_image['url']); ?>"
+                            alt="<?php echo esc_attr( $oya_image['alt'] ?: 'Ọ̀yá, goddess of wind and storms' ); ?>"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                <?php endif; ?>
+
+                <div class="love-god-content">
+
+                    <span>02</span>
+
+                    <h3 class="love-split">Ọya</h3>
+
+                    <?php if ($oya_text): ?>
+
+                        <div>
+                            <?php echo wp_kses_post($oya_text); ?>
+                        </div>
+
+                    <?php endif; ?>
+
+                </div>
+
+            </article>
+
+        <?php endif; ?>
+
+
+        <!-- SANGO -->
+
+        <?php if ($sango_image || $sango_text): ?>
+
+            <article class="love-god love-god--sango">
+
+                <?php if ($sango_image): ?>
+
+                    <div class="love-god-media">
+
+                        <img
+                            class="love-parallax-img"
+                            src="<?php echo esc_url($sango_image['url']); ?>"
+                            alt="<?php echo esc_attr( $sango_image['alt'] ?: 'Ṣàngó, god of thunder and lightning' ); ?>"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                <?php endif; ?>
+
+                <div class="love-god-content">
+
+                    <span>03</span>
+
+                    <h3 class="love-split">Ṣàngó</h3>
+
+                    <?php if ($sango_text): ?>
+
+                        <div>
+                            <?php echo wp_kses_post($sango_text); ?>
+                        </div>
+
+                    <?php endif; ?>
+
+                </div>
+
+            </article>
+
+        <?php endif; ?>
+
     </section>
+
+
+    <!-- =========================================================
+         CHAPTERS
+    ========================================================== -->
+
+    <div class="love-chapters">
+
+        <?php foreach ($chapters as $index => $chapter): ?>
+
+            <?php
+            $chapter_class = 'love-chapter love-reveal';
+
+            if ($chapter['image']) {
+                $chapter_class .= ' love-chapter--has-image';
+            } else {
+                $chapter_class .= ' love-chapter--text-only';
+            }
+
+            if ($index % 2 !== 0) {
+                $chapter_class .= ' love-chapter--reverse';
+            }
+            ?>
+
+            <section
+                class="<?php echo esc_attr($chapter_class); ?>"
+                data-chapter="<?php echo esc_attr($chapter['number']); ?>"
+                id="chapter-<?php echo esc_attr($chapter['number']); ?>"
+            >
+
+                <?php if ($chapter['image']): ?>
+
+                    <div class="love-chapter-media love-parallax-img">
+
+                        <div
+                            class="love-chapter-image"
+                            style="--chapter-image: url('<?php echo esc_url($chapter['image']['url']); ?>');"
+                            role="img"
+                            aria-label="<?php echo esc_attr(
+                                $chapter['image']['alt']
+                                    ?: ( $chapter['heading'] ? wp_strip_all_tags($chapter['heading']) : 'Illustration for Chapter ' . $chapter['number'] )
+                            ); ?>"
+                        ></div>
+
+                    </div>
+
+                <?php endif; ?>
+
+
+                <div class="love-chapter-content">
+
+                    <div class="love-chapter-marker">
+
+                        <span>
+                            Chapter
+                        </span>
+
+                        <strong>
+                            <?php echo esc_html($chapter['number']); ?>
+                        </strong>
+
+                    </div>
+
+
+                    <?php if ($chapter['heading']): ?>
+
+                        <h2 class="love-split">
+                            <?php echo wp_kses_post($chapter['heading']); ?>
+                        </h2>
+
+                    <?php endif; ?>
+
+
+                    <?php if ($chapter['text']): ?>
+
+                        <div class="love-chapter-text love-parallax-fade">
+                            <?php echo wp_kses_post($chapter['text']); ?>
+                        </div>
+
+                    <?php endif; ?>
+
+                </div>
+
+            </section>
+
+        <?php endforeach; ?>
+
+    </div>
+
+
+    <!-- =========================================================
+         ENDING
+    ========================================================== -->
+
+    <?php if ($beyond_heading || $beyond_text): ?>
+
+        <section class="love-beyond love-reveal">
+
+            <div class="love-beyond-background" aria-hidden="true"></div>
+
+            <div class="love-beyond-content">
+
+                <span>
+                    Beyond the story
+                </span>
+
+                <?php if ($beyond_heading): ?>
+
+                    <h2 class="love-split">
+                        <?php echo wp_kses_post($beyond_heading); ?>
+                    </h2>
+
+                <?php endif; ?>
+
+                <?php if ($beyond_text): ?>
+
+                    <div>
+                        <?php echo wp_kses_post($beyond_text); ?>
+                    </div>
+
+                <?php endif; ?>
+
+            </div>
+
+        </section>
+
+    <?php endif; ?>
+
 
 </main>
 
+
+<!-- =============================================================
+     AMBIENT AUDIO — only output if a sound file is set
+============================================================== -->
+
+<?php if ($ambient_sound) : ?>
+<audio
+    id="love-ambience"
+    preload="none"
+    loop
+    aria-hidden="true"
+>
+    <source
+        src="<?php echo esc_url($ambient_sound['url']); ?>"
+        type="<?php echo esc_attr($ambient_sound['mime_type'] ?? 'audio/mpeg'); ?>"
+    >
+</audio>
+<?php endif; ?>
+
+
+<?php
+// Both love-story.css and love-story.js live in your theme's
+// css/ and js/ folders — adjust the paths below if yours differ.
+// get_stylesheet_directory_uri() is used deliberately over
+// get_template_directory_uri() so this still works correctly if
+// a child theme is ever introduced.
+
+wp_enqueue_style(
+    'love-story',
+    get_stylesheet_directory_uri() . '/css/love-story.css',
+    [],
+    '1.0'
+);
+
+wp_enqueue_script(
+    'love-story',
+    get_stylesheet_directory_uri() . '/js/love-story.js',
+    [],
+    '1.0',
+    true
+);
+?>
 
 <?php get_footer(); ?>

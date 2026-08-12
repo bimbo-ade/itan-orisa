@@ -1,7 +1,6 @@
 <?php
 /**
  * archive-story.php
- * Archive template for the 'story' custom post type.
 
  */
 

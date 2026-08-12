@@ -250,7 +250,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
     <?php endif; ?>
 
     <!-- =========================================================
-         5. CULTURAL CONTEXT
+         4. CULTURAL CONTEXT
     ========================================================== -->
     <?php
     $ctx_image =
