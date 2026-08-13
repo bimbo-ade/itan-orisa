@@ -14,7 +14,8 @@
     <link rel="stylesheet" href="<?php echo get_stylesheet_uri(); ?>">
 </head>
 
-<body <?php body_class(); ?>> <a class="skip-link" href="#main-content">Skip to main content</a>
+<body <?php body_class(); ?>>
+     <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <nav class="main-nav">
         <div class="nav-container">

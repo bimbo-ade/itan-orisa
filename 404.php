@@ -5,9 +5,8 @@
 
 get_header();
 
-$gods_archive = get_post_type_archive_link( 'god' )    ?: home_url( '/gods/' );
-$home_url     = home_url( '/' );
-$lt_page      = get_page_by_path( 'love-triangle' );
+$gods_archive = get_post_type_archive_link('god') ?: home_url('/gods/');
+$home_url = home_url('/');
 ?>
 
 <div class="error-page">
@@ -33,18 +32,18 @@ $lt_page      = get_page_by_path( 'love-triangle' );
             </p>
 
             <nav aria-label="Find your way back">
-                <a href="<?php echo esc_url( $home_url ); ?>" class="btn-primary">
+                <a href="<?php echo esc_url($home_url); ?>" class="btn-primary">
                     Back to the Homepage
                 </a>
-                <a href="<?php echo esc_url( $gods_archive ); ?>" class="btn-ghost">
+                <a href="<?php echo esc_url($gods_archive); ?>" class="btn-ghost">
                     Meet the Gods
                 </a>
-              
+
             </nav>
 
         </div>
 
-       
+
 
     </section>
 

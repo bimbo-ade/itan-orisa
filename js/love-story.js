@@ -1,330 +1,369 @@
-/**
- * love-story.js
- * Everything for the Love Triangle page in one file:
- *   1. Scroll reveal (.love-reveal → .is-visible)
- *   2. Ambient sound toggle (off by default, always)
- *   3. Split-text word reveal (.love-split)
- *   4. Continuous scroll-linked parallax (.love-parallax-img / -fade)
- *   5. Ember particles (canvas)
- *   6. Cursor glow (hero, fine-pointer devices only)
- *   7. Scroll progress bar + chapter rail
- *
- * Effects 3–7 fully skip initialization under prefers-reduced-
- * motion — not just visually suppressed, they never run at all,
- * which is better for both correctness and battery/performance.
- */
+/* =============================================================
+   love-story.js  —  v2 "The Triangle"
+
+   Vanilla, no dependencies, no build step.
+
+   1.  Word-by-word heading reveal          [data-lt-split]
+   2.  Section reveal                       [data-lt-reveal]
+   3.  Stage cross-fade + accent travel     [data-lt-stage] / [data-tone]
+   4.  Scroll progress, HUD, chapter rail   [data-lt-chapter]
+   5.  Parallax on plates                   [data-lt-parallax]
+   6.  Drifting dust canvas
+   7.  Cursor bloom
+   8.  Ambient audio with fade in/out
+   ============================================================= */
+
 (function () {
-    'use strict';
+  'use strict';
 
-    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var story = document.querySelector('.love-story');
-    if (!story) return;
+  var root = document.querySelector('[data-lt]');
+  if (!root) return;
 
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-    // ------------------------------------------------------------
-    // 1. SCROLL REVEAL — runs regardless of reduced-motion (it
-    // controls VISIBILITY, not just decoration; if this didn't
-    // run, whole sections would stay invisible forever). Under
-    // reduced motion it just shows everything immediately instead
-    // of animating it in.
-    // ------------------------------------------------------------
-    (function scrollReveal() {
-        var revealEls = document.querySelectorAll('.love-reveal');
-        if (!revealEls.length) return;
+  var TONES = {
+    ogun: '#4f9a72',
+    oya: '#8b6ad6',
+    sango: '#d9483f',
+    ash: '#b9a67e'
+  };
 
-        if (reduceMotion || !('IntersectionObserver' in window)) {
-            revealEls.forEach(function (el) {
-                el.classList.add('is-visible');
-            });
-            return;
+  /* -----------------------------------------------------------
+     1. SPLIT HEADINGS
+  ----------------------------------------------------------- */
+
+  function split(el) {
+    if (el.dataset.split === 'done') return;
+
+    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    var nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+
+    var i = 0;
+
+    nodes.forEach(function (node) {
+      if (!node.nodeValue.trim()) return;
+
+      var frag = document.createDocumentFragment();
+
+      node.nodeValue.split(/(\s+)/).forEach(function (chunk) {
+        if (!chunk) return;
+
+        if (!chunk.trim()) {
+          frag.appendChild(document.createTextNode(' '));
+          return;
         }
 
-        var revealObserver = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.12, rootMargin: '0px 0px -80px 0px' });
+        var outer = document.createElement('span');
+        outer.className = 'lt-word';
 
-        revealEls.forEach(function (el) { revealObserver.observe(el); });
-    })();
+        var inner = document.createElement('span');
+        inner.textContent = chunk;
+        inner.style.setProperty('--d', (i * 0.055).toFixed(3) + 's');
+        i++;
 
+        outer.appendChild(inner);
+        frag.appendChild(outer);
+      });
 
-    // ------------------------------------------------------------
-    // 2. AMBIENT SOUND TOGGLE — off by default, always. Only a
-    // click can start it; nothing here ever autoplays. Button/
-    // audio elements only exist in the DOM if an ambient file was
-    // set in ACF, so these selectors safely find nothing otherwise.
-    // ------------------------------------------------------------
-    (function soundToggle() {
-        var soundBtn = document.querySelector('.love-sound-toggle');
-        var audioEl = document.getElementById('love-ambience');
-        var soundLabel = soundBtn ? soundBtn.querySelector('.love-sound-label') : null;
-        if (!soundBtn || !audioEl) return;
+      node.parentNode.replaceChild(frag, node);
+    });
 
-        var STORAGE_KEY = 'love-story-ambience';
-        audioEl.volume = 0.35;
+    el.dataset.split = 'done';
+  }
 
-        function setSoundState(isOn) {
-            soundBtn.setAttribute('aria-pressed', isOn ? 'true' : 'false');
-            soundBtn.setAttribute('aria-label', isOn ? 'Turn story ambience off' : 'Turn story ambience on');
-            if (soundLabel) soundLabel.textContent = isOn ? 'Sound on' : 'Sound off';
-        }
+  var headings = [].slice.call(root.querySelectorAll('[data-lt-split]'));
+  if (!reduced) headings.forEach(split);
 
-        soundBtn.addEventListener('click', function () {
-            var isOn = soundBtn.getAttribute('aria-pressed') === 'true';
-            if (isOn) {
-                audioEl.pause();
-                setSoundState(false);
-                localStorage.setItem(STORAGE_KEY, 'off');
-            } else {
-                audioEl.play().catch(function () { /* fail silently */ });
-                setSoundState(true);
-                localStorage.setItem(STORAGE_KEY, 'on');
-            }
+  /* -----------------------------------------------------------
+     2. REVEAL
+  ----------------------------------------------------------- */
+
+  var revealables = [].slice
+    .call(root.querySelectorAll('[data-lt-reveal]'))
+    .concat(headings)
+    .concat([].slice.call(root.querySelectorAll('.lt-force')));
+
+  if (reduced || !('IntersectionObserver' in window)) {
+    revealables.forEach(function (el) { el.classList.add('is-in'); });
+  } else {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-in');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+
+    revealables.forEach(function (el) { revealObserver.observe(el); });
+  }
+
+  /* -----------------------------------------------------------
+     3. STAGE + ACCENT
+  ----------------------------------------------------------- */
+
+  var layers = [].slice.call(root.querySelectorAll('.lt-stage__layer'));
+  var stageSections = [].slice.call(root.querySelectorAll('[data-lt-stage]'));
+  var railLinks = [].slice.call(document.querySelectorAll('[data-lt-rail]'));
+  var nowValue = document.querySelector('.lt-hud__now-value');
+
+  var currentStage = null;
+  var currentTone = null;
+
+  function setStage(name) {
+    if (name === currentStage) return;
+    currentStage = name;
+
+    root.classList.toggle('is-stage-off', name === 'none');
+
+    layers.forEach(function (layer) {
+      layer.classList.toggle('is-active', layer.dataset.stage === name);
+    });
+  }
+
+  function setTone(tone) {
+    if (tone === currentTone) return;
+    currentTone = tone;
+    root.style.setProperty('--accent', TONES[tone] || 'var(--bone-dim)');
+  }
+
+  if ('IntersectionObserver' in window && stageSections.length) {
+    var stageObserver = new IntersectionObserver(function (entries) {
+      // pick the most visible section currently on screen
+      var best = null;
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        if (!best || entry.intersectionRatio > best.intersectionRatio) best = entry;
+      });
+      if (!best) return;
+
+      var el = best.target;
+      setStage(el.dataset.ltStage);
+      if (el.dataset.tone) setTone(el.dataset.tone);
+
+      var label = el.getAttribute('data-lt-chapter-label');
+      var id = el.getAttribute('data-lt-chapter');
+
+      if (nowValue) {
+        nowValue.textContent = label
+          ? label
+          : (el.classList.contains('lt-hero') ? 'The Love Triangle' : nowValue.textContent);
+      }
+
+      railLinks.forEach(function (link) {
+        link.classList.toggle('is-current', !!id && link.dataset.ltRail === id);
+      });
+    }, { threshold: [0.15, 0.4, 0.7], rootMargin: '-25% 0px -25% 0px' });
+
+    stageSections.forEach(function (s) { stageObserver.observe(s); });
+  }
+
+  /* -----------------------------------------------------------
+     4. SCROLL: progress, HUD, parallax
+  ----------------------------------------------------------- */
+
+  var progress = document.querySelector('[data-lt-progress]');
+  var hud = document.querySelector('[data-lt-hud]');
+  var rail = document.querySelector('.lt-rail');
+  var parallaxEls = [].slice.call(root.querySelectorAll('[data-lt-parallax]'));
+
+  var lastY = window.scrollY;
+  var ticking = false;
+
+  function onScroll() {
+    var y = window.scrollY;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = max > 0 ? Math.min(1, y / max) : 0;
+
+    if (progress) progress.style.width = (pct * 100).toFixed(2) + '%';
+
+    if (hud) hud.classList.toggle('is-visible', y > window.innerHeight * 0.6);
+    if (rail) rail.classList.toggle('is-visible', y > window.innerHeight * 0.9 && pct < 0.96);
+
+    if (!reduced) {
+      var vh = window.innerHeight;
+      parallaxEls.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > vh + 200) return;
+        var mid = (r.top + r.height / 2 - vh / 2) / vh; // -1 … 1
+        el.style.transform = 'translate3d(0,' + (mid * -22).toFixed(2) + 'px,0) scale(1.06)';
+      });
+    }
+
+    lastY = y;
+    ticking = false;
+  }
+
+  function requestScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(onScroll);
+  }
+
+  window.addEventListener('scroll', requestScroll, { passive: true });
+  window.addEventListener('resize', requestScroll);
+  onScroll();
+
+  /* smooth anchor jumps from the rail */
+  railLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var target = document.querySelector(link.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    });
+  });
+
+  /* -----------------------------------------------------------
+     5. DUST
+  ----------------------------------------------------------- */
+
+  var canvas = root.querySelector('.lt-dust');
+
+  if (canvas && !reduced) {
+    var ctx = canvas.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var motes = [];
+    var running = true;
+
+    function sizeCanvas() {
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      var count = Math.round((window.innerWidth * window.innerHeight) / 26000);
+      count = Math.max(24, Math.min(90, count));
+
+      motes = [];
+      for (var i = 0; i < count; i++) {
+        motes.push({
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          r: Math.random() * 1.4 + 0.3,
+          vx: (Math.random() - 0.5) * 0.16,
+          vy: -(Math.random() * 0.22 + 0.04),
+          a: Math.random() * 0.4 + 0.08,
+          p: Math.random() * Math.PI * 2
         });
+      }
+    }
 
-        // Restore the visual state on return visits. Actual auto-
-        // resume depends on the browser's autoplay policy — if
-        // it's blocked, we don't lie about the state.
-        if (localStorage.getItem(STORAGE_KEY) === 'on') {
-            audioEl.play().then(function () {
-                setSoundState(true);
-            }).catch(function () {
-                setSoundState(false);
-                localStorage.setItem(STORAGE_KEY, 'off');
-            });
-        }
+    function accentRGB() {
+      var hex = TONES[currentTone] || '#cfc7b8';
+      return [
+        parseInt(hex.slice(1, 3), 16),
+        parseInt(hex.slice(3, 5), 16),
+        parseInt(hex.slice(5, 7), 16)
+      ];
+    }
+
+    function tick() {
+      if (!running) return;
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+      var c = accentRGB();
+
+      motes.forEach(function (m) {
+        m.p += 0.01;
+        m.x += m.vx + Math.sin(m.p) * 0.18;
+        m.y += m.vy;
+
+        if (m.y < -10) { m.y = window.innerHeight + 10; m.x = Math.random() * window.innerWidth; }
+        if (m.x < -10) m.x = window.innerWidth + 10;
+        if (m.x > window.innerWidth + 10) m.x = -10;
+
+        ctx.beginPath();
+        ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + m.a + ')';
+        ctx.fill();
+      });
+
+      requestAnimationFrame(tick);
+    }
+
+    sizeCanvas();
+    window.addEventListener('resize', sizeCanvas);
+    document.addEventListener('visibilitychange', function () {
+      running = !document.hidden;
+      if (running) tick();
+    });
+    tick();
+  }
+
+  /* -----------------------------------------------------------
+     6. CURSOR BLOOM
+  ----------------------------------------------------------- */
+
+  var cursor = root.querySelector('.lt-cursor');
+
+  if (cursor && fine && !reduced) {
+    var cx = window.innerWidth / 2;
+    var cy = window.innerHeight / 2;
+    var tx = cx;
+    var ty = cy;
+
+    window.addEventListener('mousemove', function (e) {
+      tx = e.clientX;
+      ty = e.clientY;
+    }, { passive: true });
+
+    (function follow() {
+      cx += (tx - cx) * 0.08;
+      cy += (ty - cy) * 0.08;
+      cursor.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)';
+      requestAnimationFrame(follow);
     })();
+  }
 
+  /* -----------------------------------------------------------
+     7. AMBIENT AUDIO
+  ----------------------------------------------------------- */
 
-    // Everything below is pure motion/decoration — skip entirely
-    // under reduced motion rather than running it and hiding the
-    // result with CSS.
-    if (reduceMotion) return;
+  var audio = document.getElementById('lt-ambience');
+  var soundBtn = document.querySelector('[data-lt-sound]');
 
+  if (audio && soundBtn) {
+    var TARGET = 0.35;
+    var fadeTimer = null;
+    var on = false;
 
-    // ------------------------------------------------------------
-    // 3. SPLIT-TEXT WORD REVEAL
-    // ------------------------------------------------------------
-    (function splitText() {
-        var targets = document.querySelectorAll('.love-split');
-        if (!targets.length) return;
-
-        targets.forEach(function (el) {
-            var words = el.textContent.trim().split(/\s+/);
-            el.textContent = '';
-
-            words.forEach(function (word, i) {
-                var outer = document.createElement('span');
-                outer.className = 'word';
-
-                var inner = document.createElement('span');
-                inner.className = 'word-inner';
-                inner.textContent = word;
-                inner.style.transitionDelay = (i * 0.045) + 's';
-
-                outer.appendChild(inner);
-                el.appendChild(outer);
-                if (i < words.length - 1) el.appendChild(document.createTextNode(' '));
-            });
-        });
-
-        if ('IntersectionObserver' in window) {
-            var splitObserver = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        splitObserver.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.4 });
-
-            targets.forEach(function (el) { splitObserver.observe(el); });
-        } else {
-            targets.forEach(function (el) { el.classList.add('is-visible'); });
+    function fade(to, done) {
+      clearInterval(fadeTimer);
+      fadeTimer = setInterval(function () {
+        var delta = to - audio.volume;
+        if (Math.abs(delta) < 0.02) {
+          audio.volume = to;
+          clearInterval(fadeTimer);
+          if (done) done();
+          return;
         }
-    })();
+        audio.volume = Math.max(0, Math.min(1, audio.volume + delta * 0.12));
+      }, 40);
+    }
 
+    function setOn(next) {
+      on = next;
+      soundBtn.setAttribute('aria-pressed', String(on));
+      soundBtn.setAttribute('aria-label', on ? 'Turn story ambience off' : 'Turn story ambience on');
 
-    // ------------------------------------------------------------
-    // 4. SCROLL-LINKED PARALLAX
-    // ------------------------------------------------------------
-    (function scrollParallax() {
-        var imgTargets = document.querySelectorAll('.love-parallax-img');
-        var fadeTargets = document.querySelectorAll('.love-parallax-fade');
-        if (!imgTargets.length && !fadeTargets.length) return;
+      if (on) {
+        audio.volume = 0;
+        var p = audio.play();
+        if (p && p.catch) p.catch(function () { setOn(false); });
+        fade(TARGET);
+      } else {
+        fade(0, function () { audio.pause(); });
+      }
+    }
 
-        var ticking = false;
+    soundBtn.addEventListener('click', function () { setOn(!on); });
 
-        function update() {
-            var vh = window.innerHeight;
-
-            imgTargets.forEach(function (el) {
-                var rect = el.getBoundingClientRect();
-                var centerOffset = (rect.top + rect.height / 2) - vh / 2;
-                var y = Math.max(-60, Math.min(60, centerOffset * 0.08));
-                el.style.setProperty('--parallax-y', y + 'px');
-            });
-
-            fadeTargets.forEach(function (el) {
-                var rect = el.getBoundingClientRect();
-                var visibleRatio = 1 - Math.min(1, Math.max(0,
-                    Math.abs((rect.top + rect.height / 2) - vh / 2) / (vh / 1.4)
-                ));
-                el.style.setProperty('--parallax-opacity', (0.3 + visibleRatio * 0.7).toFixed(2));
-                el.style.setProperty('--parallax-blur', ((1 - visibleRatio) * 4).toFixed(1) + 'px');
-            });
-
-            ticking = false;
-        }
-
-        window.addEventListener('scroll', function () {
-            if (!ticking) {
-                requestAnimationFrame(update);
-                ticking = true;
-            }
-        }, { passive: true });
-
-        update();
-    })();
-
-
-    // ------------------------------------------------------------
-    // 5. EMBER PARTICLES
-    // ------------------------------------------------------------
-    (function embers() {
-        var canvas = document.querySelector('.love-embers');
-        if (!canvas) return;
-
-        var ctx = canvas.getContext('2d');
-        var particles = [];
-        var count = window.innerWidth < 700 ? 18 : 40;
-        var dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-        function resize() {
-            canvas.width = window.innerWidth * dpr;
-            canvas.height = window.innerHeight * dpr;
-            canvas.style.width = window.innerWidth + 'px';
-            canvas.style.height = window.innerHeight + 'px';
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        }
-        resize();
-        window.addEventListener('resize', resize);
-
-        function makeParticle() {
-            return {
-                x: Math.random() * window.innerWidth,
-                y: window.innerHeight + Math.random() * 100,
-                r: Math.random() * 2 + 0.5,
-                speed: Math.random() * 0.6 + 0.2,
-                drift: (Math.random() - 0.5) * 0.4,
-                alpha: Math.random() * 0.5 + 0.2,
-                hue: Math.random() > 0.5 ? '200,162,74' : '166,56,39'
-            };
-        }
-        for (var i = 0; i < count; i++) {
-            var p = makeParticle();
-            p.y = Math.random() * window.innerHeight;
-            particles.push(p);
-        }
-
-        var visible = true;
-        document.addEventListener('visibilitychange', function () {
-            visible = !document.hidden;
-        });
-
-        function tick() {
-            if (visible) {
-                ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-                particles.forEach(function (p) {
-                    p.y -= p.speed;
-                    p.x += p.drift;
-                    if (p.y < -10) Object.assign(p, makeParticle(), { y: window.innerHeight + 10 });
-
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                    ctx.fillStyle = 'rgba(' + p.hue + ',' + p.alpha + ')';
-                    ctx.fill();
-                });
-            }
-            requestAnimationFrame(tick);
-        }
-        tick();
-    })();
-
-
-    // ------------------------------------------------------------
-    // 6. CURSOR GLOW — hero only, fine-pointer devices only
-    // ------------------------------------------------------------
-    (function cursorGlow() {
-        if (!window.matchMedia('(pointer: fine)').matches) return;
-
-        var hero = document.querySelector('.love-hero');
-        var glow = document.querySelector('.love-cursor-glow');
-        if (!hero || !glow) return;
-
-        var targetX = 0, targetY = 0, currentX = 0, currentY = 0;
-
-        hero.addEventListener('mouseenter', function () {
-            glow.classList.add('is-active');
-        });
-        hero.addEventListener('mouseleave', function () {
-            glow.classList.remove('is-active');
-        });
-        hero.addEventListener('mousemove', function (e) {
-            var rect = hero.getBoundingClientRect();
-            targetX = e.clientX - rect.left;
-            targetY = e.clientY - rect.top;
-        });
-
-        function lerp() {
-            currentX += (targetX - currentX) * 0.08;
-            currentY += (targetY - currentY) * 0.08;
-            glow.style.transform = 'translate3d(' + currentX + 'px, ' + currentY + 'px, 0) translate(-50%, -50%)';
-            requestAnimationFrame(lerp);
-        }
-        lerp();
-    })();
-
-
-    // ------------------------------------------------------------
-    // 7. PROGRESS BAR + CHAPTER RAIL
-    // ------------------------------------------------------------
-    (function progress() {
-        var bar = document.querySelector('.love-progress-bar');
-        var railLinks = document.querySelectorAll('.love-chapter-rail a');
-        var chapterSections = document.querySelectorAll('[data-chapter]');
-
-        if (bar) {
-            var ticking = false;
-            window.addEventListener('scroll', function () {
-                if (ticking) return;
-                ticking = true;
-                requestAnimationFrame(function () {
-                    var max = document.documentElement.scrollHeight - window.innerHeight;
-                    var pct = max > 0 ? (window.scrollY / max) * 100 : 0;
-                    bar.style.setProperty('--scroll-progress', pct.toFixed(1) + '%');
-                    ticking = false;
-                });
-            }, { passive: true });
-        }
-
-        if (railLinks.length && chapterSections.length && 'IntersectionObserver' in window) {
-            var railObserver = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (!entry.isIntersecting) return;
-                    var num = entry.target.getAttribute('data-chapter');
-                    railLinks.forEach(function (link) {
-                        link.classList.toggle('is-active', link.getAttribute('data-chapter') === num);
-                    });
-                });
-            }, { rootMargin: '-45% 0px -50% 0px' });
-
-            chapterSections.forEach(function (section) { railObserver.observe(section); });
-        }
-    })();
-
+    document.addEventListener('visibilitychange', function () {
+      if (!on) return;
+      fade(document.hidden ? 0.06 : TARGET);
+    });
+  }
 })();

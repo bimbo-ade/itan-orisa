@@ -90,7 +90,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
             <div class="home-section-heading">
 
                 <div>
-                   
+
                 </div>
 
                 <div>
@@ -155,7 +155,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
                                 </span>
                             <?php endif; ?>
 
-                            
+
 
                         </div>
 
@@ -324,7 +324,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
     <section class="home-stories">
 
         <div class="home-stories-header">
-                <h2>Latest Tales</h2>
+            <h2>Latest Tales</h2>
 
             <a href="<?php echo esc_url($stories_archive); ?>">
                 View All Stories &rarr;
@@ -338,10 +338,8 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
                 <?php while ($stories_query->have_posts()):
                     $stories_query->the_post();
 
-                    // Featured image first
                     $story_image = get_the_post_thumbnail_url(get_the_ID(), 'large');
 
-                    // ACF fallback
                     if (!$story_image) {
                         $acf_image = get_field('hero_image');
 
@@ -391,11 +389,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
     </section>
 
 
-    <!-- =========================================================
-         5. CULTURAL CONTEXT
-    ========================================================== -->
 
-
-        </div>
+</div>
 
 <?php get_footer(); ?>

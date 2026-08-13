@@ -1,7 +1,7 @@
 <?php
 /**
  * Template Name: About Page
- 
+
  */
 
 get_header();
@@ -113,7 +113,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
                     <div>
                         <h3>Researched, not invented</h3>
                         <p>Every story, name, domain, and relationship on this site is drawn from documented academic
-                            and cultural sources. Where traditions conflict or versions differ, that is noted  
+                            and cultural sources. Where traditions conflict or versions differ, that is noted
                             because that is the nature of oral tradition, not a mistake.</p>
                     </div>
                 </li>
@@ -129,7 +129,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
                     <div>
                         <h3>A living project</h3>
                         <p>The Yoruba pantheon includes hundreds of Orishas. This site currently focuses on three and
-                            the story that connects them. More will be added   this is not a finished monument.
+                            the story that connects them. More will be added this is not a finished monument.
                         </p>
                     </div>
                 </li>
@@ -147,7 +147,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
         </header>
         <div>
             <p>This project was built as part of an MA in Web Design &amp; Content Planning at the University of
-                Greenwich. It began as a coursework brief and became something more personal   a question about
+                Greenwich. It began as a coursework brief and became something more personal a question about
                 why the stories I grew up around were so absent from the digital spaces where other mythologies thrived.
             </p>
             <p>The short answer was: no one had built the right space for them yet. So this is an attempt to do that.

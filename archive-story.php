@@ -41,20 +41,18 @@ function itan_tag_colour($slug)
                 }) : [];
                 ?>
 
-                <article>
+                <a href="<?php the_permalink(); ?>" class="story-card">
 
                     <?php if (has_post_thumbnail()): ?>
                         <div>
-                            <a href="<?php the_permalink(); ?>" tabindex="-1" aria-hidden="true">
-                                <?php the_post_thumbnail('large', ['loading' => 'lazy']); ?>
-                            </a>
+                            <?php the_post_thumbnail('large', ['loading' => 'lazy']); ?>
                         </div>
                     <?php endif; ?>
 
                     <div>
 
                         <h2>
-                                <?php the_title(); ?>
+                            <?php the_title(); ?>
                         </h2>
 
                         <div>
@@ -72,12 +70,9 @@ function itan_tag_colour($slug)
                             </ul>
                         <?php endif; ?>
 
-                        <a href="<?php the_permalink(); ?>" aria-label="Read <?php the_title_attribute(); ?>">
-                            Read the Story &rarr;
-                        </a>
                     </div>
 
-                </article>
+                </a>
 
             <?php endwhile; ?>
 

@@ -36,7 +36,7 @@ while (have_posts()):
         $hero_focal = get_field('hero_focal_point') ?: 'center';
         $hero_focal_mobile = get_field('hero_focal_point_mobile') ?: $hero_focal;
         ?>
-       
+
         <section class="god-hero">
             <?php if ($hero_image): ?>
                 <div class="god-hero-image" aria-hidden="true">
@@ -68,7 +68,7 @@ while (have_posts()):
 
         <?php
         // ============================================================
-        // 2. QUICK FACTS — capped at 5
+        // 2. QUICK FACTS
         // ============================================================
         $quick_facts = [];
         for ($i = 1; $i <= 5; $i++) {
@@ -393,48 +393,7 @@ while (have_posts()):
             </section>
         <?php endif; ?>
 
-        <?php
-        // ============================================================
-        // 7. IN POP CULTURE — up to 8
-        // ============================================================
-        $culture_items = [];
-        for ($i = 1; $i <= 8; $i++) {
-            $c_title = get_field("culture_{$i}_title");
-            if ($c_title) {
-                $culture_items[] = [
-                    'title' => $c_title,
-                    'type' => get_field("culture_{$i}_type") ?: '',
-                    'creator' => get_field("culture_{$i}_creator") ?: '',
-                    'image' => get_field("culture_{$i}_image") ?: null,
-                    'icon' => get_field("culture_{$i}_icon") ?: '✦',
-                ];
-            }
-        }
-        ?>
-        <?php if ($culture_items): ?>
-            <section class="god-culture" id="god-culture">
-                <h2><?php the_title(); ?> In</h2>
-                <h2>Pop Culture</h2>
-                <div class="god-culture-row">
-                    <?php foreach ($culture_items as $item): ?>
-                        <div class="god-culture-card">
-                            <div class="god-culture-media">
-                                <?php if ($item['image']): ?>
-                                    <img src="<?php echo esc_url($item['image']['url']); ?>"
-                                        alt="<?php echo esc_attr($item['title']); ?>" loading="lazy">
-                                <?php else: ?>
-                                    <span aria-hidden="true"><?php echo esc_html($item['icon']); ?></span>
-                                <?php endif; ?>
-                            </div>
-                            <div class="god-culture-body">
-                                <strong><?php echo esc_html($item['title']); ?></strong>
-                                <?php if ($item['creator']): ?><small><?php echo esc_html($item['creator']); ?></small><?php endif; ?>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </section>
-        <?php endif; ?>
+
 
         <?php
         // ============================================================
