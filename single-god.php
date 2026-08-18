@@ -23,6 +23,11 @@ while (have_posts()):
     <div class="single-god"
         style="--god: <?php echo esc_attr($god_color); ?>; --god-rgb: <?php echo esc_attr("$r, $g, $b"); ?>;">
 
+    <?php $gods_archive = get_post_type_archive_link('god'); ?>
+
+    <a href="<?php echo esc_url($gods_archive); ?>" class="god-back">
+        &larr; Back to All Orishas
+    </a>
 
         <?php
         // ============================================================
@@ -144,8 +149,19 @@ while (have_posts()):
                             <span class="god-journey-number"><?php echo esc_html($i + 1); ?></span>
                             <div class="god-journey-media">
                                 <?php if ($stage['image']): ?>
-                                    <img src="<?php echo esc_url($stage['image']['url']); ?>"
-                                        alt="<?php echo esc_attr($stage['stage']); ?>" loading="lazy">
+                                    <?php
+                                    $stage_image = wp_get_attachment_image(
+                                        $stage['image']['ID'],
+                                        'medium_large',
+                                        false,
+                                        [
+                                            'alt' => $stage['stage'],
+                                            'loading' => 'lazy',
+                                        ]
+                                    );
+
+                                    echo $stage_image;
+                                    ?>
                                 <?php endif; ?>
                                 <div class="god-journey-text">
                                     <strong><?php echo esc_html($stage['stage']); ?></strong>
@@ -193,8 +209,19 @@ while (have_posts()):
                         <div class="god-symbol-card">
                             <div class="god-symbol-media">
                                 <?php if ($sym['image']): ?>
-                                    <img src="<?php echo esc_url($sym['image']['url']); ?>" alt="<?php echo esc_attr($sym['title']); ?>"
-                                        loading="lazy">
+                                    <?php
+                                    $symbol_image = wp_get_attachment_image(
+                                        $sym['image']['ID'],
+                                        'medium_large',
+                                        false,
+                                        [
+                                            'alt' => $sym['title'],
+                                            'loading' => 'lazy',
+                                        ]
+                                    );
+
+                                    echo $symbol_image;
+                                    ?>
                                 <?php else: ?>
                                     <span aria-hidden="true"><?php echo esc_html($sym['icon']); ?></span>
                                 <?php endif; ?>
@@ -484,14 +511,11 @@ while (have_posts()):
 
     </div><!-- .single-god -->
 
-    <script>
-        document.querySelectorAll('.god-faq details').forEach(function (d) {
-            d.addEventListener('toggle', function () {
-                var plus = d.querySelector('summary span:last-child');
-                if (plus) plus.textContent = d.open ? '−' : '+';
-            });
-        });
-    </script>
+
+    <?php
+
+    wp_enqueue_script('love-story', get_stylesheet_directory_uri() . '/js/love-story.js', [], '2.0', true);
+    ?>
 
 <?php endwhile; ?>
 <?php get_footer(); ?>

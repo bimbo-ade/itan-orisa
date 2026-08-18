@@ -344,16 +344,75 @@ a:hover {
    MAIN NAV
    ============================================================ */
 
+/* =============================================================
+   MAIN NAV — combo of emblem+icons (B) and ornament+border (C)
+   main-nav.css | Mobile-first | CSS nesting
+
+   Per-link icons work even though wp_nav_menu() generates plain
+   <li><a>text</a></li> with no way to inject per-item markup
+   without a custom Walker — instead, icons are CSS ::before
+   pseudo-elements using mask-image, targeted by nth-child order
+   (Home, Gods, Stories, Cultural Context, About). If you ever
+   reorder the menu in wp-admin, the icons will follow the wrong
+   labels — update the nth-child order below to match.
+
+   Every var() carries a fallback since this loads site-wide.
+   Nested per your request — if anything here silently fails to
+   apply on the live site the way home.css originally did, that's
+   the minifier-stripping-nesting issue again; flatten this file
+   the same way home.css was flattened.
+   ============================================================= */
+
 .main-nav {
-    background: var(--night-deep);
-    padding: 1rem 0;
-    border: 1px solid var(--gold);
     position: sticky;
     top: 0;
     z-index: 100;
+    background: var(--night-deep, #0d1030);
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(var(--moon-bright-rgb, 245, 200, 66), 0.15);
+
+    /* -----------------------------------------------------------
+     CORNER ORNAMENTS — echoes the hero's adire corner motif
+     ----------------------------------------------------------- */
+    & .nav-corner {
+        position: absolute;
+        width: 26px;
+        height: 26px;
+        opacity: 0.3;
+        pointer-events: none;
+        background-image:
+            linear-gradient(45deg, rgba(var(--moon-bright-rgb, 245, 200, 66), 0.7) 25%, transparent 25%),
+            linear-gradient(-45deg, rgba(var(--moon-bright-rgb, 245, 200, 66), 0.7) 25%, transparent 25%);
+        background-size: 7px 7px;
+        background-position: 0 0, 0 3.5px;
+
+        &.tl {
+            top: 6px;
+            left: 6px;
+        }
+
+        &.tr {
+            top: 6px;
+            right: 6px;
+            display: none;
+        }
+
+        /* shown again at tablet+ below */
+    }
+
+    /* -----------------------------------------------------------
+     TRI-COLOUR BASE BORDER — quiet signature, your three god
+     colours running the full width of the nav's bottom edge
+     ----------------------------------------------------------- */
+    & .nav-tri-border {
+        height: 2px;
+        background: linear-gradient(to right,
+                var(--sango-red, #D32F2F),
+                var(--moon-bright, #f5c842),
+                var(--oya-purple, #6A1B9A));
+    }
 
     & .nav-container {
-        position: relative;
         max-width: 1200px;
         margin: 0 auto;
         padding: 0 20px;
@@ -361,15 +420,49 @@ a:hover {
         align-items: center;
         justify-content: space-between;
         gap: 1rem;
+        position: relative;
     }
 
+    /* -----------------------------------------------------------
+     LOGO — emblem + serif wordmark
+     ----------------------------------------------------------- */
     & .logo a {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
         text-decoration: none;
     }
 
+    & .logo-mark {
+        color: var(--moon-bright, #f5c842);
+        filter: drop-shadow(0 0 5px rgba(var(--moon-bright-rgb, 245, 200, 66), 0.45));
+        animation: nav-emblem-pulse 4s ease-in-out infinite;
+        flex-shrink: 0;
+    }
+
+    @keyframes nav-emblem-pulse {
+
+        0%,
+        100% {
+            filter: drop-shadow(0 0 4px rgba(var(--moon-bright-rgb, 245, 200, 66), 0.35));
+        }
+
+        50% {
+            filter: drop-shadow(0 0 9px rgba(var(--moon-bright-rgb, 245, 200, 66), 0.65));
+        }
+    }
+
+    & .logo-word {
+        font-family: var(--font-heading, 'Cinzel', serif);
+        font-weight: 700;
+        font-size: 1.15rem;
+        letter-spacing: 0.03em;
+        color: var(--text-primary, #eef0f8);
+    }
+
+    /* -----------------------------------------------------------
+     HAMBURGER — checkbox-driven, no JS (same pattern as before)
+     ----------------------------------------------------------- */
     & .nav-toggle {
         position: absolute;
         opacity: 0;
@@ -379,30 +472,102 @@ a:hover {
     }
 
     & .nav-toggle-label {
-        display: none;
+        display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: flex-end;
         gap: 5px;
         width: 28px;
+        height: 22px;
         cursor: pointer;
+        z-index: 2;
 
         & span {
             display: block;
+            width: 100%;
             height: 2px;
-            background: var(--moon-warm);
+            background: var(--moon-bright, #f5c842);
             transition: transform 0.25s ease, opacity 0.25s ease;
         }
     }
 
+    /* -----------------------------------------------------------
+     LINKS — icon (via mask) + label, pill hover, current-page
+     ----------------------------------------------------------- */
     & ul {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
         list-style: none;
-        gap: 1rem;
         margin: 0;
         padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
 
+        & a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 0.9rem;
+            border-radius: 100px;
+            color: var(--text-secondary, #9aa3c8);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: background 0.25s ease, color 0.25s ease;
+
+            &::before {
+                content: '';
+                display: block;
+                width: 14px;
+                height: 14px;
+                flex-shrink: 0;
+                background-color: currentColor;
+                mask-repeat: no-repeat;
+                mask-position: center;
+                mask-size: contain;
+                -webkit-mask-repeat: no-repeat;
+                -webkit-mask-position: center;
+                -webkit-mask-size: contain;
+                opacity: 0.75;
+                transition: opacity 0.25s ease;
+            }
+
+            &:hover,
+            &:focus-visible {
+                color: var(--text-primary, #eef0f8);
+                background: rgba(var(--moon-bright-rgb, 245, 200, 66), 0.12);
+
+                &::before {
+                    opacity: 1;
+                }
+            }
+        }
+
+        /* icon per nth position — Home / Gods / Stories / Cultural Context / About */
+        & li:nth-child(1) a::before {
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M3 12l9-9 9 9M5 10v10h14V10'/%3E%3C/svg%3E");
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M3 12l9-9 9 9M5 10v10h14V10'/%3E%3C/svg%3E");
+        }
+
+        & li:nth-child(2) a::before {
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M12 2l2.5 6.5L21 9l-5 4.5L17.5 21 12 17l-5.5 4L8 13.5 3 9l6.5-.5z'/%3E%3C/svg%3E");
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M12 2l2.5 6.5L21 9l-5 4.5L17.5 21 12 17l-5.5 4L8 13.5 3 9l6.5-.5z'/%3E%3C/svg%3E");
+        }
+
+        & li:nth-child(3) a::before {
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15z'/%3E%3C/svg%3E");
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15z'/%3E%3C/svg%3E");
+        }
+
+        & li:nth-child(4) a::before {
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M8 12h8M12 8v8'/%3E%3C/svg%3E");
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M8 12h8M12 8v8'/%3E%3C/svg%3E");
+        }
+
+        & li:nth-child(5) a::before {
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21c0-4 4-6 8-6s8 2 8 6'/%3E%3C/svg%3E");
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21c0-4 4-6 8-6s8 2 8 6'/%3E%3C/svg%3E");
+        }
+
+        /* every WP "this is the current page" class, one rule */
         & :where(.current-menu-item,
             .current_page_item,
             .current-page-ancestor,
@@ -410,38 +575,20 @@ a:hover {
             li.current-archive,
             li.menu-item-object-gods-archive,
             li.current_page_parent) a {
-            color: var(--moon-bright);
-            border-bottom: 2px solid var(--moon-bright);
-            padding-bottom: 5px;
-        }
+            color: var(--moon-bright, #f5c842);
+            background: rgba(var(--moon-bright-rgb, 245, 200, 66), 0.12);
 
-        & a {
-            color: var(--text-secondary);
-            text-decoration: none;
-
-            &:active,
-            &:hover {
-                color: var(--moon-bright);
-                transform: translateY(-2px);
-            }
-
-            &:focus-visible {
-                outline: 2px solid var(--moon-bright);
-                outline-offset: 4px;
-                border-radius: 3px;
-
+            &::before {
+                opacity: 1;
             }
         }
     }
 
+
     /* -----------------------------------------------------------
-     MOBILE — hamburger, pure CSS
+     MOBILE — hamburger reveal
      ----------------------------------------------------------- */
     @media (max-width: 48em) {
-
-        & .nav-toggle-label {
-            display: flex;
-        }
 
         & ul {
             position: absolute;
@@ -450,8 +597,7 @@ a:hover {
             right: 0;
             flex-direction: column;
             gap: 0;
-            background: var(--night-deep);
-            border: 1px solid var(--gold);
+            background: var(--night-deep, #0d1030);
             border-top: none;
             max-height: 0;
             overflow: hidden;
@@ -459,22 +605,19 @@ a:hover {
 
             & li {
                 width: 100%;
-                text-align: center;
             }
 
             & a {
-                display: block;
-                padding: 0.85rem;
+                border-radius: 0;
+                padding: 0.9rem 1.25rem;
             }
         }
 
-        /* the reveal — pure CSS, driven by :checked */
         & .nav-toggle:checked~ul {
-            max-height: 60vh;
+            max-height: 70vh;
             overflow-y: auto;
         }
 
-        /* hamburger → X, driven by the same :checked state */
         & .nav-toggle:checked~.nav-toggle-label span:nth-child(1) {
             transform: translateY(7px) rotate(45deg);
         }
@@ -487,8 +630,35 @@ a:hover {
             transform: translateY(-7px) rotate(-45deg);
         }
     }
-}
 
+
+    /* -----------------------------------------------------------
+     TABLET+ — hamburger gone, full row, second corner shown
+     ----------------------------------------------------------- */
+    @media (min-width: 48em) {
+        & .nav-toggle-label {
+            display: none;
+        }
+
+        & .nav-corner.tr {
+            display: block;
+        }
+    }
+
+
+    /* -----------------------------------------------------------
+     REDUCED MOTION
+     ----------------------------------------------------------- */
+    @media (prefers-reduced-motion: reduce) {
+        & .logo-mark {
+            animation: none;
+        }
+
+        & * {
+            transition: none !important;
+        }
+    }
+}
 
 /* ============================================================
    FOOTER
@@ -503,7 +673,7 @@ a:hover {
 .footer-container p {
     margin: 0;
     font-size: 0.85rem;
-    opacity: 0.7;
+    opacity: 0.9;
 }
 
 .footer-container a {
@@ -513,9 +683,7 @@ a:hover {
 
     &:active,
     &:hover {
-        background: var(--moon-warm);
-        color: var(--night-deepest);
-        transform: translateY(-2px);
+        color: var(--moon-warm);
     }
 
     &:focus-visible {
@@ -769,7 +937,7 @@ a:hover {
                 color: var(--card-color);
                 font-family: var(--font-heading);
                 font-size: clamp(2rem, 9vw, 2.5rem);
-font-weight: 600;
+                font-weight: 600;
                 line-height: 0.9;
                 text-transform: uppercase;
             }
@@ -2892,7 +3060,30 @@ END OF HOME PAGE
     --god-glow: rgba(var(--god-rgb), 0.18);
 
 
+    & .god-back {
+        display: inline-flex;
+        align-items: center;
+        margin: var(--sp-xs) var(--sp-xs) ;
+        padding: 0.65rem 0.9rem;
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition:
+            color var(--transition),
+            border-color var(--transition),
+            background-color var(--transition);
 
+        &:hover {
+            color: var(--moon-bright);
+            border-color: var(--moon-bright);
+            background-color: rgba(255, 255, 255, 0.04);
+        }
+
+        &:focus-visible {
+            outline: 3px solid var(--moon-bright);
+            outline-offset: 3px;
+        }
+    }
 
     img {
         display: block;
@@ -2903,7 +3094,6 @@ END OF HOME PAGE
     small {
         display: block;
         color: var(--moon-warm);
-        /* font-size: 0.68rem; */
         font-weight: 600;
         letter-spacing: 0.18em;
         line-height: 1.4;

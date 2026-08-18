@@ -152,6 +152,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
             </p>
             <p>The short answer was: no one had built the right space for them yet. So this is an attempt to do that.
             </p>
+            <p>Should you have suggestions and wsant to reach out please do to this <a href="mailto:bimboadeyemi65@gmail.com"> mail</a></p>
         </div>
     </section>
 
