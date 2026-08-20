@@ -13,7 +13,7 @@ while (have_posts()):
     $last_updated = get_field('a11y_last_updated');
     ?>
 
-    <article class="a11y-page">
+    <div class="a11y-page">
 
         <header class="a11y-header">
             <h1><?php the_title(); ?></h1>
@@ -26,11 +26,7 @@ while (have_posts()):
         </header>
 
         <div class="a11y-body">
-            <?php
-            the_content();
-
-            if (!get_the_content()):
-                ?>
+           
                 <h2>Our Commitment</h2>
                 <p>Ìtàn Òrìṣà is built to be usable by as many people as possible, regardless of ability or how they browse the
                     web. Accessibility is not an afterthought; it is considered throughout the design and development of the
@@ -63,10 +59,9 @@ while (have_posts()):
 
                     Your feedback can help identify problems that may otherwise be missed and improve the experience for future
                     visitors.</p>
-            <?php endif; ?>
         </div>
 
-    </article>
+    </div>
 
 <?php endwhile; ?>
 <?php get_footer(); ?>

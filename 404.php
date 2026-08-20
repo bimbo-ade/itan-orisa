@@ -9,9 +9,8 @@ $gods_archive = get_post_type_archive_link('god') ?: home_url('/gods/');
 $home_url = home_url('/');
 ?>
 
-<div class="error-page">
 
-    <section class="error-hero">
+    <div class="error-hero">
 
         <div aria-hidden="true"></div>
 
@@ -45,8 +44,7 @@ $home_url = home_url('/');
 
 
 
-    </section>
+    </div>
 
-</div>
 
 <?php get_footer(); ?>

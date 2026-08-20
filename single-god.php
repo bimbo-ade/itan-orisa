@@ -23,32 +23,28 @@ while (have_posts()):
     <div class="single-god"
         style="--god: <?php echo esc_attr($god_color); ?>; --god-rgb: <?php echo esc_attr("$r, $g, $b"); ?>;">
 
-    <?php $gods_archive = get_post_type_archive_link('god'); ?>
+        <?php $gods_archive = get_post_type_archive_link('god'); ?>
 
-    <a href="<?php echo esc_url($gods_archive); ?>" class="god-back">
-        &larr; Back to All Orishas
-    </a>
+        <a href="<?php echo esc_url($gods_archive); ?>" class="god-back">
+            &larr; Back to All Orishas
+        </a>
 
+        <!-- ============================================================
+      1. HERO
+      ============================================================ -->
         <?php
-        // ============================================================
-        // 1. HERO
-        // ============================================================
+
         $hero_image = get_field('hero_image');
-        $hero_image_mobile = get_field('hero_image_mobile');
         $god_tagline = get_field('god_tagline');
         $hero_eyebrow = get_field('hero_eyebrow') ?: 'Orisha &middot; Thunder &amp; Lightning';
         $pronunciation = get_field('hero_pronunciation');
-        $hero_focal = get_field('hero_focal_point') ?: 'center';
-        $hero_focal_mobile = get_field('hero_focal_point_mobile') ?: $hero_focal;
         ?>
 
         <section class="god-hero">
             <?php if ($hero_image): ?>
                 <div class="god-hero-image" aria-hidden="true">
                     <picture>
-                        <?php if ($hero_image_mobile): ?>
-                            <source media="(max-width: 40em)" srcset="<?php echo esc_url($hero_image_mobile['url']); ?>">
-                        <?php endif; ?>
+
                         <img src="<?php echo esc_url($hero_image['url']); ?>" alt="<?php echo esc_attr($hero_image['alt']); ?>">
                     </picture>
                 </div>
@@ -59,22 +55,22 @@ while (have_posts()):
                 <span><?php echo wp_kses_post($hero_eyebrow); ?></span>
                 <h1><?php the_title(); ?></h1>
                 <?php if ($pronunciation): ?>
-                    <p class="god-pronunciation">/ <?php echo esc_html($pronunciation); ?> /</p>
+                    <p class="god-pronunciation">Pronounced— <?php echo esc_html($pronunciation); ?> </p>
                 <?php endif; ?>
                 <?php if ($god_tagline): ?>
                     <p class="god-tagline"><?php echo esc_html($god_tagline); ?></p>
                 <?php endif; ?>
                 <div class="god-hero-cta">
                     <a href="#god-journey" class="btn-primary">Explore Story &rarr;</a>
-                    <a href="#god-kinship" class="btn-ghost">Honor <?php the_title(); ?></a>
+                    <a href="#god-worship" class="btn-ghost">Honor <?php the_title(); ?></a>
                 </div>
             </div>
         </section>
 
+        <!-- ============================================================
+        2. QUICK FACTS
+        ============================================================ -->
         <?php
-        // ============================================================
-        // 2. QUICK FACTS
-        // ============================================================
         $quick_facts = [];
         for ($i = 1; $i <= 5; $i++) {
             $label = get_field("quick_fact_{$i}_label");
@@ -94,7 +90,7 @@ while (have_posts()):
                     <div>
                         <span aria-hidden="true"><?php echo esc_html($fact['icon']); ?></span>
                         <div>
-                            <small><?php echo esc_html($fact['label']); ?></small>
+                            <p><?php echo esc_html($fact['label']); ?></p>
                             <p><?php echo esc_html($fact['value']); ?></p>
                         </div>
                     </div>
@@ -102,22 +98,23 @@ while (have_posts()):
             </div>
         <?php endif; ?>
 
+        <!-- ============================================================
+        GOD SUMMARY 
+        ============================================================ -->
         <?php
-        // ============================================================
-        // GOD SUMMARY 
-        // ============================================================
         $god_summary = get_field('god_summary');
         ?>
         <?php if ($god_summary): ?>
             <div class="god-summary">
-                <small>Who Is <?php the_title(); ?>?</small>
+                <h2>Who Is <?php the_title(); ?>?</h2>
                 <p><?php echo esc_html($god_summary); ?></p>
             </div>
         <?php endif; ?>
+        <!-- ============================================================
+       4. THE JOURNEY
+       ============================================================ -->
         <?php
-        // ============================================================
-        // 4. THE JOURNEY
-        // ============================================================
+
         $lt_page = get_page_by_path('love-triangle');
         $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
         $story_page = get_field('full_story_link');
@@ -308,25 +305,10 @@ while (have_posts()):
 
         <?php
         // ============================================================
-        // 6. RELATIONSHIPS + WORSHIP TODAY — 
+        // 6. WORSHIP TODAY — 
         // ============================================================
-        $relations = [];
-        for ($i = 1; $i <= 3; $i++) {
-            $r_name = get_field("relation_{$i}_name");
-            if ($r_name) {
-                $r_god_post = get_field("relation_{$i}_god_link");
-                $relations[] = [
-                    'name' => $r_name,
-                    'role' => get_field("relation_{$i}_role") ?: '',
-                    'teaser' => get_field("relation_{$i}_teaser") ?: '',
-                    'image' => get_field("relation_{$i}_image") ?: null,
-                    'icon' => get_field("relation_{$i}_icon") ?: '✦',
-                    'url' => $r_god_post ? get_permalink($r_god_post->ID) : '#',
-                ];
-            }
-        }
+    
 
-        $kinship_image = get_field('worship_image_1');
         $worship_heading = get_field('worship_heading');
         $worship_intro = get_field('worship_intro');
         $offerings = [];
@@ -348,41 +330,10 @@ while (have_posts()):
             }
         }
         ?>
-        <?php if ($relations || $worship_heading): ?>
-            <section class="god-kinship" id="god-kinship">
-                <div class="god-kinship-grid">
+        <?php if ($worship_heading): ?>
+            <section class="god-worship" id="god-worship">
+                <div class="god-worship-grid">
 
-                    <?php if ($relations): ?>
-                        <div class="god-relations-col">
-                            <h2>The Relationships</h2>
-                            <div class="god-relations-row">
-                                <?php foreach ($relations as $rel): ?>
-                                    <a href="<?php echo esc_url($rel['url']); ?>" class="god-relation-card">
-                                        <div class="god-relation-media">
-                                            <?php if ($rel['image']): ?>
-                                                <img src="<?php echo esc_url($rel['image']['url']); ?>"
-                                                    alt="<?php echo esc_attr($rel['name']); ?>" loading="lazy">
-                                            <?php else: ?>
-                                                <span aria-hidden="true"><?php echo esc_html($rel['icon']); ?></span>
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="god-relation-body">
-                                            <strong><?php echo esc_html($rel['name']); ?></strong>
-                                            <?php if ($rel['role']): ?><small><?php echo esc_html($rel['role']); ?></small><?php endif; ?>
-                                            <?php if ($rel['teaser']): ?>
-                                                <p><?php echo esc_html($rel['teaser']); ?></p><?php endif; ?>
-                                        </div>
-                                    </a>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-
-                    <?php if ($kinship_image): ?>
-                        <div class="god-kinship-image">
-                            <img src="<?php echo esc_url($kinship_image['url']); ?>" alt="" loading="lazy">
-                        </div>
-                    <?php endif; ?>
 
                     <div class="god-worship-col">
                         <h2>Worship</h2>
@@ -394,7 +345,7 @@ while (have_posts()):
                             <div class="god-offerings-grid">
                                 <?php foreach ($offerings as $o): ?>
                                     <div><span
-                                            aria-hidden="true"><?php echo esc_html($o['icon']); ?></span><small><?php echo esc_html($o['title']); ?></small>
+                                            aria-hidden="true"><?php echo esc_html($o['icon']); ?></span><p><?php echo esc_html($o['title']); ?></p>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
@@ -492,7 +443,7 @@ while (have_posts()):
                     $prev_title = get_field('quick_fact_1_value', $prev_god->ID) ?: $prev_god->post_title;
                     ?>
                     <a href="<?php echo esc_url(get_permalink($prev_god->ID)); ?>" class="god-crossnav-prev">
-                        <small>Previous Orisha</small>
+                        <span>Previous Orisha</span>
                         <strong><?php echo esc_html($prev_god->post_title); ?></strong>
                         <span><?php echo esc_html(get_field('god_tagline', $prev_god->ID)); ?></span>
                     </a>
@@ -501,7 +452,7 @@ while (have_posts()):
 
                 <?php if ($next_god): ?>
                     <a href="<?php echo esc_url(get_permalink($next_god->ID)); ?>" class="god-crossnav-next">
-                        <small>Next Orisha</small>
+                        <span>Next Orisha</span>
                         <strong><?php echo esc_html($next_god->post_title); ?></strong>
                         <span><?php echo esc_html(get_field('god_tagline', $next_god->ID)); ?></span>
                     </a>

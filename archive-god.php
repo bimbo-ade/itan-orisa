@@ -19,7 +19,6 @@ function itan_god_colour($slug)
 <div class="gods-page">
 
     <section class="gods-hero">
-        <div aria-hidden="true"></div>
         <div>
             <span>The Pantheon</span>
             <h1>The Yoruba Gods - Orisa</h1>
@@ -48,7 +47,7 @@ function itan_god_colour($slug)
                     <div>
 
                         <h2>
-                            <?php the_title(); ?>
+                            <?php the_title();  ?>
                         </h2>
 
                         <div>

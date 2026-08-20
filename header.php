@@ -22,10 +22,10 @@
         <div class="nav-container">
             <div class="logo">
                 <a href="<?php echo home_url(); ?>">
-                    <svg class="logo-mark" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                    <!-- <svg class="logo-mark" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
                         <path d="M14 3 L20 9 C20 9 17 10 14 13 C11 10 8 9 8 9 Z" fill="currentColor" opacity="0.9" />
                         <path d="M14 13 L15 18 L12 18 L14 25 L13 19 L16 19 Z" fill="currentColor" />
-                    </svg>
+                    </svg> -->
                     <span class="logo-word">Ìtàn Òrìṣà</span>
                 </a>
             </div>
@@ -42,14 +42,6 @@
                     'container' => false,
                     'fallback_cb' => false,
                 ]);
-            } else {
-                echo '<ul>';
-                echo '<li><a href="' . home_url() . '">Home</a></li>';
-                echo '<li><a href="' . get_post_type_archive_link('god') . '">Gods</a></li>';
-                echo '<li><a href="' . get_post_type_archive_link('story') . '">Stories</a></li>';
-                echo '<li><a href="' . home_url('/cultural-context') . '">Cultural Context</a></li>';
-                echo '<li><a href="' . home_url('/about') . '">About</a></li>';
-                echo '</ul>';
             }
             ?>
         </div>

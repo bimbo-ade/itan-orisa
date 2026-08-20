@@ -17,17 +17,15 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
 
     <section class="ab-hero">
 
-        <div>
-            <span>&#204;t&#224;n &#210;r&#236;&#351;&#224;</span>
-            <h1>
-                Old Gods.<br>
-                <em>New Telling.</em>
-            </h1>
-            <p>A personal project. A cultural gap. An attempt to do something about both.</p>
-            <a href="<?php echo esc_url($gods_archive); ?>" class="btn-primary">
-                Meet the Orishas
-            </a>
-        </div>
+        <span>About Website</span>
+        <h1>
+            Old Gods.<br>
+            <em>New Telling.</em>
+        </h1>
+        <p>A personal project. A cultural gap. An attempt to do something about both.</p>
+        <a href="<?php echo esc_url($gods_archive); ?>" class="btn-primary">
+            Meet the Orishas
+        </a>
     </section>
 
     <div class="ab-pull-quote">
@@ -38,7 +36,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
 
     <section class="ab-section ab-section--dark">
         <header>
-            <span>Why This Exists</span>
+            <p>Why This Exists</p>
             <h2>I grew up knowing these gods existed.</h2>
         </header>
         <div>
@@ -55,7 +53,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
     <section class="ab-section ab-section--mid">
 
         <header>
-            <span>What This Is</span>
+            <p>What This Is</p>
             <h2>More than a name.</h2>
         </header>
 
@@ -104,7 +102,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
     </section>
     <section class="ab-section ab-section--dark">
         <header>
-            <span>How This Was Made</span>
+            <p>How This Was Made</p>
             <h2>How the content was built.</h2>
         </header>
         <div>
@@ -142,7 +140,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
 
     <section class="ab-section ab-section--mid">
         <header>
-            <span>The Person Behind This</span>
+            <p>The Person Behind This</p>
             <h2>About the creator</h2>
         </header>
         <div>
@@ -152,7 +150,8 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
             </p>
             <p>The short answer was: no one had built the right space for them yet. So this is an attempt to do that.
             </p>
-            <p>Should you have suggestions and wsant to reach out please do to this <a href="mailto:bimboadeyemi65@gmail.com"> mail</a></p>
+            <p>Should you have suggestions and wsant to reach out please do to this <a
+                    href="mailto:bimboadeyemi65@gmail.com"> mail</a></p>
         </div>
     </section>
 

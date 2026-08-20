@@ -45,8 +45,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
             <span class="home-eyebrow"> <?php echo wp_kses_post($hero_heading); ?>
             </span>
 
-            <h1>ÌTÀN ÒRÌṢÀ
-            </h1>
+            <h1>ÌTÀN ÒRÌṢÀ</h1>
 
             <p>
                 <?php echo esc_html($hero_tagline); ?>
@@ -89,17 +88,11 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
 
             <div class="home-section-heading">
 
-                <div>
-
-                </div>
-
-                <div>
-                    <h2>Meet The Gods</h2>
-                    <p>
-                        Explore the stories, powers and traditions surrounding
-                        the Orishas.
-                    </p>
-                </div>
+                <h2>Meet The Gods</h2>
+                <p>
+                    Explore the stories, powers and traditions surrounding
+                    the Orishas.
+                </p>
 
             </div>
 
@@ -188,12 +181,11 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
     $tri_img_right = get_field('home_triangle_image_right');
 
     $tri_heading =
-        get_field('home_triangle_heading')
-        ?: 'She Left The Smith For The Storm';
+        get_field('home_triangle_heading');
 
     $tri_subtitle =
         get_field('home_triangle_subtitle')
-        ?: 'The story of Ògún, Ọ̀yá and Ṣàngó.';
+    ;
     ?>
 
     <?php if ($tri_img_left || $tri_img_right): ?>
@@ -202,33 +194,17 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
 
             <?php if ($tri_img_left): ?>
 
-                <div class="home-triangle-side home-triangle-left" aria-hidden="true">
+                <img src="<?php echo esc_url($tri_img_left['url']); ?>" alt="" loading="lazy">
 
-                    <img src="<?php echo esc_url($tri_img_left['url']); ?>" alt="" loading="lazy">
-
-                </div>
 
             <?php endif; ?>
 
 
-            <?php if ($tri_img_right): ?>
-
-                <div class="home-triangle-side home-triangle-right" aria-hidden="true">
-
-                    <img src="<?php echo esc_url($tri_img_right['url']); ?>" alt="" loading="lazy">
-
-                </div>
-
-            <?php endif; ?>
-
-
-            <div class="home-triangle-atmosphere" aria-hidden="true"></div>
-            <div class="home-triangle-overlay" aria-hidden="true"></div>
 
 
             <div class="home-triangle-content">
 
-                <small>Featured Story</small>
+                <span>Featured Story</span>
 
                 <h2>
                     <?php echo wp_kses_post($tri_heading); ?>
@@ -264,48 +240,46 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
         get_field('home_context_text');
     ?>
 
-    <section class="home-context">
-
-        <div class="home-context-inner">
-
-            <?php if ($ctx_image): ?>
-
-                <div class="home-context-image">
-
-                    <img src="<?php echo esc_url($ctx_image['url']); ?>"
-                        alt="<?php echo esc_attr($ctx_image['alt'] ?? ''); ?>" loading="lazy">
-
-                </div>
-
-            <?php endif; ?>
+    <section class="home-context-inner">
 
 
-            <div class="home-context-text">
+        <?php if ($ctx_image): ?>
 
-                <small>
-                    Cultural Context
-                </small>
+            <div class="home-context-image">
 
-                <h2>
-                    <?php echo wp_kses_post($ctx_heading); ?>
-                </h2>
-
-                <?php if ($ctx_text): ?>
-
-                    <p>
-                        <?php echo wp_kses_post($ctx_text); ?>
-                    </p>
-
-                <?php endif; ?>
-
-                <a href="<?php echo esc_url($cc_url); ?>" class="btn-ghost">
-                    Explore The Context
-                    <span aria-hidden="true">→</span>
-                </a>
+                <img src="<?php echo esc_url($ctx_image['url']); ?>" alt="<?php echo esc_attr($ctx_image['alt'] ?? ''); ?>"
+                    loading="lazy">
 
             </div>
 
+        <?php endif; ?>
+
+
+        <div class="home-context-text">
+
+            <span>
+                Cultural Context
+            </span>
+
+            <h2>
+                <?php echo wp_kses_post($ctx_heading); ?>
+            </h2>
+
+            <?php if ($ctx_text): ?>
+
+                <p>
+                    <?php echo wp_kses_post($ctx_text); ?>
+                </p>
+
+            <?php endif; ?>
+
+            <a href="<?php echo esc_url($cc_url); ?>" class="btn-ghost">
+                Explore The Context
+                <span aria-hidden="true">→</span>
+            </a>
+
         </div>
+
 
     </section>
 
@@ -351,22 +325,24 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
                             $story_image = $acf_image['url'];
                         }
                     }
+                    $story_excerpt = wp_trim_words(get_the_excerpt(), 18, '…');
                     ?>
 
                     <a href="<?php the_permalink(); ?>" class="home-story-card">
 
                         <?php if ($story_image): ?>
-
                             <div class="home-story-media">
                                 <img src="<?php echo esc_url($story_image); ?>" alt="<?php echo esc_attr(get_the_title()); ?>"
                                     loading="lazy">
                             </div>
-
                         <?php endif; ?>
 
                         <div class="home-story-body">
-                            <small>Story</small>
+                            <span>Story</span>
                             <h3><?php the_title(); ?></h3>
+                            <?php if ($story_excerpt): ?>
+                                <p><?php echo esc_html($story_excerpt); ?></p>
+                            <?php endif; ?>
                             <span>Read Story &rarr;</span>
                         </div>
 
@@ -387,7 +363,6 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
         <?php wp_reset_postdata(); ?>
 
     </section>
-
 
 
 </div>

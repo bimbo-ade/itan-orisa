@@ -15,7 +15,6 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
 <div class="cc-page">
 
     <section class="cc-hero">
-        <div aria-hidden="true"></div>
         <div>
             <span>Cultural Context</span>
             <h1>Understanding Yoruba Mythology</h1>
@@ -38,7 +37,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
         <section class="cc-section" id="cc-yoruba">
             <div>
                 <span>01</span>
-                <small>Foundation</small>
+                <span>Foundation</span>
             </div>
             <div>
                 <h2>Foundation</h2>
@@ -55,14 +54,14 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
 
                 <details class="cc-deeper">
                     <summary>
-                        <span>Go deeper: the sixteen communities &amp; the full Oduduwa story</span>
+                        <span>Go deeper: the thirteen communities &amp; the full Oduduwa story</span>
                         <span aria-hidden="true">+</span>
                     </summary>
                     <div>
-                        <span>Before Ile-Ife</span>
+                        <h3>Before Ile-Ife</h3>
                         <p>Some Yoruba oral traditions hold that the people existed long before Ile-Ife and the Oyo
                             Empire,
-                            organized instead as sixteen independent communities, each with its own king, allied for
+                            organized instead as thirteen independent communities, each with its own king, allied for
                             peace
                             and shared prosperity rather than ruled as one kingdom:</p>
                         <ul class="cc-communities-list">
@@ -86,7 +85,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                             these early communities spoke a language called Ikedu, echoes of which some scholars argue
                             survive in the modern Ilaje dialect.</p>
 
-                        <span>The Arrival of Oduduwa</span>
+                        <h3>The Arrival of Oduduwa</h3>
                         <p>One account presents Oduduwa as a visitor from the eastern forests who gradually earned the
                             trust
                             of the local people through knowledge of healing, herbal medicine, and community leadership.
@@ -96,7 +95,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                             governance, peace, and development. As his influence grew, so did the number of people who
                             supported his leadership.</p>
 
-                        <span>Migration &amp; the Birth of New Kingdoms</span>
+                        <h3>Migration &amp; the Birth of New Kingdoms</h3>
                         <p>Like many civilizations, the Yoruba experienced rivalry and political struggle. Oral
                             tradition
                             describes a supremacy conflict that divided the confederate communities, sending many groups
@@ -112,7 +111,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
         <section class="cc-section cc-section--alt" id="cc-orishas">
             <div>
                 <span>02</span>
-                <small>The Divine Forces</small>
+                <span>The Divine Forces</span>
             </div>
             <div>
                 <h2>Who Are the Orishas?</h2>
@@ -143,7 +142,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
         <section class="cc-section" id="cc-oral">
             <div>
                 <span>03</span>
-                <small>The Tradition</small>
+                <span>The Tradition</span>
             </div>
             <div>
                 <h2>Oral Tradition and Its Vulnerability</h2>
@@ -155,6 +154,8 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                     Urbanization and modernization.
 
                     The dominance of English in schools.
+                </p>
+                <p>
 
                     Religious changes that discourage traditional practices.
 
@@ -188,11 +189,12 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
         <section class="cc-section cc-section--alt" id="cc-diaspora">
             <div>
                 <span>04</span>
-                <small>The Journey</small>
+                <span>The Journey</span>
             </div>
             <div>
                 <h2>How These Stories Crossed the World</h2>
-                <p>Yoruba culture spread globally mainly through the transatlantic slave trade between the sixteenth and
+                <p>Yoruba culture spread globally mainly through the transatlantic slave trade between the thirteenth
+                    and
                     nineteenth centuries. Enslaved Yoruba people carried their beliefs, language, music, stories, and
                     religious practices to the Americas and the Caribbean.
 
@@ -226,44 +228,13 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                     Shango, Ogun, and Oshun have become internationally recognized.
                 </p>
 
-                <!-- <div class="cc-diaspora-strip">
-                    <div>
-                        <span>&#127475;&#127468;</span>
-                        <strong>Nigeria</strong>
-                        <span>Yoruba religion</span>
-                    </div>
-                    <span aria-hidden="true">&rarr;</span>
-                    <div>
-                        <span>&#127461;&#127482;</span>
-                        <strong>Cuba</strong>
-                        <span>Santer&#237;a</span>
-                    </div>
-                    <span aria-hidden="true">&rarr;</span>
-                    <div>
-                        <span>&#127463;&#127479;</span>
-                        <strong>Brazil</strong>
-                        <span>Candombl&#233;</span>
-                    </div>
-                    <span aria-hidden="true">&rarr;</span>
-                    <div>
-                        <span>&#127481;&#127481;</span>
-                        <strong>Trinidad</strong>
-                        <span>Orisha / Shango</span>
-                    </div>
-                    <span aria-hidden="true">&rarr;</span>
-                    <div>
-                        <span>&#127482;&#127480;</span>
-                        <strong>USA</strong>
-                        <span>If&#225; revival</span>
-                    </div>
-                </div> -->
             </div>
         </section>
 
         <section class="cc-section" id="cc-gap">
             <div>
                 <span>05</span>
-                <small>The Problem</small>
+                <span>The Problem</span>
             </div>
             <div>
                 <h2>Why the Visibility Gap Exists</h2>
@@ -273,6 +244,8 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                     Reasons include:
 
                     Colonial education systems prioritized European history.
+                </p>
+                <p>
 
                     Many Yoruba traditions remained oral instead of written and visually recorded.
 
@@ -307,7 +280,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
         <section class="cc-section cc-section--alt" id="cc-contemporary">
             <div>
                 <span>06</span>
-                <small>Today</small>
+                <span>Today</span>
             </div>
             <div>
                 <h2>Yoruba Mythology in Contemporary Culture</h2>
@@ -364,7 +337,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
         <section class="cc-section" id="cc-sources">
             <div>
                 <span>07</span>
-                <small>Go Deeper</small>
+                <span>Go Deeper</span>
             </div>
 
             <div>
