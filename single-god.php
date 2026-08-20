@@ -42,30 +42,35 @@ while (have_posts()):
 
         <section class="god-hero">
             <?php if ($hero_image): ?>
-                <div class="god-hero-image" aria-hidden="true">
-                    <picture>
-
-                        <img src="<?php echo esc_url($hero_image['url']); ?>" alt="<?php echo esc_attr($hero_image['alt']); ?>">
-                    </picture>
+                <div class="god-hero-image">
+                    <img src="<?php echo esc_url($hero_image['url']); ?>" alt="<?php echo esc_attr($hero_image['alt']); ?>">
                 </div>
             <?php endif; ?>
+
             <div class="god-hero-atmosphere" aria-hidden="true"></div>
 
             <div class="god-hero-content">
-                <span><?php echo wp_kses_post($hero_eyebrow); ?></span>
+                <?php if ($hero_eyebrow): ?>
+                    <p class="god-eyebrow"><?php echo wp_kses_post($hero_eyebrow); ?></p>
+                <?php endif; ?>
+
                 <h1><?php the_title(); ?></h1>
+
                 <?php if ($pronunciation): ?>
                     <p class="god-pronunciation">Pronounced— <?php echo esc_html($pronunciation); ?> </p>
                 <?php endif; ?>
+
                 <?php if ($god_tagline): ?>
                     <p class="god-tagline"><?php echo esc_html($god_tagline); ?></p>
                 <?php endif; ?>
+
                 <div class="god-hero-cta">
                     <a href="#god-journey" class="btn-primary">Explore Story &rarr;</a>
                     <a href="#god-worship" class="btn-ghost">Honor <?php the_title(); ?></a>
                 </div>
             </div>
         </section>
+
 
         <!-- ============================================================
         2. QUICK FACTS
@@ -84,32 +89,39 @@ while (have_posts()):
             }
         }
         ?>
+
         <?php if ($quick_facts): ?>
-            <div class="god-facts-bar">
+            <dl class="god-facts-bar">
                 <?php foreach ($quick_facts as $fact): ?>
-                    <div>
-                        <span aria-hidden="true"><?php echo esc_html($fact['icon']); ?></span>
-                        <div>
-                            <p><?php echo esc_html($fact['label']); ?></p>
-                            <p><?php echo esc_html($fact['value']); ?></p>
+                    <div class="god-fact-item">
+                        <span class="god-fact-icon" aria-hidden="true"><?php echo esc_html($fact['icon']); ?></span>
+
+                        <div class="god-fact-content">
+                            <dt><?php echo esc_html($fact['label']); ?></dt>
+                            <dd><?php echo esc_html($fact['value']); ?></dd>
                         </div>
                     </div>
                 <?php endforeach; ?>
-            </div>
+            </dl>
         <?php endif; ?>
 
+
         <!-- ============================================================
-        GOD SUMMARY 
+        3.GOD SUMMARY 
         ============================================================ -->
         <?php
         $god_summary = get_field('god_summary');
         ?>
         <?php if ($god_summary): ?>
-            <div class="god-summary">
+            <section class="god-summary">
                 <h2>Who Is <?php the_title(); ?>?</h2>
-                <p><?php echo esc_html($god_summary); ?></p>
-            </div>
+
+                <div class="god-summary-content">
+                    <?php echo wp_kses_post($god_summary); ?>
+                </div>
+            </section>
         <?php endif; ?>
+
         <!-- ============================================================
        4. THE JOURNEY
        ============================================================ -->
@@ -135,19 +147,22 @@ while (have_posts()):
         <?php if ($stages): ?>
             <section class="god-journey" id="god-journey">
                 <div class="god-journey-header">
-                    <h2><?php echo esc_html($journey_heading); ?>         <?php the_title(); ?></h2>
+                    <h2><?php echo esc_html($journey_heading) . ' ' . get_the_title(); ?></h2>
                 </div>
-                <div class="god-journey-track">
+
+                <ol class="god-journey-track">
                     <?php foreach ($stages as $i => $stage): ?>
                         <?php if ($i > 0): ?>
                             <div class="god-journey-connector" aria-hidden="true">&#9670;</div>
                         <?php endif; ?>
-                        <div class="god-journey-card">
-                            <span class="god-journey-number"><?php echo esc_html($i + 1); ?></span>
+                        <li class="god-journey-card">
+
+
+                            <span class="god-journey-number" aria-hidden="true"><?php echo esc_html($i + 1); ?></span>
+
                             <div class="god-journey-media">
-                                <?php if ($stage['image']): ?>
-                                    <?php
-                                    $stage_image = wp_get_attachment_image(
+                                <?php if ($stage['image']):
+                                    echo wp_get_attachment_image(
                                         $stage['image']['ID'],
                                         'medium_large',
                                         false,
@@ -156,35 +171,53 @@ while (have_posts()):
                                             'loading' => 'lazy',
                                         ]
                                     );
+                                endif; ?>
 
-                                    echo $stage_image;
-                                    ?>
-                                <?php endif; ?>
                                 <div class="god-journey-text">
-                                    <strong><?php echo esc_html($stage['stage']); ?></strong>
+                                    <h3><?php echo esc_html($stage['stage']); ?></h3>
                                     <?php if ($stage['desc']): ?>
-                                        <p><?php echo esc_html($stage['desc']); ?></p><?php endif; ?>
+                                        <p><?php echo esc_html($stage['desc']); ?></p>
+                                    <?php endif; ?>
                                 </div>
-                            </div>
-                        </div>
+                            </div> <?php if ($i > 0): ?>
+                            <?php endif; ?>
+                        </li>
                     <?php endforeach; ?>
-                </div>
-                <p class="god-journey-hint">&larr; Scroll &rarr;</p>
+                </ol>
+
+                <p class="god-journey-hint" aria-hidden="true">&larr; Scroll &rarr;</p>
 
                 <?php if ($story_page): ?>
                     <div class="god-journey-footer">
-                        <a href="<?php echo esc_url(get_permalink($story_page->ID)); ?>" class="btn-ghost">Read
-                            <?php the_title(); ?>'s Full Story &rarr;</a>
+                        <a href="<?php echo esc_url(get_permalink($story_page->ID)); ?>" class="btn-ghost">
+                            Read <?php the_title(); ?>'s Full Story &rarr;
+                        </a>
                     </div>
                 <?php endif; ?>
             </section>
         <?php endif; ?>
 
+        <!-- 
+        ============================================================
+        5. SYMBOLS — photo card grid, up to 8
+        ============================================================ -->
         <?php
-        // ============================================================
-        // 3. SYMBOLS — photo card grid, up to 8
-        // ============================================================
         $symbols_heading = get_field('symbols_heading') ?: 'Symbols Of ';
+        $symbols = [];
+        for ($i = 1; $i <= 8; $i++) {
+            $s_title = get_field("symbol_{$i}_title");
+            if ($s_title) {
+                $symbols[] = [
+                    'title' => $s_title,
+                    'image' => get_field("symbol_{$i}_image") ?: null,
+                    'icon' => get_field("symbol_{$i}_icon") ?: '✦',
+                    'desc' => get_field("symbol_{$i}_desc") ?: '',
+                ];
+            }
+        }
+        ?>
+        <?php
+        $symbols_heading = get_field('symbols_heading') ?: 'Symbols Of';
         $symbols = [];
         for ($i = 1; $i <= 8; $i++) {
             $s_title = get_field("symbol_{$i}_title");
@@ -200,14 +233,14 @@ while (have_posts()):
         ?>
         <?php if ($symbols): ?>
             <section class="god-symbols" id="god-symbols">
-                <h2>Symbols Of <?php the_title(); ?> </h2>
+                <h2><?php echo esc_html($symbols_heading) . ' ' . get_the_title(); ?></h2>
+
                 <div class="god-symbols-grid">
                     <?php foreach ($symbols as $sym): ?>
-                        <div class="god-symbol-card">
+                        <article class="god-symbol-card">
                             <div class="god-symbol-media">
-                                <?php if ($sym['image']): ?>
-                                    <?php
-                                    $symbol_image = wp_get_attachment_image(
+                                <?php if ($sym['image']):
+                                    echo wp_get_attachment_image(
                                         $sym['image']['ID'],
                                         'medium_large',
                                         false,
@@ -216,29 +249,28 @@ while (have_posts()):
                                             'loading' => 'lazy',
                                         ]
                                     );
-
-                                    echo $symbol_image;
-                                    ?>
-                                <?php else: ?>
+                                else: ?>
                                     <span aria-hidden="true"><?php echo esc_html($sym['icon']); ?></span>
                                 <?php endif; ?>
                             </div>
+
                             <div class="god-symbol-body">
-                                <strong><?php echo esc_html($sym['title']); ?></strong>
+                                <h3><?php echo esc_html($sym['title']); ?></h3>
                                 <?php if ($sym['desc']): ?>
-                                    <p><?php echo esc_html($sym['desc']); ?></p><?php endif; ?>
+                                    <p><?php echo esc_html($sym['desc']); ?></p>
+                                <?php endif; ?>
                             </div>
-                        </div>
+                        </article>
                     <?php endforeach; ?>
                 </div>
             </section>
         <?php endif; ?>
 
+        <!-- ============================================================
+       6.POWERS & ABILITIES — 
+       ============================================================ -->
         <?php
-        // ============================================================
-        // POWERS & ABILITIES — 
-        // ============================================================
-        $powers_heading = get_field('powers_heading');
+        $powers_heading = get_field('powers_heading') ?: 'What ' . get_the_title() . ' Commands';
         $powers = [];
         for ($i = 1; $i <= 8; $i++) {
             $p_title = get_field("power_{$i}_title");
@@ -253,29 +285,33 @@ while (have_posts()):
         ?>
         <?php if ($powers): ?>
             <section class="god-powers" id="god-powers">
-                <h2>What <?php the_title(); ?> Commands</h2>
-                <div class="god-powers-grid">
+                <h2><?php echo esc_html($powers_heading); ?></h2>
+
+                <ul class="god-powers-grid">
                     <?php foreach ($powers as $power): ?>
-                        <div class="god-power-card">
-                            <span aria-hidden="true"><?php echo esc_html($power['icon']); ?></span>
-                            <strong><?php echo esc_html($power['title']); ?></strong>
+                        <li class="god-power-card">
+                            <span class="god-power-icon" aria-hidden="true"><?php echo esc_html($power['icon']); ?></span>
+
+                            <h3><?php echo esc_html($power['title']); ?></h3>
+
                             <?php if ($power['desc']): ?>
-                                <p><?php echo esc_html($power['desc']); ?></p><?php endif; ?>
-                        </div>
+                                <p><?php echo esc_html($power['desc']); ?></p>
+                            <?php endif; ?>
+                        </li>
                     <?php endforeach; ?>
-                </div>
+                </ul>
             </section>
         <?php endif; ?>
 
         <div class="god-divider" aria-hidden="true"></div>
 
 
-
+        <!-- 
+        ============================================================
+        7. ORIGIN STORY & MAJOR MYTHS 
+        ============================================================ -->
         <?php
-        // ============================================================
-        // ORIGIN STORY & MAJOR MYTHS 
-        // ============================================================
-        $myths_heading = get_field('myths_heading');
+        $myths_heading = get_field('myths_heading') ?: 'Major Myths';
         $myths = [];
         for ($i = 1; $i <= 6; $i++) {
             $m_title = get_field("myth_{$i}_title");
@@ -287,29 +323,32 @@ while (have_posts()):
         <?php if ($myths): ?>
             <section class="god-myths" id="god-myths">
                 <div class="god-myths-inner">
-                    <h2>Major Myths</h2>
+                    <h2><?php echo esc_html($myths_heading); ?></h2>
+
                     <?php foreach ($myths as $i => $myth): ?>
-                        <div class="god-myth-item">
+                        <article class="god-myth-item">
                             <span class="god-myth-number" aria-hidden="true"><?php echo esc_html($i + 1); ?></span>
+
                             <div class="god-myth-body">
-                                <strong><?php echo esc_html($myth['title']); ?></strong>
+                                <h3><?php echo esc_html($myth['title']); ?></h3>
+
                                 <?php if ($myth['desc']): ?>
-                                    <p><?php echo esc_html($myth['desc']); ?></p><?php endif; ?>
+                                    <p><?php echo esc_html($myth['desc']); ?></p>
+                                <?php endif; ?>
                             </div>
-                        </div>
+                        </article>
                     <?php endforeach; ?>
                 </div>
             </section>
         <?php endif; ?>
 
+        <!-- ============================================================
+         8. WORSHIP TODAY — 
+         ============================================================
+     -->
 
         <?php
-        // ============================================================
-        // 6. WORSHIP TODAY — 
-        // ============================================================
-    
-
-        $worship_heading = get_field('worship_heading');
+        $worship_heading = get_field('worship_heading') ?: 'Worship & Devotion';
         $worship_intro = get_field('worship_intro');
         $offerings = [];
         for ($i = 1; $i <= 8; $i++) {
@@ -330,143 +369,182 @@ while (have_posts()):
             }
         }
         ?>
-        <?php if ($worship_heading): ?>
+        <?php if ($worship_intro || $offerings || $festivals): ?>
             <section class="god-worship" id="god-worship">
                 <div class="god-worship-grid">
-
-
                     <div class="god-worship-col">
-                        <h2>Worship</h2>
+                        <h2><?php echo esc_html($worship_heading); ?></h2>
+
                         <?php if ($worship_intro): ?>
-                            <p><?php echo wp_kses_post($worship_intro); ?></p><?php endif; ?>
+                            <p class="god-worship-intro"><?php echo wp_kses_post($worship_intro); ?></p>
+                        <?php endif; ?>
 
                         <?php if ($offerings): ?>
-                            <span class="god-offerings-label">Common Offerings</span>
-                            <div class="god-offerings-grid">
+                            <h3>Common Offerings</h3>
+
+                            <ul class="god-offerings-grid">
                                 <?php foreach ($offerings as $o): ?>
-                                    <div><span
-                                            aria-hidden="true"><?php echo esc_html($o['icon']); ?></span><p><?php echo esc_html($o['title']); ?></p>
-                                    </div>
+                                    <li>
+                                        <span aria-hidden="true"><?php echo esc_html($o['icon']); ?></span>
+                                        <p><?php echo esc_html($o['title']); ?></p>
+                                    </li>
                                 <?php endforeach; ?>
-                            </div>
+                            </ul>
                         <?php endif; ?>
 
                         <?php if ($festivals): ?>
-                            <span class="god-festivals-label">Festivals</span>
-                            <?php foreach ($festivals as $f): ?>
-                                <div class="god-festival-item">
-                                    <div>
-                                        <strong><?php echo esc_html($f['name']); ?></strong>
-                                        <?php if ($f['location']): ?><span class="god-festival-loc">
-                                                <?php echo esc_html($f['location']); ?></span><?php endif; ?>
-                                    </div>
-                                    <?php if ($f['date']): ?><span
-                                            class="god-festival-date"><?php echo esc_html($f['date']); ?></span><?php endif; ?>
-                                </div>
-                            <?php endforeach; ?>
+                            <h3>Festivals &amp; Celebrations</h3>
+
+                            <ul class="god-festivals-list">
+                                <?php foreach ($festivals as $f): ?>
+                                    <li class="god-festival-item">
+                                        <div class="god-festival-meta">
+                                            <h4><?php echo esc_html($f['name']); ?></h4>
+
+                                            <?php if ($f['location']): ?>
+                                                <span class="god-festival-loc"><?php echo esc_html($f['location']); ?></span>
+                                            <?php endif; ?>
+                                        </div>
+
+                                        <?php if ($f['date']): ?>
+                                            <time class="god-festival-date"><?php echo esc_html($f['date']); ?></time>
+                                        <?php endif; ?>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
                         <?php endif; ?>
                     </div>
-
                 </div>
             </section>
         <?php endif; ?>
 
-
-
+        <!-- ============================================================
+         9. LOVE TRIANGLE — split-image banner
+         ============================================================ -->
         <?php
-        // ============================================================
-        // 5. LOVE TRIANGLE — split-image banner
-        // ============================================================
         $tri_img_left = get_field('triangle_image_left');
         $tri_img_right = get_field('triangle_image_right');
         $tri_heading = get_field('triangle_heading');
         $tri_sub = get_field('triangle_subtitle');
-        $tri_link = get_field('triangle_read_link') ?: $lt_url;
+
+        $tri_link = get_field('triangle_read_link');
+        if (!$tri_link) {
+            $lt_page = get_page_by_path('love-triangle');
+            $tri_link = $lt_page ? get_permalink($lt_page->ID) : '#';
+        }
         ?>
+
         <?php if ($tri_heading): ?>
             <section class="god-triangle" id="god-triangle">
                 <?php if ($tri_img_left): ?>
-                    <div class="god-triangle-side" aria-hidden="true"><img src="<?php echo esc_url($tri_img_left['url']); ?>"
-                            alt=""></div>
+                    <div class="god-triangle-side" aria-hidden="true">
+                        <img src="<?php echo esc_url($tri_img_left['url']); ?>" alt="">
+                    </div>
                 <?php endif; ?>
+
                 <?php if ($tri_img_right): ?>
-                    <div class="god-triangle-side" aria-hidden="true"><img src="<?php echo esc_url($tri_img_right['url']); ?>"
-                            alt=""></div>
+                    <div class="god-triangle-side" aria-hidden="true">
+                        <img src="<?php echo esc_url($tri_img_right['url']); ?>" alt="">
+                    </div>
                 <?php endif; ?>
+
                 <div class="god-triangle-content">
                     <h2><?php echo wp_kses_post($tri_heading); ?></h2>
+
                     <?php if ($tri_sub): ?>
-                        <p><?php echo esc_html($tri_sub); ?></p><?php endif; ?>
-                    <a href="<?php echo esc_url($tri_link); ?>">Read The Full Story &rarr;</a>
+                        <p><?php echo esc_html($tri_sub); ?></p>
+                    <?php endif; ?>
+
+                    <a href="<?php echo esc_url($tri_link); ?>"
+                        aria-label="Read the full story about this relationship triangle">
+                        Read The Full Story &rarr;
+                    </a>
                 </div>
             </section>
         <?php endif; ?>
+
+
+
+        <!-- ============================================================
+        10. FAQ — genuine FAQs only, capped at 6
+        ============================================================ -->
         <?php
-        // ============================================================
-        // 8. FAQ — genuine FAQs only, capped at 6
-        // ============================================================
         $faqs = [];
         for ($i = 1; $i <= 6; $i++) {
             $q = get_field("faq_{$i}_question");
-            if ($q)
-                $faqs[] = ['q' => $q, 'a' => get_field("faq_{$i}_answer") ?: ''];
+            if ($q) {
+                $faqs[] = [
+                    'q' => $q,
+                    'a' => get_field("faq_{$i}_answer") ?: ''
+                ];
+            }
         }
         ?>
         <?php if ($faqs): ?>
             <section class="god-faq" id="god-faq">
                 <div class="god-faq-inner">
                     <h2>Frequently Asked Questions</h2>
+
                     <?php foreach ($faqs as $faq): ?>
-                        <details>
-                            <summary>
-                                <span><?php echo esc_html($faq['q']); ?></span>
-                                <span aria-hidden="true">+</span>
+                        <details class="god-faq-item">
+                            <summary class="god-faq-trigger">
+                                <span class="god-faq-question"><?php echo esc_html($faq['q']); ?></span>
+                                <span class="god-faq-icon" aria-hidden="true">+</span>
                             </summary>
-                            <?php if ($faq['a']): ?>
-                                <p><?php echo wp_kses_post($faq['a']); ?></p><?php endif; ?>
+
+                            <div class="god-faq-content">
+                                <?php if ($faq['a']): ?>
+                                    <?php echo wp_kses_post($faq['a']); ?>
+                                <?php endif; ?>
+                            </div>
                         </details>
                     <?php endforeach; ?>
                 </div>
             </section>
         <?php endif; ?>
 
+
+
+
+        <!-- ============================================================
+        11. PREV / NEXT ORISHA FOOTER STRIP
+        ============================================================ -->
         <?php
-        // ============================================================
-        // 9. PREV / NEXT ORISHA FOOTER STRIP
-        // ============================================================
         $prev_god = get_field('cross_nav_prev_god');
         $next_god = get_field('cross_nav_next_god');
         ?>
         <?php if ($prev_god || $next_god): ?>
-            <nav class="god-crossnav">
-                <?php if ($prev_god):
-                    $prev_title = get_field('quick_fact_1_value', $prev_god->ID) ?: $prev_god->post_title;
-                    ?>
-                    <a href="<?php echo esc_url(get_permalink($prev_god->ID)); ?>" class="god-crossnav-prev">
-                        <span>Previous Orisha</span>
-                        <strong><?php echo esc_html($prev_god->post_title); ?></strong>
-                        <span><?php echo esc_html(get_field('god_tagline', $prev_god->ID)); ?></span>
-                    </a>
-                <?php else: ?><span></span><?php endif; ?>
+            <nav class="god-crossnav" aria-label="Orisha Chronology Navigation">
 
+                <?php if ($prev_god): ?>
+                    <a href="<?php echo esc_url(get_permalink($prev_god->ID)); ?>" class="god-crossnav-link god-crossnav-prev">
+                        <span class="god-crossnav-label">Previous Orisha</span>
+                        <span class="god-crossnav-title"><?php echo esc_html($prev_god->post_title); ?></span>
+                        <?php if ($prev_tagline = get_field('god_tagline', $prev_god->ID)): ?>
+                            <span class="god-crossnav-tagline"><?php echo esc_html($prev_tagline); ?></span>
+                        <?php endif; ?>
+                    </a>
+                <?php endif; ?>
 
                 <?php if ($next_god): ?>
-                    <a href="<?php echo esc_url(get_permalink($next_god->ID)); ?>" class="god-crossnav-next">
-                        <span>Next Orisha</span>
-                        <strong><?php echo esc_html($next_god->post_title); ?></strong>
-                        <span><?php echo esc_html(get_field('god_tagline', $next_god->ID)); ?></span>
+                    <a href="<?php echo esc_url(get_permalink($next_god->ID)); ?>" class="god-crossnav-link god-crossnav-next">
+                        <span class="god-crossnav-label">Next Orisha</span>
+                        <span class="god-crossnav-title"><?php echo esc_html($next_god->post_title); ?></span>
+                        <?php if ($next_tagline = get_field('god_tagline', $next_god->ID)): ?>
+                            <span class="god-crossnav-tagline"><?php echo esc_html($next_tagline); ?></span>
+                        <?php endif; ?>
                     </a>
-                <?php else: ?><span></span><?php endif; ?>
+                <?php endif; ?>
+
             </nav>
         <?php endif; ?>
 
-    </div><!-- .single-god -->
 
-
-    <?php
+    </div>
+     <?php
 
     wp_enqueue_script('love-story', get_stylesheet_directory_uri() . '/js/love-story.js', [], '2.0', true);
     ?>
 
-<?php endwhile; ?>
-<?php get_footer(); ?>
+    <?php endwhile; ?>
+    <?php get_footer(); ?>

@@ -149,11 +149,11 @@ table {
    ------------------------------------------------------------- */
 :root {
 
-    --night-deepest: #07091a;
-    --night-deep: #0d1030;
-    --night-mid: #141840;
-    --night-light: #1e2255;
-    --night-muted: #2a2f6e;
+    --night-deepest: #040510;
+    --night-deep: #0a0c24;
+    --night-mid: #12163b;
+    --night-light: #1c2154;
+    --night-muted: #2b3175;
 
     /* Moon gold family */
     --moon-bright: #f5c842;
@@ -162,9 +162,9 @@ table {
     --moon-glow: rgba(245, 200, 66, 0.12);
 
     /* Text */
-    --text-primary: #eef0f8;
-    --text-secondary: #acb3d5;
-    --text-muted: #5c6494;
+    --text-primary: #f4f4f4;
+    --text-secondary: #c2c9eb;
+    --text-muted: #828bbd;
 
     /* Typography */
     --font-heading: 'Cinzel', Helvetica, 'Georgia', serif;
@@ -210,7 +210,7 @@ body {
     background: var(--night-deepest);
     color: var(--text-primary);
     font-family: var(--font-body);
-    line-height: 1.55;
+    line-height: 1.6;
     font-size: 1.21rem;
 
 
@@ -601,14 +601,10 @@ a:hover {
    ============================================================= */
 
 .home-page {
-    --home-bg: var(--night-deepest);
-    --home-border: rgba(218, 169, 65, 0.25);
-    --home-text: #eee8d9;
-    ;
-    --home-muted: #aaa59a;
+    
 
     background: var(--night-deepest);
-    color: var(--home-text);
+    color: var(--text-primary);
     overflow: hidden;
 
     img {
@@ -647,7 +643,7 @@ a:hover {
 
         h2 {
             margin: 0;
-            color: var(--home-text);
+            color: var(--text-primary);
             font-size: clamp(2rem, 7vw, 3rem);
 
             line-height: 1;
@@ -655,8 +651,7 @@ a:hover {
 
         p {
             max-width: 38rem;
-            /* margin: 1rem 0 0; */
-            color: var(--home-muted);
+            color: var(--text-secondary);
         }
     }
 
@@ -672,7 +667,7 @@ a:hover {
         place-items: center;
         isolation: isolate;
         overflow: hidden;
-        border-bottom: 1px solid var(--home-border);
+        border-bottom: 1px solid var(--moon-pale);
 
         .home-hero-image,
         .home-hero-atmosphere {
@@ -736,7 +731,7 @@ a:hover {
             h1 {
                 max-width: 500px;
                 margin: 0 auto;
-                color: #f3e7c5;
+                color: var(--text-primary);
                 font-size: clamp(2rem, 7vw, 4rem);
                 line-height: 1;
                 text-transform: uppercase;
@@ -745,7 +740,7 @@ a:hover {
 
             p {
                 margin: 1.5rem auto 0;
-                color: #dedbd4;
+                color: var(--text-secondary);
                 max-width: 300px;
             }
 
@@ -789,7 +784,7 @@ a:hover {
 
     .home-gods {
         padding: 4rem var(--sp-md);
-        background: var(--home-bg);
+        background: var(--night-deepest);
     }
 
     .home-gods-grid {
@@ -847,7 +842,7 @@ a:hover {
             span {
                 display: block;
                 margin-top: 0.7rem;
-                color: #dedbd4;
+                color: var(--text-secondary);
                 font-size: 0.75rem;
                 letter-spacing: 0.1em;
                 text-transform: uppercase;
@@ -922,8 +917,8 @@ a:hover {
         min-height: 520px;
         display: grid;
         place-items: center;
-        border-top: 1px solid var(--home-border);
-        border-bottom: 1px solid var(--home-border);
+        border-top: 1px solid var(--moon-pale);
+        border-bottom: 1px solid var(--moon-pale);
 
         img {
             width: 100%;
@@ -948,7 +943,7 @@ a:hover {
 
             h2 {
                 margin: 0;
-                color: #f1e2bd;
+                color: var(--text-primary);
                 font-family: var(--font-heading);
                 font-size: clamp(2rem, 7vw, 3rem);
 
@@ -971,7 +966,7 @@ a:hover {
 
     .home-stories {
         padding: 4rem var(--sp-md);
-        border-top: 1px solid var(--home-border);
+        border-top: 1px solid var(--moon-pale);
     }
 
     .home-stories-header {
@@ -1027,7 +1022,7 @@ a:hover {
         display: block;
         overflow: hidden;
         border: 1px solid rgba(255, 255, 255, 0.12);
-        background: #0d0d0d;
+        background: var(--night-deep);
 
         .home-story-media {
             position: relative;
@@ -1059,7 +1054,7 @@ a:hover {
 
             strong {
                 display: block;
-                color: var(--home-text);
+                color: var(--text-secondary);
                 font-family: var(--font-heading);
                 font-size: clamp(2rem, 7vw, 3rem);
 
@@ -1076,7 +1071,7 @@ a:hover {
             }
 
             p {
-                color: var(--home-muted);
+                color: var(--text-muted);
             }
         }
 
@@ -1096,7 +1091,7 @@ a:hover {
 
     .home-stories-empty {
         padding: 3rem 0;
-        color: var(--home-muted);
+        color: var(--text-muted);
         text-align: center;
     }
 
@@ -1107,7 +1102,7 @@ a:hover {
 
     .home-context-inner {
         padding: 4rem var(--sp-md);
-        background: var(--home-bg);
+        background: var(--night-deepest);
 
         display: grid;
         gap: 2rem;
@@ -1131,8 +1126,7 @@ a:hover {
 
         h2 {
             margin: 0;
-            color: var(--home-text);
-            font-family: var(--font-heading);
+            color: var(--text-primary);
             font-size: clamp(2rem, 7vw, 3rem);
 
             line-height: 0.95;
@@ -1141,7 +1135,7 @@ a:hover {
         p {
             max-width: 600px;
             margin: 1.5rem 0;
-            color: var(--home-muted);
+            color: var(--text-secondary);
         }
     }
 
@@ -1154,7 +1148,7 @@ a:hover {
         width: calc(100% - 2rem);
         height: 1px;
         margin: 0 auto;
-        background: var(--home-border);
+        background: var(--moon-pale);
     }
 
 
@@ -2928,7 +2922,7 @@ END OF HOME PAGE
     }
 
 
-    .god-hero-content>span {
+    .god-hero-content>p:first-child {
         display: inline-block;
 
         margin-bottom: 1rem;
@@ -3097,7 +3091,7 @@ END OF HOME PAGE
     }
 
 
-    .god-facts-bar p:first-child {
+    .god-facts-bar dt {
         margin-bottom: 0.2rem;
         color: var(--text-primary);
         font-size: 0.8rem;
@@ -3107,7 +3101,7 @@ END OF HOME PAGE
     }
 
 
-    .god-facts-bar p {
+    .god-facts-bar dd {
         display: block;
 
         color: var(--text-secondary);
@@ -3136,7 +3130,7 @@ END OF HOME PAGE
 
 
 
-    .god-summary p {
+    .god-summary-content {
         margin: 0;
 
         color: var(--text-secondary);
@@ -3192,179 +3186,146 @@ END OF HOME PAGE
    06. JOURNEY
    ============================================================ */
 
+
 .single-god {
 
     .god-journey-header {
         margin-bottom: 2rem;
     }
 
-
-
-
-
+    /* Updated to handle <ol> element styles */
     .god-journey-track {
         display: flex;
         gap: 0.8rem;
-
         width: calc(100vw - var(--sp-md) * 2);
-
         overflow-x: auto;
         overscroll-behavior-x: contain;
-
         padding-bottom: 1.5rem;
-
         scrollbar-width: thin;
         scrollbar-color: var(--god) transparent;
     }
-
-
-    .god-journey-card {
-        position: relative;
-        flex: 0 0 min(78vw, 310px);
-
-        padding-top: 1.5rem;
-    }
-
-
-    .god-journey-number {
-        position: absolute;
-        top: 0;
-        left: 1rem;
-        z-index: 3;
-
-        display: grid;
-        place-items: center;
-
-        width: 38px;
-        height: 38px;
-
-        background: var(--god);
-        color: #fff;
-
-        border-radius: 50%;
-
-        font-family: var(--font-heading);
-        font-size: 0.8rem;
-        font-weight: 700;
-    }
-
-
-    .god-journey-media {
-        min-height: 280px;
-
-        position: relative;
-        overflow: hidden;
-
-        border: 1px solid var(--god-border);
-        background: var(--night-mid);
-    }
-
-
-    .god-journey-media img {
-        width: 100%;
-        height: 280px;
-
-        object-fit: cover;
-
-        opacity: 0.72;
-
-        transition:
-            transform 0.5s ease,
-            opacity 0.5s ease;
-    }
-
-
-    .god-journey-text {
-        position: absolute;
-        inset: auto 0 0;
-
-        padding: 4rem 1.2rem 1.2rem;
-
-        background:
-            linear-gradient(to top,
-                rgba(7, 9, 26, 0.98),
-                rgba(7, 9, 26, 0.05));
-    }
-
-
-    .god-journey-text strong {
-        display: block;
-
-        color: var(--text-primary);
-
-        font-family: var(--font-heading);
-        font-size: 1rem;
-    }
-
-
-    .god-journey-text p {
-        margin: 0.35rem 0 0;
-
-        color: var(--text-secondary);
-
-        font-size: 0.95rem;
-        line-height: 1.55;
-    }
-
-
-    .god-journey-card:hover img {
-        opacity: 1;
-    }
-
-
-    .god-journey-connector {
-        display: flex;
-        align-items: center;
-
-        flex: 0 0 auto;
-
-
-        font-size: 0.55rem;
-    }
-
-
-    .god-journey-hint {
-        margin: 0.5rem 0 0;
-
-        color: var(--text-secondary);
-
-        font-size: 0.7rem;
-        letter-spacing: 0.12em;
-        text-align: center;
-        text-transform: uppercase;
-    }
-
-
-    .god-journey-footer {
-        margin-top: 2rem;
-        text-align: center;
-    }
-
-
-    .god-journey-footer .btn-ghost {
-        display: inline-block;
-
-        padding: 0.8rem 1.2rem;
-
-        border: 1px solid var(--god-border);
-
-        color: var(--moon-pale);
-
-        font-size: 0.7rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-
-        transition:
-            background var(--transition),
-            border-color var(--transition);
-    }
-
-
-    .god-journey-footer .btn-ghost:hover {
-        background: var(--god-soft);
-        border-color: var(--god);
-    }
 }
+
+/* Updated to target </li> element items seamlessly */
+.god-journey-card {
+    position: relative;
+    flex: 0 0 min(78vw, 310px);
+    padding-top: 1.5rem;
+}
+
+.god-journey-number {
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    background: var(--god);
+    color: #fff;
+    border-radius: 50%;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
+
+}
+
+.god-journey-media {
+    min-height: 280px;
+    position: relative;
+    overflow: hidden;
+
+    border: 1px solid var(--god-border);
+    background: var(--night-mid);
+}
+
+.god-journey-media img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    opacity: 0.72;
+
+    transition:
+        transform 0.5s ease,
+        opacity 0.5s ease;
+}
+
+.god-journey-text {
+    position: absolute;
+    inset: auto 0 0;
+    padding: 4rem 1.2rem 1.2rem;
+
+    background:
+        linear-gradient(to top,
+            rgba(7, 9, 26, 0.98),
+            rgba(7, 9, 26, 0.05));
+}
+
+.god-journey-text h3 {
+    display: block;
+    margin: 0;
+
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.god-journey-text p {
+    margin: 0.35rem 0 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+.god-journey-card:hover img {
+    transform: scale(1.03);
+    opacity: 1;
+}
+
+.god-journey-connector {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    font-size: 0.55rem;
+
+}
+
+.god-journey-hint {
+    margin: 0.5rem 0 0;
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.god-journey-footer {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.god-journey-footer .btn-ghost {
+    display: inline-block;
+    padding: 0.8rem 1.2rem;
+    border: 1px solid var(--god-border);
+    color: var(--moon-pale);
+
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    transition:
+        background var(--transition),
+        border-color var(--transition);
+}
+
+.god-journey-footer .btn-ghost:hover {
+    background: var(--god-soft);
+    border-color: var(--god);
+}
+
 
 
 /* ============================================================
@@ -3430,12 +3391,12 @@ END OF HOME PAGE
     }
 
 
-    .god-symbol-body strong {
+    .god-symbol-body h3 {
         display: block;
-
+        margin: 0;
         color: var(--text-primary);
-
-        font-family: var(--font-heading);
+        font-size: 1rem;
+        font-weight: 700;
     }
 
 
@@ -3502,26 +3463,25 @@ END OF HOME PAGE
     }
 
 
-    .god-power-card strong {
+    .god-power-card h3 {
+        display: block;
+        margin: 0;
         color: var(--text-primary);
-
-        font-family: var(--font-heading);
-        font-size: 0.9rem;
-        line-height: 1.35;
+        font-size: 1rem;
+        font-weight: 700;
     }
-
-
-    .god-power-card p {
-        margin: 0.45rem 0 0;
-
-        color: var(--text-secondary);
-
-        line-height: 1.5;
-    }
-
-
-
 }
+
+
+.god-power-card p {
+    margin: 0.45rem 0 0;
+
+    color: var(--text-secondary);
+}
+
+
+
+
 
 
 /* ============================================================
@@ -3584,19 +3544,18 @@ END OF HOME PAGE
         border: 1px solid var(--text-secondary);
         border-radius: 50%;
 
-        /* color: var(--god); */
 
         font-family: var(--font-heading);
         font-size: 0.75rem;
     }
 
 
-    .god-myth-body strong {
+    .god-myth-body h3 {
         display: block;
-
+        margin: 0;
         color: var(--text-primary);
-
-        font-family: var(--font-heading);
+        font-size: 1rem;
+        font-weight: 700;
     }
 
 
@@ -3740,10 +3699,12 @@ END OF HOME PAGE
 
 
     .god-worship-col h3 {
-        margin-bottom: 0.8rem;
-
-        color: var(--text-primary);
-        font-size: 1.4rem;
+        display: block;
+        margin: 1.5rem 0 0.7rem;
+        color: var(--moon-warm);
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
     }
 
 
@@ -3774,7 +3735,7 @@ END OF HOME PAGE
     }
 
 
-    .god-offerings-grid>div {
+    .god-offerings-grid>li {
         display: flex;
         align-items: center;
         gap: 0.5rem;
@@ -3807,7 +3768,7 @@ END OF HOME PAGE
     }
 
 
-    .god-festival-item strong {
+    .god-festival-item h4 {
         display: block;
 
         color: var(--text-primary);
@@ -4002,19 +3963,14 @@ END OF HOME PAGE
         border: 1px solid var(--text-secondary);
         border-radius: 50%;
 
-        /* color: var(--god); */
 
         font-family: var(--font-body);
     }
 
 
     .god-faq details>div {
-        padding: 0 2.5rem 1.4rem 0;
-
+        padding-bottom: 1rem;
         color: var(--text-secondary);
-
-        font-size: 0.85rem;
-        line-height: 1.8;
     }
 
 
@@ -4076,10 +4032,17 @@ END OF HOME PAGE
         text-transform: uppercase;
         color: var(--text-secondary);
         font-size: 0.65rem;
+        letter-spacing: 0.2em;
+    }
+
+    .god-crossnav span:last-child {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
     }
 
 
-    .god-crossnav strong {
+
+    .god-crossnav-title {
         margin: 0.25rem 0;
 
         color: var(--text-primary);
@@ -4089,11 +4052,6 @@ END OF HOME PAGE
     }
 
 
-    .god-crossnav span:not(.god-crossnav-mark) {
-        color: var(--text-secondary);
-
-        font-size: 0.86rem;
-    }
 
 
     .god-crossnav-mark {
@@ -4719,7 +4677,7 @@ END OF SINGLE GOD AND SINGLE STORY
 
         }
 
-     
+
 
     }
 
@@ -4787,7 +4745,7 @@ END OF SINGLE GOD AND SINGLE STORY
             pointer-events: none;
         }
 
-       
+
 
         /* content div */
         &>div:last-child {
