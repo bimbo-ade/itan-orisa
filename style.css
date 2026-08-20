@@ -350,15 +350,16 @@ a:hover {
     top: 0;
     z-index: 100;
     background: var(--night-deep);
-    padding: 1rem 0;
-    border-bottom: 1px solid rgba(var(--moon-bright-rgb, 245, 200, 66), 0.15);
-
-
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(
+        var(--moon-bright-rgb, 245, 200, 66),
+        0.15
+    );
 
     & .nav-container {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 0 20px;
+        padding: 0 1rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -366,13 +367,15 @@ a:hover {
         position: relative;
     }
 
-    /* -----------------------------------------------------------
-     LOGO 
-     ----------------------------------------------------------- */
+
+    /* =========================================================
+       LOGO
+       ========================================================= */
+
     & .logo a {
         display: flex;
         align-items: center;
-        gap: 5rem;
+        gap: 0.5rem;
         text-decoration: none;
 
         &:focus-visible {
@@ -384,23 +387,27 @@ a:hover {
 
     & .logo-mark {
         color: var(--moon-bright);
-        filter: drop-shadow(0 0 5px rgba(var(--moon-bright-rgb, 245, 200, 66), 0.45));
+        filter: drop-shadow(
+            0 0 5px
+            rgba(var(--moon-bright-rgb, 245, 200, 66), 0.45)
+        );
         flex-shrink: 0;
     }
-
 
     & .logo-word {
         font-family: var(--font-heading);
         font-weight: 700;
-        font-size: 1.15rem;
+        font-size: 1rem;
         letter-spacing: 0.03em;
-        padding-left: 1rem;
         color: var(--text-primary);
+        white-space: nowrap;
     }
 
-    /* -----------------------------------------------------------
-     HAMBURGER —
-     ----------------------------------------------------------- */
+
+    /* =========================================================
+       HAMBURGER
+       ========================================================= */
+
     & .nav-toggle {
         position: absolute;
         opacity: 0;
@@ -416,148 +423,258 @@ a:hover {
         align-items: flex-end;
         gap: 5px;
         width: 28px;
-        height: 22px;
+        height: 28px;
         cursor: pointer;
         z-index: 2;
+        flex-shrink: 0;
 
         & span {
             display: block;
             width: 100%;
             height: 2px;
             background: var(--moon-bright, #f5c842);
-            transition: transform 0.25s ease, opacity 0.25s ease;
+            transition:
+                transform 0.25s ease,
+                opacity 0.25s ease;
         }
     }
 
-    /* -----------------------------------------------------------
-     LINKS — 
-     ----------------------------------------------------------- */
+
+    /* Keyboard focus for hamburger */
+    & .nav-toggle:focus-visible + .nav-toggle-label {
+        outline: 2px solid var(--moon-bright);
+        outline-offset: 4px;
+        border-radius: 3px;
+    }
+
+
+    /* =========================================================
+       NAVIGATION — MOBILE DEFAULT
+       ========================================================= */
+
     & ul {
         list-style: none;
         margin: 0;
         padding: 0;
+
+        position: absolute;
+        top: calc(100% + 0.75rem);
+        left: 0;
+        right: 0;
+
         display: flex;
-        flex-wrap: wrap;
-        gap: 0.4rem;
+        flex-direction: column;
 
-        & a {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.55rem 0.9rem;
-            border-radius: var(--border-radius);
-            color: var(--text-secondary, #9aa3c8);
-            text-decoration: none;
-            transition: background 0.1s ease, color 0.1s ease;
+        background: var(--night-deep, #0d1030);
+        border-top: 1px solid
+            rgba(var(--moon-bright-rgb, 245, 200, 66), 0.15);
 
+        max-height: 0;
+        overflow: hidden;
+
+        transition: max-height 0.3s ease;
+    }
 
 
-            &:hover {
-                color: var(--text-primary, #eef0f8);
-                background: rgba(var(--moon-bright-rgb, 245, 200, 66), 0.12);
+    /* ---------------------------------------------------------
+       NAV LINKS
+       --------------------------------------------------------- */
 
-                &::before {
-                    opacity: 1;
-                }
+    & ul a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
 
-            }
+        width: 100%;
+        padding: 0.9rem 1rem;
 
-            &:focus-visible {
-                outline: 2px solid var(--moon-bright);
-                border-radius: 3px;
-            }
-        }
+        color: var(--text-secondary, #9aa3c8);
+        text-decoration: none;
 
+        border-bottom: 1px solid
+            rgba(255, 255, 255, 0.05);
 
-        /* every WP "this is the current page" class, one rule */
-        & :where(.current-menu-item,
-            .current_page_item,
-            .current-page-ancestor,
-            li.current-post-type-archive,
-            li.current-archive,
-            li.menu-item-object-gods-archive,
-            li.current_page_parent) a {
-            color: var(--moon-bright, #f5c842);
-            background: rgba(var(--moon-bright-rgb, 245, 200, 66), 0.12);
+        transition:
+            background 0.15s ease,
+            color 0.15s ease;
+
+        &:hover {
+            color: var(--text-primary, #eef0f8);
+            background:
+                rgba(
+                    var(--moon-bright-rgb, 245, 200, 66),
+                    0.08
+                );
 
             &::before {
                 opacity: 1;
             }
         }
-    }
 
-
-    /* -----------------------------------------------------------
-     MOBILE — hamburger reveal
-     ----------------------------------------------------------- */
-    @media (max-width: 48em) {
-
-        & ul {
-            position: absolute;
-            top: calc(100% + 17px);
-            left: 0;
-            right: 0;
-            flex-direction: column;
-            gap: 0;
-            background: var(--night-deep, #0d1030);
-            border-top: none;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-
-            & li {
-                width: 100%;
-            }
-
-            & a {
-                border-radius: 0;
-                padding: 0.9rem 1.25rem;
-            }
-        }
-
-        & .nav-toggle:checked~ul {
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-
-        & .nav-toggle:checked~.nav-toggle-label span:nth-child(1) {
-            transform: translateY(7px) rotate(45deg);
-        }
-
-        & .nav-toggle:checked~.nav-toggle-label span:nth-child(2) {
-            opacity: 0;
-        }
-
-        & .nav-toggle:checked~.nav-toggle-label span:nth-child(3) {
-            transform: translateY(-7px) rotate(-45deg);
+        &:focus-visible {
+            outline: 2px solid var(--moon-bright);
+            outline-offset: -2px;
         }
     }
 
 
-    /* -----------------------------------------------------------
-     TABLET+ — hamburger gone, full row, second corner shown
-     ----------------------------------------------------------- */
+    /* =========================================================
+       CURRENT PAGE
+       ========================================================= */
+
+    & ul :where(
+        .current-menu-item,
+        .current_page_item,
+        .current-page-ancestor,
+        li.current-post-type-archive,
+        li.current-archive,
+        li.menu-item-object-gods-archive,
+        li.current_page_parent
+    ) a {
+        color: var(--moon-bright, #f5c842);
+
+        background:
+            rgba(
+                var(--moon-bright-rgb, 245, 200, 66),
+                0.12
+            );
+
+        &::before {
+            opacity: 1;
+        }
+    }
+
+
+    /* =========================================================
+       OPEN MOBILE MENU
+       ========================================================= */
+
+    & .nav-toggle:checked ~ ul {
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+
+
+    /* Hamburger → X */
+
+    & .nav-toggle:checked
+        ~ .nav-toggle-label
+        span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    & .nav-toggle:checked
+        ~ .nav-toggle-label
+        span:nth-child(2) {
+        opacity: 0;
+    }
+
+    & .nav-toggle:checked
+        ~ .nav-toggle-label
+        span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+
+    /* =========================================================
+       TABLET — 48em+
+       ========================================================= */
+
     @media (min-width: 48em) {
+
+        & {
+            padding: 1rem 0;
+        }
+
+        & .nav-container {
+            padding: 0 1.5rem;
+        }
+
+
+        /* Logo gets slightly larger */
+
+        & .logo-word {
+            font-size: 1.15rem;
+        }
+
+
+        /* Hide hamburger */
+
         & .nav-toggle-label {
             display: none;
         }
 
-        & .nav-corner.tr {
-            display: block;
+
+        /* Restore horizontal navigation */
+
+        & ul {
+            position: static;
+
+            max-height: none;
+            overflow: visible;
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            gap: 0.25rem;
+
+            background: transparent;
+            border: 0;
+        }
+
+
+        & ul li {
+            width: auto;
+        }
+
+
+        & ul a {
+            width: auto;
+            padding: 0.55rem 0.75rem;
+
+            border: 0;
+            border-radius: var(--border-radius);
         }
     }
 
 
-    /* -----------------------------------------------------------
-     REDUCED MOTION
-     ----------------------------------------------------------- */
-    @media (prefers-reduced-motion: reduce) {
-        & .logo-mark {
-            animation: none;
+    /* =========================================================
+       DESKTOP — 64em+
+       ========================================================= */
+
+    @media (min-width: 64em) {
+
+        & .nav-container {
+            padding: 0 2rem;
         }
+
+        & .logo a {
+            gap: 0.75rem;
+        }
+
+        & ul {
+            gap: 0.4rem;
+        }
+
+        & ul a {
+            padding: 0.6rem 0.9rem;
+        }
+    }
+
+
+    /* =========================================================
+       REDUCED MOTION
+       ========================================================= */
+
+    @media (prefers-reduced-motion: reduce) {
 
         & * {
             transition: none !important;
+        }
+
+        & .logo-mark {
+            animation: none;
         }
     }
 }
@@ -686,13 +803,13 @@ a:hover {
             }
         }
 
-        /* 
-        .home-hero-atmosphere {
+        
+        /* .home-hero-atmosphere {
             z-index: -2;
             background:
                 linear-gradient(to bottom,
-                    rgba(0, 0, 0, 0.15),
-                    rgba(0, 0, 0, 0.55) 60%,
+                    rgba(0, 0, 0, 0.063),
+                    rgba(0, 0, 0, 0.123) 100%,
                     var(--night-deepest) 100%);
         } */
 
@@ -722,7 +839,7 @@ a:hover {
             width: min(90%, 850px);
             padding: 6rem 0 0;
             text-align: center;
-
+z-index: 20;
             .home-eyebrow {
                 margin-bottom: 1.25rem;
                 font-size: 0.7rem;
@@ -946,7 +1063,7 @@ a:hover {
                 color: var(--text-primary);
                 font-family: var(--font-heading);
                 font-size: clamp(2rem, 7vw, 3rem);
-
+        max-width: 500px;
                 line-height: 1;
                 text-transform: uppercase;
                 text-shadow: 0 5px 30px rgba(0, 0, 0, 0.8);
