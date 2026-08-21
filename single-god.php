@@ -94,16 +94,19 @@ while (have_posts()):
             <dl class="god-facts-bar">
                 <?php foreach ($quick_facts as $fact): ?>
                     <div class="god-fact-item">
-                        <span class="god-fact-icon" aria-hidden="true"><?php echo esc_html($fact['icon']); ?></span>
 
-                        <div class="god-fact-content">
-                            <dt><?php echo esc_html($fact['label']); ?></dt>
-                            <dd><?php echo esc_html($fact['value']); ?></dd>
-                        </div>
+                        <dt>
+                            <span class="god-fact-icon" aria-hidden="true"><?php echo esc_html($fact['icon']); ?></span>
+                            <?php echo esc_html($fact['label']); ?>
+                        </dt>
+
+                        <dd><?php echo esc_html($fact['value']); ?></dd>
+
                     </div>
                 <?php endforeach; ?>
             </dl>
         <?php endif; ?>
+
 
 
         <!-- ============================================================
@@ -152,11 +155,8 @@ while (have_posts()):
 
                 <ol class="god-journey-track">
                     <?php foreach ($stages as $i => $stage): ?>
-                        <?php if ($i > 0): ?>
-                            <div class="god-journey-connector" aria-hidden="true">&#9670;</div>
-                        <?php endif; ?>
                         <li class="god-journey-card">
-
+                          
 
                             <span class="god-journey-number" aria-hidden="true"><?php echo esc_html($i + 1); ?></span>
 
@@ -179,23 +179,15 @@ while (have_posts()):
                                         <p><?php echo esc_html($stage['desc']); ?></p>
                                     <?php endif; ?>
                                 </div>
-                            </div> <?php if ($i > 0): ?>
-                            <?php endif; ?>
+                            </div>
                         </li>
                     <?php endforeach; ?>
                 </ol>
 
                 <p class="god-journey-hint" aria-hidden="true">&larr; Scroll &rarr;</p>
-
-                <?php if ($story_page): ?>
-                    <div class="god-journey-footer">
-                        <a href="<?php echo esc_url(get_permalink($story_page->ID)); ?>" class="btn-ghost">
-                            Read <?php the_title(); ?>'s Full Story &rarr;
-                        </a>
-                    </div>
-                <?php endif; ?>
             </section>
         <?php endif; ?>
+
 
         <!-- 
         ============================================================
@@ -407,7 +399,7 @@ while (have_posts()):
                                         </div>
 
                                         <?php if ($f['date']): ?>
-                                            <time class="god-festival-date"><?php echo esc_html($f['date']); ?></time>
+                                            <p class="god-festival-date"><?php echo esc_html($f['date']); ?></p>
                                         <?php endif; ?>
                                     </li>
                                 <?php endforeach; ?>
@@ -541,10 +533,10 @@ while (have_posts()):
 
 
     </div>
-     <?php
+    <?php
 
     wp_enqueue_script('love-story', get_stylesheet_directory_uri() . '/js/love-story.js', [], '2.0', true);
     ?>
 
-    <?php endwhile; ?>
-    <?php get_footer(); ?>
+<?php endwhile; ?>
+<?php get_footer(); ?>

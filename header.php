@@ -22,16 +22,12 @@
         <div class="nav-container">
             <div class="logo">
                 <a href="<?php echo home_url(); ?>">
-                    <!-- <svg class="logo-mark" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                        <path d="M14 3 L20 9 C20 9 17 10 14 13 C11 10 8 9 8 9 Z" fill="currentColor" opacity="0.9" />
-                        <path d="M14 13 L15 18 L12 18 L14 25 L13 19 L16 19 Z" fill="currentColor" />
-                    </svg> -->
                     <span class="logo-word">Ìtàn Òrìṣà</span>
                 </a>
             </div>
 
             <input type="checkbox" id="nav-toggle" class="nav-toggle">
-            <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle menu">
+            <label for="nav-toggle" class="nav-toggle-label" >
                 <span></span><span></span><span></span>
             </label>
 

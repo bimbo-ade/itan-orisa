@@ -16,7 +16,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
 
     <section class="cc-hero">
         <div>
-            <span>Cultural Context</span>
+            <p>Cultural Context</p>
             <h1>Understanding Yoruba Mythology</h1>
             <p>A reference guide to the tradition, the people, and the stories behind this project.</p>
         </div>
@@ -289,31 +289,47 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
 
                     Its influence can be found in:
 
-                    Literature
+                </p>
+                <p>
+
+                    <em>
+                        Literature-
+                    </em>
 
                     Authors continue to use Yoruba myths in novels, poetry, and drama. Nobel Prize winner Wole Soyinka
                     frequently draws from Yoruba cosmology.
 
                     Custodian of cultural practices should also help enlighten younglings about myths, proverbs and
                     majorly the indigenous practice of cultural displays and practices for record and future reference
-                    purposes. </p>
+                    purposes.
+                </p>
 
-                <p> Movies
+                <p> <em>
+                        Movies-
+                    </em>
 
                     Films such as Black Panther incorporate visual and cultural elements inspired by Yoruba traditions.
                     Nigerian Yoruba-language films also portray traditional beliefs and legends.
 
-                    Music
+                </p>
+                <p>
+
+                    <em> Music-</em>
 
                     Artists including King Sunny Ade, Asa, Burna Boy, and others reference Yoruba spirituality,
                     proverbs, and history in their music.
+                </p>
+                <p>
 
-                    Fashion
+                    <em> Fashion-</em>
 
                     Traditional Yoruba clothing such as Agbada, Aso Oke, Gele, and Adire has gained international
                     popularity.
 
-                    Technology and Social Media
+                </p>
+                <p>
+                    <em>Technology and Social Media-</em>
+
 
                     Young creators now use YouTube, TikTok, podcasts, and online archives to preserve Yoruba language,
                     folktales, and mythology for future generations.
@@ -322,16 +338,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                     cultural pride around the world.
                 </p>
 
-                <!-- <div class="cc-tag-cloud">
-                    <span>Nnedi Okorafor</span>
-                    <span>Beyonc&#233; Lemonade</span>
-                    <span>Wole Soyinka</span>
-                    <span>Burna Boy</span>
-                    <span>Smite (game)</span>
-                    <span>UNESCO If&#225; recognition</span>
-                    <span>Afrofuturism</span>
-                    <span>Candombl&#233; revival</span>
-                </div> -->
+
             </div>
         </section>
         <section class="cc-section" id="cc-sources">

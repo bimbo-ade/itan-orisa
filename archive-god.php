@@ -20,7 +20,7 @@ function itan_god_colour($slug)
 
     <section class="gods-hero">
         <div>
-            <span>The Pantheon</span>
+            <p>The Pantheon</p>
             <h1>The Yoruba Gods - Orisa</h1>
             <p>Meet the Orishas &#8212; divine forces of thunder, iron, and transformation.</p>
         </div>

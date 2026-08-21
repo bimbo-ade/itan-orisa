@@ -30,7 +30,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
     <section class="home-hero">
 
         <?php if ($hero_image): ?>
-            <div class="home-hero-image" aria-hidden="true">
+            <div class="home-hero-image">
                 <img src="<?php echo esc_url($hero_image['url']); ?>" alt="" fetchpriority="high">
             </div>
         <?php endif; ?>
@@ -42,8 +42,8 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
 
         <div class="home-hero-content">
 
-            <span class="home-eyebrow"> <?php echo wp_kses_post($hero_heading); ?>
-            </span>
+            <p class="home-eyebrow"> <?php echo wp_kses_post($hero_heading); ?>
+            </p>
 
             <h1>ÌTÀN ÒRÌṢÀ</h1>
 
@@ -138,14 +138,14 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
 
                         <div class="home-god-body">
 
-                            <strong>
+                            <h3>
                                 <?php echo esc_html($god->post_title); ?>
-                            </strong>
+                            </h3>
 
                             <?php if ($g_tag): ?>
-                                <span>
+                                <p>
                                     <?php echo esc_html($g_tag); ?>
-                                </span>
+                                </p>
                             <?php endif; ?>
 
 
@@ -204,15 +204,11 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
 
             <div class="home-triangle-content">
 
-                <span>Featured Story</span>
+                <p>Featured Story</p>
 
                 <h2>
                     <?php echo wp_kses_post($tri_heading); ?>
                 </h2>
-
-                <p>
-                    <?php echo esc_html($tri_subtitle); ?>
-                </p>
 
                 <a href="<?php echo esc_url($lt_url); ?>" class="btn-primary">
                     Read The Love Triangle
@@ -257,9 +253,9 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
 
         <div class="home-context-text">
 
-            <span>
+            <p>
                 Cultural Context
-            </span>
+            </p>
 
             <h2>
                 <?php echo wp_kses_post($ctx_heading); ?>
@@ -267,9 +263,9 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
 
             <?php if ($ctx_text): ?>
 
-                <p>
-                    <?php echo wp_kses_post($ctx_text); ?>
-                </p>
+
+                <?php echo wp_kses_post($ctx_text); ?>
+
 
             <?php endif; ?>
 
@@ -338,7 +334,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
                         <?php endif; ?>
 
                         <div class="home-story-body">
-                            <span>Story</span>
+                            <p>Story</p>
                             <h3><?php the_title(); ?></h3>
                             <?php if ($story_excerpt): ?>
                                 <p><?php echo esc_html($story_excerpt); ?></p>

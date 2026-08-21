@@ -17,7 +17,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
 
     <section class="ab-hero">
 
-        <span>About Website</span>
+        <p>About Website</p>
         <h1>
             Old Gods.<br>
             <em>New Telling.</em>

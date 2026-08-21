@@ -22,7 +22,7 @@ function itan_tag_colour($slug)
     <section class="stories-hero">
         <div aria-hidden="true"></div>
         <div>
-            <span>The Stories</span>
+            <p>The Stories</p>
             <h1>Stories of the Gods</h1>
             <p>Ancient tales of power, love, betrayal, and transformation.</p>
         </div>
