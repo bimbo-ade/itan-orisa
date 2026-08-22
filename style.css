@@ -190,7 +190,7 @@ table {
     --sp-lg: 2.5rem;
     --sp-xl: 4rem;
     --sp-2xl: 6rem;
-    --sp-3xl: 14rem;
+    --sp-3xl: 7rem;
 
 
     /* Layout */
@@ -216,7 +216,7 @@ table {
 }
 
 html {
-    scroll-padding-top: 65px;
+    scroll-padding-top: 90px;
 }
 
 body {
@@ -332,7 +332,7 @@ a:hover {
 .btn-primary:focus-visible,
 .btn-ghost:focus-visible {
     outline: 3px solid var(--moon-bright);
-    outline-offset: 7px;
+    outline-offset: 3px;
 }
 
 /* ============================================================
@@ -4112,7 +4112,6 @@ END OF SINGLE GOD AND SINGLE STORY
                 display: inline-block;
                 margin-top: var(--sp-md);
                 color: var(--moon-bright);
-                font-size: 0.96rem;
                 border-bottom: 1px solid transparent;
 
                 &:hover {
@@ -4121,6 +4120,29 @@ END OF SINGLE GOD AND SINGLE STORY
                 }
             }
         }
+
+
+
+        .email-link {
+            color: var(--moon-bright);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dashed rgba(245, 200, 66, 0.4);
+            transition: all 0.2s ease;
+        }
+
+        .email-link:hover {
+            color: var(--moon-pale);
+            border-bottom-style: solid;
+            border-bottom-color: var(--moon-bright);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .email-link {
+                transition: none !important;
+            }
+        }
+
     }
 
 
@@ -4259,21 +4281,9 @@ END OF SINGLE GOD AND SINGLE STORY
 
         & .ab-section {
             grid-template-columns: 240px 1fr;
-            padding: var(--sp-2xl) var(--sp-2xl);
-
-        }
-
-
-
-    }
-
-    @media (min-width: 70em) {
-
-        & .ab-section {
-            max-width: 65ch;
+            max-width: 67ch;
             margin: 0 auto;
-            padding: var(--sp-2xl) var(--sp-md);
-
+            padding: var(--sp-2xl) var(--sp-xl);
 
 
         }
@@ -4335,7 +4345,7 @@ END OF SINGLE GOD AND SINGLE STORY
             }
 
             & h1 {
-            
+
                 margin-bottom: var(--sp-md);
             }
 
@@ -4383,6 +4393,12 @@ END OF SINGLE GOD AND SINGLE STORY
                 border-color: var(--moon-bright);
             }
 
+            &:focus-visible {
+                background: var(--moon-bright);
+                color: var(--night-deep);
+                outline: 1px solid var(--moon-bright);
+            }
+
         }
     }
 
@@ -4394,6 +4410,7 @@ END OF SINGLE GOD AND SINGLE STORY
         max-width: var(--max-width);
         margin: 0 auto;
     }
+
     & .cc-section {
         padding: var(--sp-2xl) var(--sp-md);
         border-bottom: 1px solid var(--moon-pale);
@@ -4409,7 +4426,7 @@ END OF SINGLE GOD AND SINGLE STORY
             margin-bottom: var(--sp-md);
 
             & span {
-                font-size: 2rem;
+                font-size: 1.4rem;
                 line-height: 1;
                 color: var(--text-secondary);
             }
@@ -4427,20 +4444,14 @@ END OF SINGLE GOD AND SINGLE STORY
         &>div:last-child {
 
             & h2 {
-                font-family: var(--font-heading);
-                font-size: clamp(1.6rem, 4vw, 2.4rem);
-                line-height: 1.15;
-                color: var(--text-primary);
-                margin-top: 0;
-                margin-bottom: var(--sp-md);
+                margin-bottom: 1.5rem;
             }
 
             & p {
-                color: var(--text-secondary);
-                margin-bottom: var(--sp-md);
 
                 & em {
                     color: var(--moon-bright);
+                    font-style: italic;
                 }
 
                 &:last-of-type {
@@ -4448,35 +4459,18 @@ END OF SINGLE GOD AND SINGLE STORY
                 }
             }
 
-            /* inline back link — <a> that isn't a button */
-            &>a:not(.btn-primary):not(.btn-ghost) {
-                display: inline-block;
-                margin-top: var(--sp-xl);
-                color: var(--moon-bright);
-                font-size: 0.96rem;
-                font-weight: 600;
-                text-decoration: none;
-                border-bottom: 1px solid transparent;
-                transition: color var(--transition),
-                    border-color var(--transition);
-
-                &:hover {
-                    color: var(--moon-pale);
-                    border-color: var(--moon-pale);
-                }
-            }
         }
     }
 
     & .cc-deeper {
         margin-top: 1.5rem;
-        border: 1px solid rgba(var(--moon-bright-rgb, 245, 200, 66), 0.25);
-        background: var(--night-deepest, #0d1030);
+        border: 1px solid rgba(var(--moon-bright-rgb, 245, 200, 66), 0.7);
+        background: var(--night-deepest);
 
 
         &[open] summary {
-            color: var(--moon-bright, #f5c842);
-            border-bottom: 1px solid rgba(var(--moon-bright-rgb, 245, 200, 66), 0.2);
+            color: var(--moon-bright);
+            border-bottom: 1px solid rgba(var(--moon-bright-rgb, 245, 200, 66), 0.5);
 
 
             & span:last-child {
@@ -4494,7 +4488,7 @@ END OF SINGLE GOD AND SINGLE STORY
             list-style: none;
             font-size: 0.95rem;
             font-weight: 600;
-            color: var(--text-primary, #eef0f8);
+            color: var(--text-primary);
             transition: color 0.25s ease;
 
             &::-webkit-details-marker {
@@ -4505,6 +4499,11 @@ END OF SINGLE GOD AND SINGLE STORY
                 color: var(--moon-bright);
             }
 
+            &:focus-visible {
+                outline: 1px solid var(--moon-bright);
+                outline-offset: 3px;
+            }
+
             & span:last-child {
                 flex-shrink: 0;
                 font-size: 1.1rem;
@@ -4512,28 +4511,14 @@ END OF SINGLE GOD AND SINGLE STORY
                 color: var(--moon-bright);
                 transition: transform 0.2s ease;
             }
-
-            & p {
-                font-size: 3rem;
-            }
         }
 
         &>div {
             padding: 1.5rem 1.25rem;
 
-            & span {
-                font-family: var(--font-heading);
-                font-size: 1rem;
-                color: var(--moon-bright);
-
-                &:first-child {
-                    margin-top: 0;
-                }
-            }
-
             & p {
-                color: var(--text-secondary, #9aa3c8);
-                margin: 0 0 0.75rem;
+                margin-bottom: 3rem;
+
             }
         }
     }
@@ -4547,10 +4532,10 @@ END OF SINGLE GOD AND SINGLE STORY
         gap: 0.5rem 1rem;
 
         & li {
-            font-size: 0.85rem;
-            color: var(--text-primary, #eef0f8);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
             padding: 0.35rem 0 0.35rem 1rem;
-            border-bottom: 1px solid rgba(var(--moon-bright-rgb, 245, 200, 66), 0.12);
+            border-bottom: 1px solid rgba(var(--moon-bright-rgb, 245, 200, 66), 0.4);
             position: relative;
 
             &::before {
@@ -4565,18 +4550,14 @@ END OF SINGLE GOD AND SINGLE STORY
     }
 
     & .cc-communities-note {
-        font-style: italic;
-        color: var(--text-muted, #5c6494);
-        margin: 0;
+        color: var(--text-secondary);
     }
 
 
 
 
     /* -----------------------------------------------------------
-     ORISHA GRID — Section 2
-     Six deity pills in a 2-col grid.
-     --oc set inline per pill for the left border colour.
+     ORISHA GRID 
      ----------------------------------------------------------- */
     & .cc-orisha-grid {
         display: grid;
@@ -4584,15 +4565,16 @@ END OF SINGLE GOD AND SINGLE STORY
         gap: var(--sp-sm);
         margin-top: var(--sp-lg);
 
-        &>div {
+        &>p {
             padding: var(--sp-sm) var(--sp-md);
             background-color: var(--night-mid);
             border-left: 3px solid var(--oc, var(--moon-bright));
             border-radius: 0 var(--border-radius) var(--border-radius) 0;
             font-size: 0.96rem;
             font-weight: 600;
-            color: var(--text-primary);
+            color: var(--text-secondary);
             transition: background var(--transition);
+            margin-bottom: 0;
 
             &:hover {
                 background-color: var(--night-muted);
@@ -4613,111 +4595,15 @@ END OF SINGLE GOD AND SINGLE STORY
             border-radius: 100px;
             font-size: 0.82rem;
             font-weight: 600;
-            color: var(--moon-bright, #f5c842);
-        }
-    }
-
-
-    /* -----------------------------------------------------------
-     DIASPORA STRIP — Section 4
-     Horizontally scrollable row of country cards.
-     Arrows are bare <span> elements between <div> cards.
-     ----------------------------------------------------------- */
-    & .cc-diaspora-strip {
-        display: flex;
-        align-items: center;
-        gap: var(--sp-xs);
-        margin-top: var(--sp-lg);
-        overflow-x: auto;
-        padding-bottom: var(--sp-sm);
-        scrollbar-width: none;
-        -webkit-overflow-scrolling: touch;
-
-        &::-webkit-scrollbar {
-            display: none;
-        }
-
-        /* country card */
-        &>div {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.3rem;
-            padding: var(--sp-sm);
-            background-color: var(--night-mid);
-            border: 1px solid var(--night-light);
-            border-radius: var(--border-radius);
-            min-width: 96px;
-            text-align: center;
-            flex-shrink: 0;
-            transition: background var(--transition),
-                border-color var(--transition);
-
-            &:hover {
-                background-color: var(--night-muted);
-                border-color: var(--moon-bright);
-            }
-
-            /* flag emoji */
-            & span:first-child {
-                font-size: 1.4rem;
-            }
-
-            /* country name */
-            & strong {
-                font-size: 0.72rem;
-                font-weight: 700;
-                color: var(--text-primary);
-            }
-
-            /* tradition name */
-            & span:last-child {
-                font-size: 0.62rem;
-                color: var(--moon-pale);
-            }
-        }
-
-        /* arrow spans between cards */
-        &>span {
             color: var(--moon-bright);
-            font-size: 1rem;
-            flex-shrink: 0;
-            opacity: 0.4;
         }
     }
 
 
-    /* -----------------------------------------------------------
-     TAG CLOUD — Section 6
-     ----------------------------------------------------------- */
-    & .cc-tag-cloud {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--sp-xs);
-        margin-top: var(--sp-lg);
-
-        & span {
-            display: inline-block;
-            padding: 0.4rem 0.9rem;
-            background-color: var(--night-mid);
-            border: 1px solid var(--night-light);
-            border-radius: 100px;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            transition: background var(--transition),
-                color var(--transition);
-
-            &:hover {
-                background-color: var(--night-muted);
-                color: var(--moon-pale);
-            }
-        }
-    }
 
 
     /* -----------------------------------------------------------
-     SOURCES LIST — Section 7
-     Three category divs, each with an h3 and ul.
+     SOURCES LIST 
      ----------------------------------------------------------- */
     & .cc-sources-list {
         display: flex;
@@ -4729,14 +4615,11 @@ END OF SINGLE GOD AND SINGLE STORY
 
             & h3 {
                 font-family: var(--font-body);
-                font-size: 0.72rem;
-                font-weight: 700;
-                letter-spacing: 0.12em;
-                text-transform: uppercase;
+                font-size: 1rem;
+                letter-spacing: 0.1em;
                 color: var(--moon-bright);
-                margin-bottom: var(--sp-sm);
                 padding-bottom: var(--sp-xs);
-                border-bottom: 1px solid var(--night-light);
+                border-bottom: 1px solid rgba(var(--moon-bright-rgb, 245, 200, 66), 0.6);
             }
 
             & ul {
@@ -4752,16 +4635,25 @@ END OF SINGLE GOD AND SINGLE STORY
                 font-size: 0.96rem;
                 color: var(--text-secondary);
                 padding-left: var(--sp-sm);
-                border-left: 2px solid var(--night-light);
+                border-left: 2px solid rgba(var(--moon-bright-rgb, 245, 200, 66), 0.4);
                 transition: border-color var(--transition);
 
                 &:hover {
                     border-color: var(--moon-bright);
                 }
 
+
+
                 & em {
                     color: var(--text-primary);
                     font-style: italic;
+                }
+
+                & a {
+                    &:focus-visible {
+                        outline: 3px solid var(--moon-bright);
+                        outline-offset: 1px;
+                    }
                 }
             }
         }
@@ -4776,37 +4668,8 @@ END OF SINGLE GOD AND SINGLE STORY
         text-align: center;
         background-color: var(--night-deep);
         border-top: 1px solid var(--night-light);
-        position: relative;
-        overflow: hidden;
 
 
-        &::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse 80% 50% at 50% 100%,
-                    var(--moon-glow) 0%,
-                    transparent 70%);
-            pointer-events: none;
-        }
-
-        &>* {
-            position: relative;
-            z-index: 1;
-        }
-
-        & h2 {
-            font-family: var(--font-heading);
-            font-size: clamp(1.6rem, 4vw, 2.4rem);
-            color: var(--text-primary);
-        }
-
-        &>p {
-            color: var(--text-secondary);
-            margin-bottom: var(--sp-lg);
-        }
-
-        /* button row */
         &>div {
             display: flex;
             flex-direction: column;
@@ -4822,7 +4685,7 @@ END OF SINGLE GOD AND SINGLE STORY
     @media (min-width: 40em) {
 
         & .cc-sticky-nav {
-            top: 76px;
+            top: 80px;
         }
 
         & .cc-fact-strip {
@@ -4839,6 +4702,13 @@ END OF SINGLE GOD AND SINGLE STORY
         }
     }
 
+    @media (min-width: 48em) {
+
+        & .cc-sticky-nav {
+            top: 97px;
+        }
+    }
+
     @media (min-width: 57em) {
         & .cc-sticky-nav {
             justify-content: center;
@@ -4850,21 +4720,18 @@ END OF SINGLE GOD AND SINGLE STORY
      ----------------------------------------------------------- */
     @media (min-width: 60em) {
 
-        & .cc-section {
-            padding: var(--sp-xl);
+        & .cc-sticky-nav {
+            top: 97px;
         }
 
-        & .cc-fact-strip strong {
-            font-size: 2.8rem;
+        & .cc-section {
+            max-width: 65ch;
+            margin: 0 auto;
+            padding: var(--sp-3xl) var(--sp-md);
+
         }
     }
 
-    @media (min-width: 90em) {
-
-        & .cc-section {
-            padding: var(--sp-2xl) 14rem;
-        }
-    }
 
     /* -----------------------------------------------------------
      ACCESSIBILITY
@@ -4876,12 +4743,6 @@ END OF SINGLE GOD AND SINGLE STORY
         }
     }
 
-    & a:focus-visible,
-    & .cc-nav-link:focus-visible {
-        outline: 3px solid var(--moon-bright);
-        outline-offset: 3px;
-        border-radius: 3px;
-    }
 }
 
 /* =============================================================
@@ -4894,25 +4755,14 @@ ERROR PAGE
 
 .error-hero {
     background-color: var(--night-deepest);
-    color: var(--text-primary);
-    font-family: var(--font-body);
-    overflow-x: hidden;
-    min-height: 100svh;
-
-
-
-    position: relative;
-    min-height: 100svh;
+    min-height: 90svh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: var(--sp-xl) var(--sp-md);
-    overflow: hidden;
 
 
-    &>div:nth-child(2) {
-        position: relative;
-        z-index: 1;
+    &>div{
         max-width: 640px;
         text-align: center;
         margin: 0 auto;
@@ -4928,22 +4778,17 @@ ERROR PAGE
 
         }
 
-        & h1 {
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            line-height: 1.15;
-            color: var(--text-primary);
-            margin-bottom: var(--sp-md);
 
-            & em {
-                color: var(--moon-bright);
-                font-style: normal;
-                display: block;
-            }
+
+
+        & em {
+            color: var(--moon-bright);
+
         }
 
+
         & p {
-            color: var(--text-secondary);
-            margin-bottom: var(--sp-md);
+
             max-width: 520px;
             margin-left: auto;
             margin-right: auto;
@@ -4991,93 +4836,45 @@ END OF ERROR PAGE
 
 .a11y-page {
     background: var(--night-deepest);
-    color: var(--text-primary);
     max-width: 720px;
     margin: 0 auto;
-    padding: 3rem 1.25rem 4rem;
+    padding: var(--sp-md);
 
 
     & .a11y-header {
-        margin-bottom: 2.5rem;
-        padding-bottom: 1.5rem;
+        margin: 2.5rem 0;
         border-bottom: 1px solid rgba(var(--moon-bright-rgb, 245, 200, 66), 0.2);
 
         & h1 {
-            font-size: clamp(1.8rem, 6vw, 2.6rem);
             color: var(--moon-bright);
-            margin: 0 0 0.75rem;
-        }
-
-        & .a11y-intro {
-            font-size: 1.05rem;
-            line-height: 1.7;
-            color: var(--text-secondary);
-            margin: 0 0 0.5rem;
         }
 
         & .a11y-updated {
-            font-size: 0.78rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
-            margin: 0;
+            margin-bottom: 2rem;
         }
     }
 
     & .a11y-body {
 
         & h2 {
-            font-size: 1.4rem;
             color: var(--moon-bright);
-            margin: 2.5rem 0 1rem;
-
-            &:first-child {
-                margin-top: 0;
-            }
-        }
-
-        & h3 {
-            font-size: 1.1rem;
-            color: var(--text-primary);
-            margin: 1.75rem 0 0.75rem;
-        }
-
-        & p {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: var(--text-secondary);
-            margin: 0 0 1.25rem;
         }
 
         & ul,
         & ol {
-            margin: 0 0 1.5rem;
-            padding-left: 1.4rem;
 
             & li {
-                font-size: 1rem;
-                line-height: 1.75;
+                font-size: 1.1rem;
                 color: var(--text-secondary);
-                margin-bottom: 0.75rem;
+                margin-bottom: 2rem;
             }
         }
 
         & strong {
             color: var(--text-primary);
-        }
-
-        & a {
-            color: var(--moon-bright);
-            text-decoration: underline;
-            text-underline-offset: 2px;
-
-            &:hover {
-                color: var(--moon-pale);
-            }
-
-            &:focus-visible {
-                outline: 3px solid var(--moon-bright);
-                outline-offset: 3px;
-                border-radius: 2px;
-            }
+            font-style: italic;
         }
 
 
@@ -5090,16 +4887,13 @@ END OF ERROR PAGE
    ----------------------------------------------------------- */
 @media (min-width: 40em) {
     .a11y-page {
-        padding: 4rem 1.5rem 5rem;
+        max-width: 67ch;
+        margin: 0 auto;
+        padding: var(--sp-xl);
 
-        & .a11y-header h1 {
-            font-size: 2.8rem;
-        }
 
-        & .a11y-body p,
-        & .a11y-body ul li {
-            font-size: 1.05rem;
-        }
+
+
     }
 }
 

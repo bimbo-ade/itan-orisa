@@ -9,7 +9,7 @@ get_header();
 while (have_posts()):
     the_post();
 
-    $god_color = get_field('god_color') ?: '#B3221D';
+    $god_color = get_field('god_color');
     $hex = ltrim($god_color, '#');
     if (strlen($hex) === 3)
         $hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
@@ -26,7 +26,7 @@ while (have_posts()):
         <?php $gods_archive = get_post_type_archive_link('god'); ?>
 
         <a href="<?php echo esc_url($gods_archive); ?>" class="god-back">
-            &larr; Back to All Orishas
+            &larr; Back to All Òrìṣà
         </a>
 
         <!-- ============================================================
@@ -36,7 +36,7 @@ while (have_posts()):
 
         $hero_image = get_field('hero_image');
         $god_tagline = get_field('god_tagline');
-        $hero_eyebrow = get_field('hero_eyebrow') ?: 'Orisha &middot; Thunder &amp; Lightning';
+        $hero_eyebrow = get_field('hero_eyebrow');
         $pronunciation = get_field('hero_pronunciation');
         ?>
 
@@ -429,13 +429,13 @@ while (have_posts()):
         <?php if ($tri_heading): ?>
             <section class="god-triangle" id="god-triangle">
                 <?php if ($tri_img_left): ?>
-                    <div class="god-triangle-side" aria-hidden="true">
+                    <div class="god-triangle-side" >
                         <img src="<?php echo esc_url($tri_img_left['url']); ?>" alt="">
                     </div>
                 <?php endif; ?>
 
                 <?php if ($tri_img_right): ?>
-                    <div class="god-triangle-side" aria-hidden="true">
+                    <div class="god-triangle-side">
                         <img src="<?php echo esc_url($tri_img_right['url']); ?>" alt="">
                     </div>
                 <?php endif; ?>
@@ -499,18 +499,18 @@ while (have_posts()):
 
 
         <!-- ============================================================
-        11. PREV / NEXT ORISHA FOOTER STRIP
+        11. PREV / NEXT Òrìṣà FOOTER STRIP
         ============================================================ -->
         <?php
         $prev_god = get_field('cross_nav_prev_god');
         $next_god = get_field('cross_nav_next_god');
         ?>
         <?php if ($prev_god || $next_god): ?>
-            <nav class="god-crossnav" aria-label="Orisha Chronology Navigation">
+            <nav class="god-crossnav" aria-label="Òrìṣà Chronology Navigation">
 
                 <?php if ($prev_god): ?>
                     <a href="<?php echo esc_url(get_permalink($prev_god->ID)); ?>" class="god-crossnav-link god-crossnav-prev">
-                        <span class="god-crossnav-label">Previous Orisha</span>
+                        <span class="god-crossnav-label">Previous Òrìṣà</span>
                         <span class="god-crossnav-title"><?php echo esc_html($prev_god->post_title); ?></span>
                         <?php if ($prev_tagline = get_field('god_tagline', $prev_god->ID)): ?>
                             <span class="god-crossnav-tagline"><?php echo esc_html($prev_tagline); ?></span>
@@ -520,7 +520,7 @@ while (have_posts()):
 
                 <?php if ($next_god): ?>
                     <a href="<?php echo esc_url(get_permalink($next_god->ID)); ?>" class="god-crossnav-link god-crossnav-next">
-                        <span class="god-crossnav-label">Next Orisha</span>
+                        <span class="god-crossnav-label">Next Òrìṣà</span>
                         <span class="god-crossnav-title"><?php echo esc_html($next_god->post_title); ?></span>
                         <?php if ($next_tagline = get_field('god_tagline', $next_god->ID)): ?>
                             <span class="god-crossnav-tagline"><?php echo esc_html($next_tagline); ?></span>

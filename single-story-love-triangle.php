@@ -91,7 +91,7 @@ $beyond_text = get_field('love_beyond_text');
 
         <?php if ($hero_image): ?>
 
-            <div class="love-hero-media" aria-hidden="true">
+            <div class="love-hero-media">
 
                 <img
                     src="<?php echo esc_url($hero_image['url']); ?>"
@@ -130,9 +130,7 @@ $beyond_text = get_field('love_beyond_text');
 
         </div>
 
-        <div class="love-scroll-hint" aria-hidden="true">
-            <!-- Scroll to enter -->
-        </div>
+    
 
     </section>
 

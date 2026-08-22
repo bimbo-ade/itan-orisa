@@ -20,7 +20,6 @@ function itan_tag_colour($slug)
 <div class="stories-page">
 
     <section class="stories-hero">
-        <div aria-hidden="true"></div>
         <div>
             <p>The Stories</p>
             <h1>Stories of the Gods</h1>
@@ -59,16 +58,7 @@ function itan_tag_colour($slug)
                             <?php the_excerpt(); ?>
                         </div>
 
-                        <?php if ($god_tags): ?>
-                            <ul>
-                                <?php foreach ($god_tags as $tag): ?>
-                                    <li style="--cp:<?php echo esc_attr(itan_tag_colour($tag->slug)); ?>;">
-                                        <span aria-hidden="true"></span>
-                                        <?php echo esc_html(ucfirst($tag->name)); ?>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        <?php endif; ?>
+                
 
                     </div>
 

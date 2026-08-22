@@ -11,9 +11,6 @@ $home_url = home_url('/');
 
 
     <div class="error-hero">
-
-        <div aria-hidden="true"></div>
-
         <div>
 
             <span>404</span>

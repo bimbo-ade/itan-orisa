@@ -24,7 +24,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
 
     <nav class="cc-sticky-nav" aria-label="Page sections">
         <a href="#cc-yoruba" class="cc-nav-link">The Yoruba People</a>
-        <a href="#cc-orishas" class="cc-nav-link">The Orishas</a>
+        <a href="#cc-orishas" class="cc-nav-link">The Òrìṣà</a>
         <a href="#cc-oral" class="cc-nav-link">Oral Tradition</a>
         <a href="#cc-diaspora" class="cc-nav-link">The Diaspora</a>
         <a href="#cc-gap" class="cc-nav-link">The Visibility Gap</a>
@@ -54,14 +54,14 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
 
                 <details class="cc-deeper">
                     <summary>
-                        <span>Go deeper: the thirteen communities &amp; the full Oduduwa story</span>
+                        <span>Go deeper: the sixteen communities &amp; the full Oduduwa story</span>
                         <span aria-hidden="true">+</span>
                     </summary>
                     <div>
                         <h3>Before Ile-Ife</h3>
                         <p>Some Yoruba oral traditions hold that the people existed long before Ile-Ife and the Oyo
                             Empire,
-                            organized instead as thirteen independent communities, each with its own king, allied for
+                            organized instead as sixteen independent communities, each with its own king, allied for
                             peace
                             and shared prosperity rather than ruled as one kingdom:</p>
                         <ul class="cc-communities-list">
@@ -114,27 +114,27 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                 <span>The Divine Forces</span>
             </div>
             <div>
-                <h2>Who Are the Orishas?</h2>
-                <p>The Orishas are divine spiritual beings in the traditional Yoruba religion. They serve different
+                <h2>Who Are the Òrìṣà?</h2>
+                <p>The Òrìṣà are divine spiritual beings in the traditional Yoruba religion. They serve different
                     purposes for and with human beings. Unlike Olódùmarè, who is believed to be the creator of the
-                    universe, the Orishas oversee different aspects of life and nature. According to historical
+                    universe, the Òrìṣà oversee different aspects of life and nature. According to historical
                     accounts, there are 201 gods in Yoruba culture</p>
                 <p>
-                    The worship of Orishas emphasizes morality, respect for nature, community, and harmony with
-                    spiritual forces. Today, Orisha worship continues both in West Africa and throughout the African
+                    The worship of Òrìṣà emphasizes morality, respect for nature, community, and harmony with
+                    spiritual forces. Today, Òrìṣà worship continues both in West Africa and throughout the African
                     diaspora.</p>
-                <p>What distinguishes the Orishas from many other mythological figures is their psychological
+                <p>What distinguishes the Òrìṣà from many other mythological figures is their psychological
                     complexity. They are not archetypes of virtue they have flaws, make mistakes, experience
                     jealousy and grief, and their stories do not always resolve neatly. This complexity is not a modern
                     interpretation: it is intrinsic to how they have always been told.</p>
 
                 <div class="cc-orisha-grid">
-                    <div style="--oc:#D32F2F;"> &#350;&#224;ng&#243; - Thunder</div>
-                    <div style="--oc:#6A1B9A;">Ọya - Storms</div>
-                    <div style="--oc:#2E7D32;"> Ogun - Iron</div>
-                    <div style="--oc:#1565C0;"> Yemoja - Ocean</div>
-                    <div style="--oc:#F9A825;">Ọ&#351;un - Rivers</div>
-                    <div style="--oc:#E8EAF4;"> Obatala - Creation</div>
+                    <p style="--oc:#D32F2F;"> Ṣàngó - Thunder</p>
+                    <p style="--oc:#6A1B9A;">Ọya - Storms</p>
+                    <p style="--oc:#2E7D32;"> Ògún - Iron</p>
+                    <p style="--oc:#1565C0;"> Yẹmọja - Ocean</p>
+                    <p style="--oc:#F9A825;">Ọ̀ṣun - Rivers</p>
+                    <p style="--oc:#E8EAF4;"> Ọbàtálá - Creation</p>
                 </div>
             </div>
         </section>
@@ -193,7 +193,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
             </div>
             <div>
                 <h2>How These Stories Crossed the World</h2>
-                <p>Yoruba culture spread globally mainly through the transatlantic slave trade between the thirteenth
+                <p>Yoruba culture spread globally mainly through the transatlantic slave trade between the sixteenth
                     and
                     nineteenth centuries. Enslaved Yoruba people carried their beliefs, language, music, stories, and
                     religious practices to the Americas and the Caribbean.
@@ -205,7 +205,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
 
                     Candomblé (Brazil)
 
-                    Trinidad Orisha religion
+                    Trinidad Òrìṣà religion
 
                     Lukumí traditions
 
@@ -455,7 +455,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
         <p>The context is here. The stories are one click away.</p>
         <div>
             <a href="<?php echo esc_url($gods_archive); ?>" class="btn-primary">
-                Explore the Orishas
+                Explore the Òrìṣà
             </a>
             <a href="<?php echo esc_url($lt_url); ?>" class="btn-ghost">
                 Read the Love Triangle

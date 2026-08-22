@@ -91,7 +91,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
                 <h2>Meet The Gods</h2>
                 <p>
                     Explore the stories, powers and traditions surrounding
-                    the Orishas.
+                    the Òrìṣà.
                 </p>
 
             </div>
@@ -161,7 +161,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
             <div class="home-gods-more">
 
                 <a href="<?php echo esc_url($gods_archive); ?>">
-                    Explore All Orishas
+                    Explore All Òrìṣà
                     <span aria-hidden="true">→</span>
                 </a>
 
