@@ -51,8 +51,6 @@ while (have_posts()):
                 </div>
             <?php endif; ?>
 
-            <div class="god-hero-atmosphere" aria-hidden="true"></div>
-
             <div class="god-hero-content">
                 <?php if ($hero_eyebrow): ?>
                     <p class="god-eyebrow"><?php echo wp_kses_post($hero_eyebrow); ?></p>

@@ -86,7 +86,7 @@ $chapter_god_map = ['ogun', 'sango', 'oya', 'ogun', 'sango', 'oya', 'sango'];
         <?php if ($hero_image): ?>
             <div class="love-hero-media">
                 <img src="<?php echo esc_url($hero_image['url']); ?>"
-                    alt="Symbolic Yoruba love triangle clash: iron blades, ember sparks, storm winds, and crimson lightning colliding in darkness">
+                    alt="Symbolic Yoruba love triangle clash: iron blades, storm  lightning colliding in darkness">
 
             </div>
         <?php endif; ?>
