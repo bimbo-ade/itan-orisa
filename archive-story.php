@@ -43,9 +43,20 @@ function itan_tag_colour($slug)
                 <a href="<?php the_permalink(); ?>" class="story-card">
 
                     <?php if (has_post_thumbnail()): ?>
-                        <div>
-                            <?php the_post_thumbnail('large', ['loading' => 'lazy']); ?>
-                        </div>
+                        <?php
+                        $thumb_id = get_post_thumbnail_id();
+                        $stored_alt = $thumb_id ? get_post_meta($thumb_id, '_wp_attachment_image_alt', true) : '';
+                        $alt = $stored_alt ?: get_the_title();
+                        $has_srcset = wp_get_attachment_image_srcset($thumb_id, 'love-archive-card');
+
+                        the_post_thumbnail('love-archive-card', [
+                            'loading' => 'lazy',
+                            'alt' => $alt,
+                            'decoding' => 'async',
+                            'sizes' => $has_srcset ? '(max-width: 40em) 100vw, (max-width: 64em) 50vw, 400px' : false,
+                        ]);
+                        ?>
+
                     <?php endif; ?>
 
                     <div>
@@ -58,7 +69,7 @@ function itan_tag_colour($slug)
                             <?php the_excerpt(); ?>
                         </div>
 
-                
+
 
                     </div>
 

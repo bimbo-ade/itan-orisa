@@ -31,7 +31,11 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
 
         <?php if ($hero_image): ?>
             <div class="home-hero-image">
-                <img src="<?php echo esc_url($hero_image['url']); ?>" alt="" fetchpriority="high">
+                <img src="<?php echo esc_url(love_img($hero_image, 'love-hero')); ?>"
+                    srcset="<?php echo esc_attr(love_img_set($hero_image)); ?>" sizes="100vw" width="1600" height="900"
+                    alt="Cinematic illustration of the Orisha pantheon lineage triangle" fetchpriority="high"
+                    decoding="async">
+
             </div>
         <?php endif; ?>
 
@@ -102,42 +106,46 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
 
                     <?php
                     $g_color = get_field('god_color', $god->ID) ?: '#f5c842';
-
                     $g_hex = ltrim($g_color, '#');
 
                     if (strlen($g_hex) === 3) {
-                        $g_hex =
-                            $g_hex[0] . $g_hex[0] .
+                        $g_hex = $g_hex[0] . $g_hex[0] .
                             $g_hex[1] . $g_hex[1] .
                             $g_hex[2] . $g_hex[2];
                     }
 
-                    $g_rgb =
-                        hexdec(substr($g_hex, 0, 2)) . ', ' .
+                    $g_rgb = hexdec(substr($g_hex, 0, 2)) . ', ' .
                         hexdec(substr($g_hex, 2, 2)) . ', ' .
                         hexdec(substr($g_hex, 4, 2));
 
-                    $g_image = get_field('hero_image', $god->ID);
                     $g_tag = get_field('god_tagline', $god->ID);
+
+                    $featured_img_id = get_post_thumbnail_id($god->ID);
+
+                    $archive_img_data = wp_get_attachment_image_src($featured_img_id, 'medium_large');
+                    $stored_alt = get_post_meta($featured_img_id, '_wp_attachment_image_alt', true);
+                    $img_alt = $stored_alt ?: $god->post_title . ' Orisha character profile artwork';
+
                     ?>
 
                     <a href="<?php echo esc_url(get_permalink($god->ID)); ?>" class="home-god-card" style="
-                            --card-color: <?php echo esc_attr($g_color); ?>;
-                            --card-rgb: <?php echo esc_attr($g_rgb); ?>;
-                        ">
+            --card-color: <?php echo esc_attr($g_color); ?>;
+            --card-rgb: <?php echo esc_attr($g_rgb); ?>;
+        ">
 
-                        <?php if ($g_image): ?>
+                        <?php if ($archive_img_data): ?>
 
                             <div class="home-god-media">
 
-                                <img src="<?php echo esc_url($g_image['url']); ?>" alt="" loading="lazy">
-
+                                <img src="<?php echo esc_url($archive_img_data[0]); ?>"
+                                    width="<?php echo esc_attr($archive_img_data[1]); ?>"
+                                    height="<?php echo esc_attr($archive_img_data[2]); ?>" alt="<?php echo esc_attr($img_alt); ?>"
+                                    loading="lazy" decoding="async">
                             </div>
 
                         <?php endif; ?>
 
                         <div class="home-god-body">
-
                             <h3>
                                 <?php echo esc_html($god->post_title); ?>
                             </h3>
@@ -147,14 +155,12 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
                                     <?php echo esc_html($g_tag); ?>
                                 </p>
                             <?php endif; ?>
-
-
-
                         </div>
 
                     </a>
 
                 <?php endforeach; ?>
+
 
             </div>
 
@@ -194,9 +200,10 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
 
             <?php if ($tri_img_left): ?>
 
-                <img src="<?php echo esc_url($tri_img_left['url']); ?>" alt="" loading="lazy">
-
-
+                <img src="<?php echo esc_url(love_img($tri_img_left, 'large')); ?>"
+                    width="<?php echo esc_attr($tri_img_left['width']); ?>"
+                    height="<?php echo esc_attr($tri_img_left['height']); ?>"
+                    alt="Decorative traditional Yoruba geometric lineage patterns" loading="lazy" decoding="async">
             <?php endif; ?>
 
 
@@ -243,10 +250,14 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
 
             <div class="home-context-image">
 
-                <img src="<?php echo esc_url($ctx_image['url']); ?>" alt="<?php echo esc_attr($ctx_image['alt'] ?? ''); ?>"
-                    loading="lazy">
-
+                <img src="<?php echo esc_url(love_img($ctx_image, 'large')); ?>"
+                    width="<?php echo esc_attr($ctx_image['width']); ?>"
+                    height="<?php echo esc_attr($ctx_image['height']); ?>"
+                    alt="<?php echo esc_attr($ctx_image['alt'] ?: 'Historical cultural context illustration'); ?>"
+                    loading="lazy" decoding="async">
             </div>
+
+
 
         <?php endif; ?>
 
@@ -318,7 +329,7 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
                         }
 
                         if ($acf_image) {
-                            $story_image = $acf_image['url'];
+                            $story_image = love_img($acf_image, 'large');
                         }
                     }
                     $story_excerpt = wp_trim_words(get_the_excerpt(), 18, '…');
@@ -328,8 +339,11 @@ $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
 
                         <?php if ($story_image): ?>
                             <div class="home-story-media">
-                                <img src="<?php echo esc_url($story_image); ?>" alt="<?php echo esc_attr(get_the_title()); ?>"
-                                    loading="lazy">
+                                <img src="<?php echo esc_url(love_img($tri_img_left, '1536x1536')); ?>"
+                                    width="<?php echo esc_attr($tri_img_left['width']); ?>"
+                                    height="<?php echo esc_attr($tri_img_left['height']); ?>"
+                                    alt="Decorative traditional Yoruba geometric lineage patterns" loading="lazy" decoding="async">
+
                             </div>
                         <?php endif; ?>
 

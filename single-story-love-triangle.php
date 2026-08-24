@@ -1,410 +1,214 @@
 <?php
 /**
- * Template Name: Love Triangle
+ * single-story-love-triangle.php
+ *
+
  */
 
 get_header();
 
+
+
+
 /*
 |--------------------------------------------------------------------------
-| HERO
+| ACF CONTENT
 |--------------------------------------------------------------------------
 */
 
 $hero_image = get_field('love_hero_image');
-$hero_heading = get_field('love_hero_heading') ?: 'The Love Triangle';
+$hero_heading = get_field('love_hero_heading') ?: 'She Left The Smith For The Storm';
 $hero_intro = get_field('love_hero_intro');
-
-/*
-|--------------------------------------------------------------------------
-| INTRO / STORY NOTE
-|--------------------------------------------------------------------------
-*/
 
 $intro_heading = get_field('love_intro_heading');
 $intro_text = get_field('love_intro_text');
-$story_note = get_field('love_story_note');
+$disclaimer_text = get_field('love_disclaimer_text');
+$beyond_heading = get_field('love_beyond_heading') ?: 'So Who Really Lost?';
+$beyond_text = get_field('love_beyond_text');
+$beat_1 = get_field('love_beat_1_text') ?: "Did she really leave the Smith for the Storm?";
+$beat_2 = get_field('love_beat_2_text') ?: "In the end, she simply walked away, and the wind went with her...";
 
-/*
-|--------------------------------------------------------------------------
-| CHARACTER INTRODUCTIONS
-|--------------------------------------------------------------------------
-*/
 
-$characters = [
-    [
-        'name'  => 'Ògún',
-        'image' => get_field('love_ogun_image'),
-        'text'  => get_field('love_ogun_text'),
-        'class' => 'ogun',
-    ],
-    [
-        'name'  => 'Ọ̀yá',
-        'image' => get_field('love_oya_image'),
-        'text'  => get_field('love_oya_text'),
-        'class' => 'oya',
-    ],
-    [
-        'name'  => 'Ṣàngó',
-        'image' => get_field('love_sango_image'),
-        'text'  => get_field('love_sango_text'),
-        'class' => 'sango',
-    ],
+
+$cast_fields = [
+    ['post' => 'love_cast_1_god', 'role' => 'love_cast_1_role', 'class' => 'ogun'],
+    ['post' => 'love_cast_2_god', 'role' => 'love_cast_2_role', 'class' => 'oya'],
+    ['post' => 'love_cast_3_god', 'role' => 'love_cast_3_role', 'class' => 'sango'],
 ];
-
-/*
-|--------------------------------------------------------------------------
-| CHAPTERS
-|--------------------------------------------------------------------------
-*/
-
-$chapters = [];
-
-for ($i = 1; $i <= 7; $i++) {
-
-    $heading = get_field("love_chapter_{$i}_heading");
-    $text    = get_field("love_chapter_{$i}_text");
-    $image   = get_field("love_chapter_{$i}_image");
-
-    if ($heading || $text || $image) {
-        $chapters[] = [
-            'number' => str_pad($i, 2, '0', STR_PAD_LEFT),
-            'heading' => $heading,
-            'text' => $text,
-            'image' => $image,
+$cast = [];
+foreach ($cast_fields as $cf) {
+    $god_post = get_field($cf['post']);
+    if ($god_post) {
+        $cast[] = [
+            'post' => $god_post,
+            'role' => get_field($cf['role']) ?: '',
+            'class' => $cf['class'],
         ];
     }
 }
 
-$beyond_heading = get_field('love_beyond_heading');
-$beyond_text = get_field('love_beyond_text');
+$chapters = [];
+for ($i = 1; $i <= 7; $i++) {
+    $heading = get_field("love_chapter_{$i}_heading");
+    $text = get_field("love_chapter_{$i}_text");
+    if ($heading || $text) {
+        $chapters[] = [
+            'number' => sprintf('%02d', $i),
+            'heading' => $heading,
+            'text' => $text,
+        ];
+    }
+}
 
+$chapter_god_map = ['ogun', 'sango', 'oya', 'ogun', 'sango', 'oya', 'sango'];
 ?>
 
-<div class="love-page">
+<div class="love-story">
 
-    <!-- =========================================================
+    <?php if ($chapters): ?>
+        <nav class="love-chapter-rail" aria-label="Chapter progress">
+            <?php foreach ($chapters as $chapter): ?>
+                <a href="#chapter-<?php echo esc_attr($chapter['number']); ?>"
+                    data-chapter="<?php echo esc_attr($chapter['number']); ?>"
+                    data-label="<?php echo esc_attr($chapter['heading']); ?>"
+                    aria-label="Jump to Chapter <?php echo esc_attr($chapter['number'] . ': ' . $chapter['heading']); ?>"></a>
+            <?php endforeach; ?>
+        </nav>
+    <?php endif; ?>
+
+
+
+    <!-- ==========================================================
          HERO
-    ========================================================== -->
+    =========================================================== -->
 
     <section class="love-hero">
-
         <?php if ($hero_image): ?>
-
             <div class="love-hero-media">
-
-                <img
-                    src="<?php echo esc_url($hero_image['url']); ?>"
-                    alt=""
-                    fetchpriority="high"
-                >
+                <img src="<?php echo esc_url($hero_image['url']); ?>"
+                    alt="Symbolic Yoruba love triangle clash: iron blades, ember sparks, storm winds, and crimson lightning colliding in darkness">
 
             </div>
-
         <?php endif; ?>
 
         <div class="love-hero-overlay" aria-hidden="true"></div>
 
         <div class="love-hero-content">
-
-            <span class="love-eyebrow">
-                A Yoruba Myth Retold
-            </span>
-
-            <h1>
-                <?php echo wp_kses_post($hero_heading); ?>
-            </h1>
-
+            <?php if ($hero_heading): ?>
+                <h1 class="love-split"><?php echo ($hero_heading); ?></h1>
+            <?php endif; ?>
             <?php if ($hero_intro): ?>
-
-                <p>
-                    <?php echo wp_kses_post($hero_intro); ?>
-                </p>
-
-            <?php endif; ?>
-
-            <a href="#love-story" class="love-start">
-                Enter the story
-                <span aria-hidden="true">↓</span>
-            </a>
-
-        </div>
-
-    
-
-    </section>
-
-
-    <!-- =========================================================
-         STORY INTRODUCTION
-    ========================================================== -->
-
-    <section class="love-intro" id="love-story">
-
-        <div class="love-intro-inner">
-
-            <div class="love-section-marker">
-                <span>00</span>
-                <small>Before the story</small>
-            </div>
-
-            <?php if ($intro_heading): ?>
-
-                <h2>
-                    <?php echo wp_kses_post($intro_heading); ?>
-                </h2>
-
-            <?php endif; ?>
-
-            <?php if ($intro_text): ?>
-
-                <div class="love-intro-text">
-                    <?php echo wp_kses_post($intro_text); ?>
-                </div>
-
-            <?php endif; ?>
-
-
-            <?php if ($story_note): ?>
-
-                <aside class="love-story-note">
-
-                    <span class="love-note-label">
-                        A note on the story
-                    </span>
-
-                    <div>
-                        <?php echo wp_kses_post($story_note); ?>
-                    </div>
-
-                </aside>
-
+                <?php echo wp_kses_post($hero_intro); ?>
             <?php endif; ?>
 
         </div>
-
     </section>
 
 
-    <!-- =========================================================
-         THE THREE
-    ========================================================== -->
-
-    <section class="love-characters">
-
-        <div class="love-characters-heading">
-
-            <span>01</span>
-
-            <div>
-                <small>The three at the centre</small>
-
-                <h2>
-                    Iron. Storm. Thunder.
-                </h2>
-            </div>
-
-        </div>
-
-
-        <div class="love-character-grid">
-
-            <?php foreach ($characters as $character): ?>
-
-                <article class="love-character <?php echo esc_attr($character['class']); ?>">
-
-                    <?php if ($character['image']): ?>
-
-                        <div class="love-character-image">
-
-                            <img
-                                src="<?php echo esc_url($character['image']['url']); ?>"
-                                alt="<?php echo esc_attr($character['name']); ?>"
-                                loading="lazy"
-                            >
-
-                        </div>
-
-                    <?php endif; ?>
-
-
-                    <div class="love-character-content">
-
-                        <span>
-                            <?php echo esc_html($character['name']); ?>
-                        </span>
-
-                        <?php if ($character['text']): ?>
-
-                            <div>
-                                <?php echo wp_kses_post($character['text']); ?>
-                            </div>
-
-                        <?php endif; ?>
-
-                    </div>
-
-                </article>
-
-            <?php endforeach; ?>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================================================
-         THE STORY
-    ========================================================== -->
-
-    <section class="love-chapters">
-
-        <?php foreach ($chapters as $index => $chapter): ?>
-
-            <?php
-            $chapter_number = $index + 1;
-
-            $chapter_class = 'love-chapter chapter-' . $chapter_number;
-
-            if ($chapter_number % 2 === 0) {
-                $chapter_class .= ' chapter-reverse';
-            }
-
-            /*
-             * Chapter 3 is our major dramatic turning point.
-             */
-            if ($chapter_number === 3) {
-                $chapter_class .= ' chapter-climax';
-            }
-
-            /*
-             * Chapter 5 gets the darker treatment.
-             */
-            if ($chapter_number === 5) {
-                $chapter_class .= ' chapter-betrayal';
-            }
-
-            /*
-             * Chapter 7 becomes the ending.
-             */
-            if ($chapter_number === 7) {
-                $chapter_class .= ' chapter-ending';
-            }
-            ?>
-
-            <article class="<?php echo esc_attr($chapter_class); ?>">
-
-                <div class="love-chapter-number" aria-hidden="true">
-                    <?php echo esc_html($chapter['number']); ?>
-                </div>
-
-
-                <?php if ($chapter['image']): ?>
-
-                    <div class="love-chapter-image">
-
-                        <img
-                            src="<?php echo esc_url($chapter['image']['url']); ?>"
-                            alt=""
-                            loading="lazy"
-                        >
-
-                    </div>
-
-                <?php endif; ?>
-
-
-                <div class="love-chapter-content">
-
-                    <span class="love-chapter-label">
-                        Chapter <?php echo esc_html($chapter['number']); ?>
-                    </span>
-
-                    <?php if ($chapter['heading']): ?>
-
-                        <h2>
-                            <?php echo wp_kses_post($chapter['heading']); ?>
-                        </h2>
-
-                    <?php endif; ?>
-
-
-                    <?php if ($chapter['text']): ?>
-
-                        <div class="love-chapter-text">
-                            <?php echo wp_kses_post($chapter['text']); ?>
-                        </div>
-
-                    <?php endif; ?>
-
-                </div>
-
-            </article>
-
-        <?php endforeach; ?>
-
-    </section>
-
-
-    <!-- =========================================================
-         BEYOND THE STORY
-    ========================================================== -->
-
-    <?php if ($beyond_heading || $beyond_text): ?>
-
-        <section class="love-beyond">
-
-            <div class="love-beyond-inner">
-
-                <span class="love-beyond-label">
-                    Beyond the story
-                </span>
-
-                <?php if ($beyond_heading): ?>
-
-                    <h2>
-                        <?php echo wp_kses_post($beyond_heading); ?>
-                    </h2>
-
-                <?php endif; ?>
-
-
-                <?php if ($beyond_text): ?>
-
-                    <div class="love-beyond-text">
-                        <?php echo wp_kses_post($beyond_text); ?>
-                    </div>
-
-                <?php endif; ?>
-
-            </div>
-
+    <!-- ==========================================================
+        CAST
+    =========================================================== -->
+
+    <?php if ($cast): ?>
+        <section class="love-three love-reveal" aria-labelledby="love-three-heading">
+            <span class="love-eyebrow" id="love-three-heading">Who's In This Story</span>
+            <h2 class="love-three-names">
+                <?php foreach ($cast as $i => $c):
+                    if ($i > 0)
+                        echo '<span class="love-three-sep" aria-hidden="true">&amp;</span>';
+                    ?>
+                    <a href="<?php echo esc_url(get_permalink($c['post']->ID)); ?>"
+                        class="<?php echo esc_attr($c['class']); ?>">
+                        <?php echo esc_html($c['post']->post_title); ?>
+                    </a>
+                <?php endforeach; ?>
+            </h2>
         </section>
-
     <?php endif; ?>
 
 
-    <!-- =========================================================
-         CLOSING
-    ========================================================== -->
+    <!-- ==========================================================
+         INTRO + DISCLAIMER
+    =========================================================== -->
 
-    <section class="love-closing">
+    <?php if ($intro_heading || $intro_text): ?>
+        <section class="love-intro love-reveal">
+            <div class="love-intro-inner">
+                <span class="love-eyebrow">Before The Story</span>
+                <?php if ($intro_heading): ?>
+                    <h2 class="love-split"><?php echo ($intro_heading); ?></h2>
+                <?php endif; ?>
+                <?php if ($intro_text): ?>
+                    <div class="love-intro-copy"><?php echo wp_kses_post($intro_text); ?></div>
+                <?php endif; ?>
 
-        <div>
+            </div>
+        </section>
+    <?php endif; ?>
 
-            <span>
-                Iron. Thunder. Storm.
-            </span>
 
-            <p>
-                The story may have many tellings.
-                The storm still remembers.
-            </p>
+    <!-- ==========================================================
+         CHAPTERS + INTERLUDE
+    =========================================================== -->
 
-        </div>
+    <div class="love-chapters">
+        <?php foreach ($chapters as $index => $chapter):
+            $god_key = $chapter_god_map[$index] ?? 'gold';
+            ?>
+            <section class="love-chapter love-reveal" id="chapter-<?php echo esc_attr($chapter['number']); ?>"
+                data-chapter="<?php echo esc_attr($chapter['number']); ?>"
+                style="--chapter-color: var(--<?php echo esc_attr($god_key); ?>, var(--love-gold));">
 
-    </section>
+                <div class="love-chapter-marker">
+                    <strong><?php echo esc_html($chapter['number']); ?></strong> <span>Chapter</span>
 
                 </div>
+
+                <?php if ($chapter['heading']): ?>
+                    <h2 class="love-split"><?php echo ($chapter['heading']); ?></h2>
+                <?php endif; ?>
+
+                <?php if ($chapter['text']): ?>
+                    <div class="love-chapter-text"><?php echo wp_kses_post($chapter['text']); ?></div>
+                <?php endif; ?>
+            </section>
+
+            <?php
+            if ($index === 2 && $beat_1): ?>
+                <div class="love-beat love-reveal">
+                    <div class="love-beat-inner"><?php echo wpautop(esc_html($beat_1)); ?></div>
+                </div>
+            <?php endif; ?>
+
+        <?php endforeach; ?>
+
+        <?php if ($beat_2): ?>
+            <div class="love-beat love-beat--closing love-reveal">
+                <div class="love-beat-inner"><?php echo wpautop(esc_html($beat_2)); ?></div>
+            </div>
+        <?php endif; ?>
+    </div>
+
+
+    <!-- ==========================================================
+         BEYOND THE STORY
+    =========================================================== -->
+
+    <?php if ($beyond_heading || $beyond_text): ?>
+        <section class="love-beyond love-reveal">
+            <span class="love-eyebrow">Beyond The Story</span>
+            <?php if ($beyond_heading): ?>
+                <h2 class="love-split"><?php echo ($beyond_heading); ?></h2>
+            <?php endif; ?>
+            <?php if ($beyond_text): ?>
+                <div class="love-beyond-copy"><?php echo wp_kses_post($beyond_text); ?></div>
+            <?php endif; ?>
+        </section>
+    <?php endif; ?>
+
+</div>
+
+
+
 
 <?php get_footer(); ?>

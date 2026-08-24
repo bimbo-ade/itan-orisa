@@ -43,7 +43,11 @@ while (have_posts()):
         <section class="god-hero">
             <?php if ($hero_image): ?>
                 <div class="god-hero-image">
-                    <img src="<?php echo esc_url($hero_image['url']); ?>" alt="<?php echo esc_attr($hero_image['alt']); ?>">
+                    <img src="<?php echo esc_url($hero_image['url']); ?>"
+                        width="<?php echo esc_attr($hero_image['width'] ?: '1200'); ?>"
+                        height="<?php echo esc_attr($hero_image['height'] ?: '684'); ?>"
+                        alt="<?php echo esc_attr($hero_image['alt'] ?: get_the_title() . ' Orisha profile illustration'); ?>"
+                        fetchpriority="high" decoding="async">
                 </div>
             <?php endif; ?>
 
@@ -156,7 +160,7 @@ while (have_posts()):
                 <ol class="god-journey-track">
                     <?php foreach ($stages as $i => $stage): ?>
                         <li class="god-journey-card">
-                          
+
 
                             <span class="god-journey-number" aria-hidden="true"><?php echo esc_html($i + 1); ?></span>
 
@@ -167,8 +171,9 @@ while (have_posts()):
                                         'medium_large',
                                         false,
                                         [
-                                            'alt' => $stage['stage'],
+                                            'alt' => $stage['stage'] ?: get_the_title() . ' milestone illustration',
                                             'loading' => 'lazy',
+                                            'decoding' => 'async',
                                         ]
                                     );
                                 endif; ?>
@@ -237,13 +242,13 @@ while (have_posts()):
                                         'medium_large',
                                         false,
                                         [
-                                            'alt' => $sym['title'],
+                                            'alt' => $sym['title'] ?: get_the_title() . ' sacred symbol icon',
                                             'loading' => 'lazy',
+                                            'decoding' => 'async',
                                         ]
                                     );
-                                else: ?>
-                                    <span aria-hidden="true"><?php echo esc_html($sym['icon']); ?></span>
-                                <?php endif; ?>
+                                endif; ?>
+
                             </div>
 
                             <div class="god-symbol-body">
@@ -429,8 +434,12 @@ while (have_posts()):
         <?php if ($tri_heading): ?>
             <section class="god-triangle" id="god-triangle">
                 <?php if ($tri_img_left): ?>
-                    <div class="god-triangle-side" >
-                        <img src="<?php echo esc_url($tri_img_left['url']); ?>" alt="">
+                    <div class="god-triangle-side">
+                        <img src="<?php echo esc_url($tri_img_left['url']); ?>"
+                            width="<?php echo esc_attr($tri_img_left['width'] ?? '500'); ?>"
+                            height="<?php echo esc_attr($tri_img_left['height'] ?? '500'); ?>"
+                            alt="<?php echo esc_attr($tri_img_left['alt'] ?: get_the_title() . ' left visual artifact'); ?>"
+                            loading="lazy" decoding="async">
                     </div>
                 <?php endif; ?>
 
