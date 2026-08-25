@@ -8,9 +8,9 @@ get_header();
 
 $gods_archive = get_post_type_archive_link('god') ?: '#';
 $cc_page = get_page_by_path('cultural-context');
-$lt_page = get_page_by_path('love-triangle');
-$cc_url = $cc_page ? get_permalink($cc_page->ID) : '#';
+$lt_page = get_page_by_path('love-triangle', OBJECT, 'story');
 $lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
+$cc_url = $cc_page ? get_permalink($cc_page->ID) : '#';
 ?>
 
 <div class="about-page">

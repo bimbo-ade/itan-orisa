@@ -7,8 +7,8 @@
 
 get_header();
 
-$lt_page = get_page_by_path('love-triangle');
-$lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
+$lt_page = get_page_by_path('love-triangle', OBJECT, 'story');
+$lt_url  = $lt_page ? get_permalink($lt_page->ID) : '#';
 $gods_archive = get_post_type_archive_link('god') ?: '#';
 ?>
 
@@ -463,10 +463,16 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
         </div>
     </section>
 
-    <?php
-
-    wp_enqueue_script('love-story', get_stylesheet_directory_uri() . '/js/love-story.js', [], '2.0', true);
-    ?>
+    
 
 </div>
+<script>document.querySelectorAll('.cc-nav-link').forEach(link => {
+    link.addEventListener('click', function () {
+        document.querySelectorAll('.cc-nav-link').forEach(item => {
+            item.classList.remove('active');
+        });
+
+        this.classList.add('active');
+    });
+});</script>
 <?php get_footer(); ?>

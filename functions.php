@@ -194,16 +194,3 @@ function itan_orisa_start_html_buffer() {
     }
 }
 add_action( 'wp_loaded', 'itan_orisa_start_html_buffer' );
-function iton_orisa_scripts() {
-
-    wp_enqueue_script(
-        'iton-orisa-navigation',
-        get_template_directory_uri() . '/js/love-story.js',
-        [],
-        '1.0',
-        true
-    );
-
-}
-
-add_action('wp_enqueue_scripts', 'iton_orisa_scripts');

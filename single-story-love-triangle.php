@@ -28,7 +28,7 @@ $beyond_text = get_field('love_beyond_text');
 $beat_1 = get_field('love_beat_1_text') ?: "Did she really leave the Smith for the Storm?";
 $beat_2 = get_field('love_beat_2_text') ?: "In the end, she simply walked away, and the wind went with her...";
 
-
+$stories_archive = get_post_type_archive_link('story') ?: '#';
 
 $cast_fields = [
     ['post' => 'love_cast_1_god', 'role' => 'love_cast_1_role', 'class' => 'ogun'],
@@ -86,7 +86,7 @@ $chapter_god_map = ['ogun', 'sango', 'oya', 'ogun', 'sango', 'oya', 'sango'];
         <?php if ($hero_image): ?>
             <div class="love-hero-media">
                 <img src="<?php echo esc_url($hero_image['url']); ?>"
-                    alt="Symbolic Yoruba love triangle clash: iron blades, storm  lightning colliding in darkness">
+                    alt="Symbolic clash of iron blades, storm  lightning colliding in darkness">
 
             </div>
         <?php endif; ?>
@@ -205,6 +205,14 @@ $chapter_god_map = ['ogun', 'sango', 'oya', 'ogun', 'sango', 'oya', 'sango'];
             <?php endif; ?>
         </section>
     <?php endif; ?>
+    <section class="love-story-cta">
+        <h2>The Tapestry Continues</h2>
+        <p>Every connection shapes the cosmos. Other threads await your discovery.</p>
+        <a href="<?php echo esc_url($stories_archive); ?>" class="btn-primary"
+            aria-label="Return to the stories archive to browse all narratives">
+            Return to the stories
+        </a>
+    </section>
 
 </div>
 

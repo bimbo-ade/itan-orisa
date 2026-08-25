@@ -154,11 +154,11 @@ while (have_posts()):
                 <div class="god-journey-header">
                     <h2><?php echo esc_html($journey_heading) . ' ' . get_the_title(); ?></h2>
                 </div>
-
-                <ol class="god-journey-track">
+                <ol class="god-journey-track" aria-label="Orisha journey timeline">
                     <?php foreach ($stages as $i => $stage): ?>
-                        <li class="god-journey-card">
-
+                        <!-- FIX: Added tabindex="0" for keyboard focus and a descriptive aria-label -->
+                        <li class="god-journey-card" tabindex="0"
+                            aria-label="Milestone <?php echo esc_attr($i + 1) . ': ' . esc_attr($stage['stage']); ?>">
 
                             <span class="god-journey-number" aria-hidden="true"><?php echo esc_html($i + 1); ?></span>
 
@@ -188,6 +188,7 @@ while (have_posts()):
                 </ol>
 
                 <p class="god-journey-hint" aria-hidden="true">&larr; Scroll &rarr;</p>
+
             </section>
         <?php endif; ?>
 
@@ -285,8 +286,6 @@ while (have_posts()):
                 <ul class="god-powers-grid">
                     <?php foreach ($powers as $power): ?>
                         <li class="god-power-card">
-                            <span class="god-power-icon" aria-hidden="true"><?php echo esc_html($power['icon']); ?></span>
-
                             <h3><?php echo esc_html($power['title']); ?></h3>
 
                             <?php if ($power['desc']): ?>
@@ -441,12 +440,6 @@ while (have_posts()):
                     </div>
                 <?php endif; ?>
 
-                <?php if ($tri_img_right): ?>
-                    <div class="god-triangle-side">
-                        <img src="<?php echo esc_url($tri_img_right['url']); ?>" alt="">
-                    </div>
-                <?php endif; ?>
-
                 <div class="god-triangle-content">
                     <h2><?php echo wp_kses_post($tri_heading); ?></h2>
 
@@ -487,7 +480,7 @@ while (have_posts()):
                     <?php foreach ($faqs as $faq): ?>
                         <details class="god-faq-item">
                             <summary class="god-faq-trigger">
-                                <span class="god-faq-question"><?php echo esc_html($faq['q']); ?></span>
+                                <p class="god-faq-question"><?php echo esc_html($faq['q']); ?></p>
                                 <span class="god-faq-icon" aria-hidden="true">+</span>
                             </summary>
 
@@ -518,7 +511,7 @@ while (have_posts()):
                 <?php if ($prev_god): ?>
                     <a href="<?php echo esc_url(get_permalink($prev_god->ID)); ?>" class="god-crossnav-link god-crossnav-prev">
                         <span class="god-crossnav-label">Previous Òrìṣà</span>
-                        <span class="god-crossnav-title"><?php echo esc_html($prev_god->post_title); ?></span>
+                        <p class="god-crossnav-title"><?php echo esc_html($prev_god->post_title); ?></p>
                         <?php if ($prev_tagline = get_field('god_tagline', $prev_god->ID)): ?>
                             <span class="god-crossnav-tagline"><?php echo esc_html($prev_tagline); ?></span>
                         <?php endif; ?>
@@ -528,7 +521,7 @@ while (have_posts()):
                 <?php if ($next_god): ?>
                     <a href="<?php echo esc_url(get_permalink($next_god->ID)); ?>" class="god-crossnav-link god-crossnav-next">
                         <span class="god-crossnav-label">Next Òrìṣà</span>
-                        <span class="god-crossnav-title"><?php echo esc_html($next_god->post_title); ?></span>
+                        <p class="god-crossnav-title"><?php echo esc_html($next_god->post_title); ?></p>
                         <?php if ($next_tagline = get_field('god_tagline', $next_god->ID)): ?>
                             <span class="god-crossnav-tagline"><?php echo esc_html($next_tagline); ?></span>
                         <?php endif; ?>
@@ -540,10 +533,13 @@ while (have_posts()):
 
 
     </div>
-    <?php
 
-    wp_enqueue_script('love-story', get_stylesheet_directory_uri() . '/js/love-story.js', [], '2.0', true);
-    ?>
 
 <?php endwhile; ?>
+<script>document.querySelectorAll('.god-faq details').forEach(function (d) {
+        d.addEventListener('toggle', function () {
+            var plus = d.querySelector('summary span');
+            if (plus) plus.textContent = d.open ? '−' : '+';
+        });
+    });</script>
 <?php get_footer(); ?>

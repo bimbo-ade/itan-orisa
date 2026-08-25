@@ -10,9 +10,8 @@ $stories_archive = get_post_type_archive_link('story') ?: '#';
 
 $cc_page = get_page_by_path('cultural-context');
 $cc_url = $cc_page ? get_permalink($cc_page->ID) : '#';
-
-$lt_page = get_page_by_path('love-triangle');
-$lt_url = $lt_page ? get_permalink($lt_page->ID) : '#';
+$lt_page = get_page_by_path('love-triangle', OBJECT, 'story');
+$lt_url  = $lt_page ? get_permalink($lt_page->ID) : '#';
 ?>
 
 <div class="home-page">
