@@ -1,4 +1,5 @@
 <?php
+
 /**
  * single-story-love-triangle.php
  *
@@ -17,7 +18,7 @@ get_header();
 */
 
 $hero_image = get_field('love_hero_image');
-$hero_heading = get_field('love_hero_heading') ?: 'She Left The Smith For The Storm';
+$hero_heading = get_field('love_hero_heading') ?: 'She Left the Forge for the Flame';
 $hero_intro = get_field('love_hero_intro');
 
 $intro_heading = get_field('love_intro_heading');
@@ -25,7 +26,7 @@ $intro_text = get_field('love_intro_text');
 $disclaimer_text = get_field('love_disclaimer_text');
 $beyond_heading = get_field('love_beyond_heading') ?: 'So Who Really Lost?';
 $beyond_text = get_field('love_beyond_text');
-$beat_1 = get_field('love_beat_1_text') ?: "Did she really leave the Smith for the Storm?";
+$beat_1 = get_field('love_beat_1_text') ?: "Did she really leave the Forge for the Flame?";
 $beat_2 = get_field('love_beat_2_text') ?: "In the end, she simply walked away, and the wind went with her...";
 
 $stories_archive = get_post_type_archive_link('story') ?: '#';
@@ -116,7 +117,7 @@ $chapter_god_map = ['ogun', 'sango', 'oya', 'ogun', 'sango', 'oya', 'sango'];
                 <?php foreach ($cast as $i => $c):
                     if ($i > 0)
                         echo '<span class="love-three-sep" aria-hidden="true">&amp;</span>';
-                    ?>
+                ?>
                     <a href="<?php echo esc_url(get_permalink($c['post']->ID)); ?>"
                         class="<?php echo esc_attr($c['class']); ?>">
                         <?php echo esc_html($c['post']->post_title); ?>
@@ -154,7 +155,7 @@ $chapter_god_map = ['ogun', 'sango', 'oya', 'ogun', 'sango', 'oya', 'sango'];
     <div class="love-chapters">
         <?php foreach ($chapters as $index => $chapter):
             $god_key = $chapter_god_map[$index] ?? 'gold';
-            ?>
+        ?>
             <section class="love-chapter love-reveal" id="chapter-<?php echo esc_attr($chapter['number']); ?>"
                 data-chapter="<?php echo esc_attr($chapter['number']); ?>"
                 style="--chapter-color: var(--<?php echo esc_attr($god_key); ?>, var(--love-gold));">
@@ -206,7 +207,7 @@ $chapter_god_map = ['ogun', 'sango', 'oya', 'ogun', 'sango', 'oya', 'sango'];
         </section>
     <?php endif; ?>
     <section class="love-story-cta">
-        <h2>The Tapestry Continues</h2>
+        <h2>Discover More</h2>
         <p>Every connection shapes the cosmos. Other threads await your discovery.</p>
         <a href="<?php echo esc_url($stories_archive); ?>" class="btn-primary"
             aria-label="Return to the stories archive to browse all narratives">

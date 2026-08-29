@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template Name: About Page
 
@@ -23,9 +24,6 @@ $cc_url = $cc_page ? get_permalink($cc_page->ID) : '#';
             <em>New Telling.</em>
         </h1>
         <p>A personal project. A cultural gap. An attempt to do something about both.</p>
-        <a href="<?php echo esc_url($gods_archive); ?>" class="btn-primary">
-            Meet the Òrìṣà
-        </a>
     </section>
 
     <div class="ab-pull-quote">
@@ -40,12 +38,12 @@ $cc_url = $cc_page ? get_permalink($cc_page->ID) : '#';
             <h2>I grew up knowing these gods existed.</h2>
         </header>
         <div>
-            <p>Growing up in Nigeria, the Òrìṣà weren't unknown. They appeared in films, conversations, books and
-                everyday culture. &#350;&#224;ng&#243;, Ọya, Ogun were names I had always heard.</p>
+            <p>Growing up in Nigeria, the Yoruba deities weren't unknown, being Yoruba myself. They appeared in films, conversations, books and
+                everyday culture. Sango, Ọya, Ogun were names I had always heard.</p>
             <p> But when I looked beyond home, something changed.</p>
             <p>Online, in games, films, comics and modern digital experiences, it was almost impossible to find Yoruba
                 mythology represented alongside traditions like Greek or Norse mythology. Zeus, Thor and Odin had become
-                global cultural icons. The Òrìṣà rarely appeared in those same spaces.</p>
+                global cultural icons. The gods rarely appeared in those same spaces.</p>
             <p>That absence stayed with me.</p>
             <p>This project is my attempt to help build the kind of digital doorway these stories deserve.</p>
         </div>
@@ -126,7 +124,7 @@ $cc_url = $cc_page ? get_permalink($cc_page->ID) : '#';
                 <li>
                     <div>
                         <h3>A living project</h3>
-                        <p>The Yoruba pantheon includes hundreds of Òrìṣà. This site currently focuses on three and
+                        <p>The Yoruba pantheon includes hundreds of gods and goddesses. This site currently focuses on three and
                             the story that connects them. More will be added this is not a finished monument.
                         </p>
                     </div>
@@ -150,7 +148,7 @@ $cc_url = $cc_page ? get_permalink($cc_page->ID) : '#';
             </p>
             <p>The short answer was: no one had built the right space for them yet. So this is an attempt to do that.
             </p>
-            <p class="contact-prompt">
+            <p>
                 Should you have suggestions and want to reach out, please do so at this
                 <a href="mailto:bimboadeyemi65@gmail.com" class="email-link"
                     aria-label="Send an email to bimboadeyemi65@gmail.com">

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * archive-story.php
 
@@ -22,7 +23,7 @@ function itan_tag_colour($slug)
     <section class="stories-hero">
         <div>
             <p>The Stories</p>
-            <h1>Stories of the Gods</h1>
+            <h1>Stories of the <em> Divine Deities</em> </h1>
             <p>Ancient tales of power, love, betrayal, and transformation.</p>
         </div>
     </section>
@@ -38,7 +39,7 @@ function itan_tag_colour($slug)
                 $god_tags = $tags ? array_filter($tags, function ($t) use ($god_slugs) {
                     return in_array($t->slug, $god_slugs, true);
                 }) : [];
-                ?>
+            ?>
 
                 <a href="<?php the_permalink(); ?>" class="story-card">
 

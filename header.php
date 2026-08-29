@@ -5,6 +5,11 @@
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php wp_title('|', true, 'right'); ?><?php bloginfo('name'); ?></title>
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo esc_url(get_template_directory_uri()); ?>/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo esc_url(get_template_directory_uri()); ?>/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo esc_url(get_template_directory_uri()); ?>/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" href="<?php echo esc_url(get_template_directory_uri()); ?>/favicons/favicon.ico">
+    <meta name="google-site-verification" content="EugkmQ__TA59fEUOHFkPHLb_f8coXS1VWmID11Ghzkg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template Name: Home
  */
@@ -94,7 +95,7 @@ $lt_url  = $lt_page ? get_permalink($lt_page->ID) : '#';
                 <h2>Meet The Gods</h2>
                 <p>
                     Explore the stories, powers and traditions surrounding
-                    the Òrìṣà.
+                    the deities.
                 </p>
 
             </div>
@@ -189,8 +190,7 @@ $lt_url  = $lt_page ? get_permalink($lt_page->ID) : '#';
         get_field('home_triangle_heading');
 
     $tri_subtitle =
-        get_field('home_triangle_subtitle')
-    ;
+        get_field('home_triangle_subtitle');
     ?>
 
     <?php if ($tri_img_left || $tri_img_right): ?>
@@ -332,7 +332,7 @@ $lt_url  = $lt_page ? get_permalink($lt_page->ID) : '#';
                         }
                     }
                     $story_excerpt = wp_trim_words(get_the_excerpt(), 18, '…');
-                    ?>
+                ?>
 
                     <a href="<?php the_permalink(); ?>" class="home-story-card">
 

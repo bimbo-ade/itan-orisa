@@ -169,9 +169,9 @@ table {
 
     --night-deepest: #101010;
     --night-deep: #151515;
-    --night-mid: #0D0D0D;
-    --night-light: #1c1c1c;
-    --night-muted: #242424;
+    --night-mid: #1D1D1D;
+    --night-light: #444;
+    --night-muted: #2E2E2E;
 
     /* Moon gold family */
     --moon-bright: #f5c842;
@@ -180,9 +180,9 @@ table {
     --moon-glow: rgba(245, 200, 66, 0.12);
 
     /* Text */
-    --text-primary: #f5f5f5;
-    --text-secondary: #cccccc;
-    --text-muted: #858585;
+    --text-primary: #f4f4f4;
+    --text-secondary: #c3c3c3;
+    --text-muted: #A3A3A3;
 
     /* Typography */
     --font-heading: 'Cinzel', Georgia, 'Georgia', serif;
@@ -732,7 +732,7 @@ SKIP LINK
         place-items: center;
         isolation: isolate;
         overflow: hidden;
-        border-bottom: 1px solid var(--moon-pale);
+        border-bottom: 1px solid var(--moon-warm);
 
         .home-hero-image,
         .home-hero-atmosphere {
@@ -752,7 +752,7 @@ SKIP LINK
             background:
                 linear-gradient(to bottom,
                     rgba(0, 0, 0, 0.063),
-                    rgba(0, 0, 0, 0.123) 100%,
+                    rgba(0, 0, 0, 0.371) 100%,
                     var(--night-deepest) 100%);
         }
 
@@ -816,7 +816,7 @@ SKIP LINK
 
     .home-gods {
         padding: 4rem var(--sp-md);
-        background: var(--night-deepest);
+        background-color: var(--night-deep);
     }
 
     h2 {
@@ -834,8 +834,10 @@ SKIP LINK
         display: flex;
         align-items: flex-end;
         overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        background: #090909;
+        border: 1px solid var(--night-light);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        transition: all 0.25s ease;
+        border-radius: var(--border-radius);
 
         .home-god-media {
             position: absolute;
@@ -906,8 +908,8 @@ SKIP LINK
         min-height: 520px;
         display: grid;
         place-items: center;
-        border-top: 1px solid var(--moon-pale);
-        border-bottom: 1px solid var(--moon-pale);
+        border-top: 1px solid var(--moon-warm);
+        border-bottom: 1px solid var(--moon-warm);
 
         .home-triangle-content {
             position: absolute;
@@ -916,6 +918,9 @@ SKIP LINK
             margin: 0 2rem;
             text-align: center;
             background: rgba(12, 12, 12, 0.684);
+            border: 1px solid var(--moon-warm);
+            border-radius: var(--border-radius);
+
 
 
 
@@ -935,7 +940,7 @@ SKIP LINK
 
     .home-stories {
         padding: 4rem var(--sp-md);
-        border-top: 1px solid var(--moon-pale);
+        border-top: 1px solid var(--moon-warm);
     }
 
     .home-stories-header {
@@ -957,7 +962,8 @@ SKIP LINK
         display: block;
         overflow: hidden;
         border: 1px solid rgba(255, 255, 255, 0.12);
-        background: var(--night-deep);
+        background: var(--night-mid);
+        border-radius: var(--border-radius);
 
         .home-story-media {
             position: relative;
@@ -1020,7 +1026,7 @@ SKIP LINK
 
     .home-context-inner {
         padding: 4rem var(--sp-md);
-        background: var(--night-deepest);
+        background-color: var(--night-deep);
 
         display: grid;
         gap: 2rem;
@@ -1031,6 +1037,9 @@ SKIP LINK
 
         img {
             aspect-ratio: 4 / 3;
+            border: 1px solid var(--night-light);
+            border-radius: var(--border-radius);
+
         }
     }
 
@@ -1046,18 +1055,6 @@ SKIP LINK
             max-width: 600px;
             margin: 1.5rem 0;
         }
-    }
-
-
-    /* ========================================================
-       DIVIDER
-    ======================================================== */
-
-    .home-divider {
-        width: calc(100% - 2rem);
-        height: 1px;
-        margin: 0 auto;
-        background: var(--moon-pale);
     }
 
 
@@ -1226,7 +1223,7 @@ END OF HOME PAGE
         position: relative;
         padding: var(--sp-2xl) var(--sp-md);
         text-align: center;
-        border-bottom: 1px solid var(--moon-pale);
+        border-bottom: 1px solid var(--moon-warm);
         overflow: hidden;
 
         /* content div */
@@ -1244,6 +1241,11 @@ END OF HOME PAGE
                 text-transform: uppercase;
                 color: var(--moon-bright);
                 margin-bottom: var(--sp-sm);
+            }
+            & h1{
+                   & em {
+                    color: var(--moon-bright);
+                }
             }
 
             & p {
@@ -1275,7 +1277,7 @@ END OF HOME PAGE
     & .gods-grid .god-card,
     .stories-grid .story-card {
         position: relative;
-        background-color: var(--night-deepest);
+        background-color: var(--night-deep);
         border: 1px solid var(--night-light);
         border-top: 3px solid var(--gc);
         border-radius: var(--border-radius);
@@ -1313,7 +1315,7 @@ END OF HOME PAGE
 
                 background: linear-gradient(to bottom,
                         transparent 90%,
-                        var(--night-mid) 100%);
+                        var(--night-deep) 100%);
 
                 pointer-events: none;
             }
@@ -2107,6 +2109,7 @@ END OF HOME PAGE
         grid-template-columns: repeat(2, 1fr);
         border-top: 1px solid var(--god-border);
         border-bottom: 1px solid var(--god-border);
+        background: var(--night-deepest);
     }
 
 
@@ -2162,12 +2165,18 @@ END OF HOME PAGE
    ============================================================ */
 
 .single-god {
+    background-color: var(--night-deep);
 
     .god-summary {
         max-width: var(--content-width);
         margin-inline: auto;
         padding: 7rem var(--sp-md);
 
+        & h2 {
+            border-left: 4px solid var(--god);
+            padding-left: 1rem;
+
+        }
     }
 
     .god-summary-content {
@@ -2175,6 +2184,8 @@ END OF HOME PAGE
         color: var(--text-secondary);
 
     }
+
+
 
 
 }
@@ -2198,14 +2209,17 @@ END OF HOME PAGE
 
     .god-journey,
     .god-powers {
-        background: var(--night-deep);
+        background-color: var(--night-deepest);
     }
 
 
     .god-symbols,
     .god-myths,
     .god-faq {
-        background: var(--night-deepest);
+        background: radial-gradient(circle at 100% 70%,
+                color-mix(in srgb, var(--god) 5%, transparent) 0%,
+                color-mix(in srgb, var(--god) 5%, transparent) 35%,
+                transparent 65%), var(--night-deepest);
     }
 
 
@@ -2283,6 +2297,7 @@ END OF HOME PAGE
     position: relative;
     overflow: hidden;
     border: 1px solid var(--god-border);
+    border-radius: var(--border-radius);
     background: var(--night-mid);
 }
 
@@ -2343,8 +2358,9 @@ END OF HOME PAGE
 
     .god-symbol-card {
         overflow: hidden;
-        background: var(--night-mid);
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        background-color: var(--night-deepest);
+        border: 1px solid var(--night-light);
+        border-radius: var(--border-radius);
         margin-bottom: 1.5rem;
     }
 
@@ -2362,6 +2378,10 @@ END OF HOME PAGE
 
     .god-symbol-body {
         padding: 1rem;
+    }
+
+    .god-symbol-body h3 {
+        color: color-mix(in srgb, var(--god), #ffffff 10%);
     }
 
     .god-symbol-body p {
@@ -2391,8 +2411,12 @@ END OF HOME PAGE
         align-items: flex-start;
         justify-content: flex-start;
         padding: 1.2rem;
-        background: var(--night-mid);
+        background: radial-gradient(circle at 100% 70%,
+                /* color-mix(in srgb, var(--god) 5%, transparent) 0%, */
+                color-mix(in srgb, var(--god) 2%, transparent)2%,
+                transparent 65%), var(--night-deepest);
         border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: var(--border-radius);
         transition:
             background var(--transition),
             border-color var(--transition),
@@ -2402,6 +2426,8 @@ END OF HOME PAGE
 
     .god-power-card h3 {
         margin-bottom: 0.5rem;
+        color: color-mix(in srgb, var(--god), #ffffff 10%);
+
 
     }
 
@@ -2454,6 +2480,7 @@ END OF HOME PAGE
 
     .god-myth-item:first-of-type {
         border-top: 1px solid rgba(255, 255, 255, 0.07);
+        margin-top: 2rem;
     }
 
 
@@ -2462,15 +2489,18 @@ END OF HOME PAGE
         place-items: center;
         width: 34px;
         height: 34px;
-        border: 1px solid var(--text-secondary);
+        border: 1px solid color-mix(in srgb, var(--god), #ffffff 30%);
         border-radius: 50%;
         font-family: var(--font-heading);
         font-size: 0.75rem;
+        border: 1px solid color-mix(in srgb, var(--god), #ffffff 30%);
     }
 
 
     .god-myth-body h3 {
         margin: 0 0 0.7rem;
+        color: color-mix(in srgb, var(--god), #ffffff 10%);
+
     }
 
     .god-myth-body p {
@@ -2487,9 +2517,7 @@ END OF HOME PAGE
 
     .god-worship {
         background:
-            linear-gradient(135deg,
-                var(--night-mid),
-                var(--night-deep));
+            var(--night-deepest)
     }
 
 
@@ -2500,14 +2528,14 @@ END OF HOME PAGE
 
     .god-worship-col {
         padding: 1.5rem;
-        background: var(--night-mid);
         border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: var(--border-radius);
     }
 
 
     .god-worship-col h3 {
         margin: 1.5rem 0 0.7rem;
-        color: var(--moon-warm);
+        color: color-mix(in srgb, var(--god), #ffffff 10%);
         font-size: 0.9rem;
     }
 
@@ -2523,7 +2551,11 @@ END OF HOME PAGE
         align-items: center;
         gap: 0.5rem;
         padding: 0.65rem;
-        background: var(--night-light);
+        background: var(--night-mid);
+    }
+
+    .god-offerings-grid>li {
+        background-color: color-mix(in srgb, var(--god) 8%, transparent);
     }
 
     .god-offerings-grid p {
@@ -2598,6 +2630,7 @@ END OF HOME PAGE
         text-align: center;
         background: rgba(7, 9, 26, 0.72);
         border: 1px solid var(--god-border);
+        border-radius: var(--border-radius);
         backdrop-filter: blur(10px);
     }
 
@@ -2624,6 +2657,10 @@ END OF HOME PAGE
 
     .god-faq-inner {
         max-width: 950px;
+
+        & h2 {
+            margin-bottom: 2rem;
+        }
     }
 
 
@@ -2647,7 +2684,7 @@ END OF HOME PAGE
         list-style: none;
     }
 
-    .god-faq summary span {
+    .god-faq summary span:last-child {
         flex-shrink: 0;
         display: grid;
         place-items: center;
@@ -2673,7 +2710,8 @@ END OF HOME PAGE
 
     .god-faq-item[open] .god-faq-question {
         color: var(--moon-bright);
-        margin-bottom: 0.3rem;font-weight: 600;
+        margin-bottom: 0.3rem;
+        font-weight: 600;
     }
 
     .god-faq-item[open] .god-faq-icon {
@@ -2692,7 +2730,7 @@ END OF HOME PAGE
     .god-crossnav {
         display: grid;
         grid-template-columns: 1fr;
-        background: var(--night-deep);
+        background: var(--night-deepest);
         border-top: 1px solid var(--god-border);
     }
 
@@ -2903,12 +2941,12 @@ END OF HOME PAGE
         }
 
         .god-triangle {
-            min-height: 560px;
+            height: auto;
         }
 
 
         .god-triangle-side {
-            min-height: 560px;
+            height: 700px;
         }
 
 
@@ -2969,7 +3007,7 @@ END OF SINGLE GOD AND SINGLE STORY
 /* ABOUT PAGE */
 
 .about-page {
-    background-color: var(--night-deepest);
+    background-color: var(--night-deep);
     color: var(--text-primary);
     font-family: var(--font-body);
     overflow-x: hidden;
@@ -3005,7 +3043,6 @@ END OF SINGLE GOD AND SINGLE STORY
 
             & em {
                 color: var(--moon-bright);
-                font-style: normal;
             }
         }
 
@@ -3111,7 +3148,7 @@ END OF SINGLE GOD AND SINGLE STORY
 
         @media (prefers-reduced-motion: reduce) {
             .email-link {
-                transition: none !important;
+                transition: none;
             }
         }
 
@@ -3210,7 +3247,7 @@ END OF SINGLE GOD AND SINGLE STORY
      CLOSING CTA
      ----------------------------------------------------------- */
     & .ab-cta {
-        padding: var(--sp-lg);
+        padding: var(--sp-xl) var(--sp-lg);
         text-align: center;
         background-color: var(--night-deep);
         border-top: 1px solid var(--night-light);
@@ -3319,6 +3356,10 @@ END OF SINGLE GOD AND SINGLE STORY
             & h1 {
 
                 margin-bottom: var(--sp-md);
+
+                & em {
+                    color: var(--moon-bright);
+                }
             }
 
             & p {
@@ -3438,7 +3479,7 @@ END OF SINGLE GOD AND SINGLE STORY
     & .cc-deeper {
         margin-top: 1.5rem;
         border: 1px solid rgba(var(--moon-bright-rgb, 245, 200, 66), 0.7);
-        background: var(--night-deepest);
+        background: var(--night-mid);
 
 
         &[open] summary {
@@ -3549,9 +3590,7 @@ END OF SINGLE GOD AND SINGLE STORY
             transition: background var(--transition);
             margin-bottom: 0;
 
-            &:hover {
-                background-color: var(--night-muted);
-            }
+
         }
     }
 
@@ -3637,7 +3676,7 @@ END OF SINGLE GOD AND SINGLE STORY
      CLOSING CTA
      ----------------------------------------------------------- */
     & .cc-cta {
-        padding: var(--sp-lg);
+        padding: var(--sp-xl) var(--sp-lg);
         text-align: center;
         background-color: var(--night-deep);
         border-top: 1px solid var(--night-light);
@@ -3848,6 +3887,20 @@ END OF ERROR PAGE
         & strong {
             color: var(--text-primary);
             font-style: italic;
+        }
+
+        .email-link {
+            color: var(--moon-bright);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dashed rgba(245, 200, 66, 0.4);
+            transition: all 0.2s ease;
+        }
+
+        .email-link:hover {
+            color: var(--moon-pale);
+            border-bottom-style: solid;
+            border-bottom-color: var(--moon-bright);
         }
 
 

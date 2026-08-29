@@ -1,4 +1,5 @@
 <?php
+
 /**
  * single-god.php 
 
@@ -16,7 +17,7 @@ while (have_posts()):
     $r = hexdec(substr($hex, 0, 2));
     $g = hexdec(substr($hex, 2, 2));
     $b = hexdec(substr($hex, 4, 2));
-    ?>
+?>
 
 
 
@@ -156,7 +157,6 @@ while (have_posts()):
                 </div>
                 <ol class="god-journey-track" aria-label="Orisha journey timeline">
                     <?php foreach ($stages as $i => $stage): ?>
-                        <!-- FIX: Added tabindex="0" for keyboard focus and a descriptive aria-label -->
                         <li class="god-journey-card" tabindex="0"
                             aria-label="Milestone <?php echo esc_attr($i + 1) . ': ' . esc_attr($stage['stage']); ?>">
 
@@ -480,7 +480,7 @@ while (have_posts()):
                     <?php foreach ($faqs as $faq): ?>
                         <details class="god-faq-item">
                             <summary class="god-faq-trigger">
-                                <p class="god-faq-question"><?php echo esc_html($faq['q']); ?></p>
+                                <span class="god-faq-question"><?php echo esc_html($faq['q']); ?></span>
                                 <span class="god-faq-icon" aria-hidden="true">+</span>
                             </summary>
 
@@ -536,10 +536,5 @@ while (have_posts()):
 
 
 <?php endwhile; ?>
-<script>document.querySelectorAll('.god-faq details').forEach(function (d) {
-        d.addEventListener('toggle', function () {
-            var plus = d.querySelector('summary span');
-            if (plus) plus.textContent = d.open ? '−' : '+';
-        });
-    });</script>
+
 <?php get_footer(); ?>

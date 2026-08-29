@@ -1,4 +1,5 @@
 <?php
+
 /**
  * archive-god.php
  */
@@ -21,8 +22,8 @@ function itan_god_colour($slug)
     <section class="gods-hero">
         <div>
             <p>The Pantheon</p>
-            <h1>The Yoruba Gods - ÒRÌṢÀ</h1>
-            <p>Meet the Òrìṣà &#8212; divine forces of thunder, iron, and transformation.</p>
+            <h1>The Yoruba Gods</h1>
+            <p>Meet the Deities &#8212; divine forces of thunder, iron, and transformation.</p>
         </div>
     </section>
 
@@ -34,7 +35,7 @@ function itan_god_colour($slug)
                 the_post();
                 $slug = get_post_field('post_name', get_the_ID());
                 $colour = itan_god_colour($slug);
-                ?>
+            ?>
 
                 <a href="<?php the_permalink(); ?>" class="god-card" style="--gc:<?php echo esc_attr($colour); ?>;">
 

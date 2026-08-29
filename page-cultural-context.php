@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template Name: Cultural Context Page
  *
@@ -17,7 +18,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
     <section class="cc-hero">
         <div>
             <p>Cultural Context</p>
-            <h1>Understanding Yoruba Mythology</h1>
+            <h1>Understanding <em>Yoruba Mythology</em> </h1>
             <p>A reference guide to the tradition, the people, and the stories behind this project.</p>
         </div>
     </section>
@@ -120,10 +121,10 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                     universe, the Òrìṣà oversee different aspects of life and nature. According to historical
                     accounts, there are 201 gods in Yoruba culture</p>
                 <p>
-                    The worship of Òrìṣà emphasizes morality, respect for nature, community, and harmony with
-                    spiritual forces. Today, Òrìṣà worship continues both in West Africa and throughout the African
+                    The worship of the Yoruba gods and goddesses emphasizes morality, respect for nature, community, and harmony with
+                    spiritual forces. Today, the worship continues both in West Africa and throughout the African
                     diaspora.</p>
-                <p>What distinguishes the Òrìṣà from many other mythological figures is their psychological
+                <p>What distinguishes the Yoruba deities from many other mythological figures is their psychological
                     complexity. They are not archetypes of virtue they have flaws, make mistakes, experience
                     jealousy and grief, and their stories do not always resolve neatly. This complexity is not a modern
                     interpretation: it is intrinsic to how they have always been told.</p>
@@ -384,6 +385,9 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
 
                             <li>
                                 Akinruntan, F. O. (2016).
+                                <a href=" https://thesun.ng/ugbo-a-kingdom-built-on-water/"
+                                    rel="noopener noreferrer">"
+                                    rel="noopener noreferrer"></a>
                                 <em>A History of the Oldest Kingdom in Yorubaland.</em>
                             </li>
                         </ul>
@@ -455,7 +459,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
         <p>The context is here. The stories are one click away.</p>
         <div>
             <a href="<?php echo esc_url($gods_archive); ?>" class="btn-primary">
-                Explore the Òrìṣà
+                Explore the pantheon
             </a>
             <a href="<?php echo esc_url($lt_url); ?>" class="btn-ghost">
                 Read the Love Triangle
@@ -463,16 +467,8 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
         </div>
     </section>
 
-    
+
 
 </div>
-<script>document.querySelectorAll('.cc-nav-link').forEach(link => {
-    link.addEventListener('click', function () {
-        document.querySelectorAll('.cc-nav-link').forEach(item => {
-            item.classList.remove('active');
-        });
 
-        this.classList.add('active');
-    });
-});</script>
 <?php get_footer(); ?>

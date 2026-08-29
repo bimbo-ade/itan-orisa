@@ -1,9 +1,16 @@
 <?php
 
+// Enable featured images for posts and custom post types.
 add_theme_support('post-thumbnails');
+
+
+// ============================================================
+// GODS
+// Registers the "Gods" custom post type.
+// ============================================================
+
 function register_gods()
 {
-
     register_post_type('god', [
 
         'labels' => [
@@ -14,8 +21,8 @@ function register_gods()
             'edit_item' => 'Edit God',
             'view_item' => 'View God',
         ],
-        'public' => true,
 
+        'public' => true,
         'has_archive' => true,
         'rewrite' => ['slug' => 'gods'],
 
@@ -27,17 +34,20 @@ function register_gods()
         ],
 
         'menu_icon' => 'dashicons-groups',
-
         'show_in_rest' => true,
     ]);
 }
+
 add_action('init', 'register_gods');
 
 
+// ============================================================
+// STORIES
+// Registers the "Stories" custom post type.
+// ============================================================
 
 function register_stories()
 {
-
     register_post_type('story', [
 
         'labels' => [
@@ -52,12 +62,14 @@ function register_stories()
         'public' => true,
         'has_archive' => true,
         'rewrite' => ['slug' => 'stories'],
+
         'supports' => [
             'title',
             'editor',
             'thumbnail',
             'excerpt'
         ],
+
         'menu_icon' => 'dashicons-book',
         'show_in_rest' => true,
     ]);
@@ -66,6 +78,10 @@ function register_stories()
 add_action('init', 'register_stories');
 
 
+// ============================================================
+// NAVIGATION
+// Registers the primary WordPress navigation menu.
+// ============================================================
 
 function register_my_menus()
 {
@@ -73,124 +89,192 @@ function register_my_menus()
         'primary' => 'Primary Menu'
     ]);
 }
+
 add_action('init', 'register_my_menus');
 
 
+// ============================================================
+// STYLES & SCRIPTS
+// Loads the main theme stylesheet and JavaScript.
+// ============================================================
 
 function load_my_theme_styles()
 {
-
     wp_enqueue_style(
         'my-main-style',
         get_stylesheet_uri(),
         [],
         '1.0'
     );
+
+    // Main theme JavaScript.
+    wp_enqueue_script(
+        'my-main-script',
+        get_template_directory_uri() . '/js/main.js',
+        [],
+        '1.0',
+        true
+    );
 }
 
 add_action('wp_enqueue_scripts', 'load_my_theme_styles');
 
 
+// ============================================================
+// LOVE STORY IMAGES
+// Returns the requested ACF image size, with the original
+// image used as a fallback.
+// ============================================================
+
 function love_img($image, $size = 'large')
 {
-    if (!is_array($image))
+    if (!is_array($image)) {
         return '';
+    }
+
     if (!empty($image['sizes'][$size])) {
         return $image['sizes'][$size];
     }
+
     return $image['url'];
 }
 
 
+// Generates a responsive srcset for an ACF image.
 function love_img_set($image)
 {
-    if (!is_array($image) || empty($image['ID']))
+    if (!is_array($image) || empty($image['ID'])) {
         return '';
+    }
+
     return wp_get_attachment_image_srcset($image['ID'], 'large') ?: '';
 }
 
 
+// ============================================================
+// CUSTOM IMAGE SIZES
+// Creates image crops/sizes used by the love story pages.
+// ============================================================
+
 add_action('after_setup_theme', function () {
+
     add_image_size('love-card', 500, 500, true);
     add_image_size('love-hero', 1600, 900, true);
+
+    add_image_size('love-archive-card', 950, 540, true);
+    add_image_size('love-archive-card-small', 640, 364, true);
 });
 
 
+// ============================================================
+// META DESCRIPTION
+// Generates a page-specific SEO meta description.
+// ============================================================
 
-
-
-add_action('after_setup_theme', function () {
-    add_action('after_setup_theme', function () {
-
-        add_image_size('love-archive-card', 950, 540, true);
-        add_image_size('love-archive-card-small', 640, 364, true);
-    });
-});
-
-
-// meta description code bloc
-
+/**
+ * Global Metadata Engine Manager
+ * Automatically injects pristine, high-performing SEO descriptions into the head element.
+ */
 add_action('wp_head', function () {
-
     $description = '';
 
     if (is_front_page()) {
-        $description = 'Itan Orisa Discover the gods of Yoruba mythology, their stories, symbols, powers, and the myths still told today.';
-
+        $description = 'Explore Ìtàn Òrìṣà, a digital library of Yoruba folklore. Discover the gods, their powers, stories, and the ways Yoruba mythology continues to influence culture today.';
     } elseif (is_singular('god')) {
 
-        $description = get_field('god_summary')
-            ?: (get_the_title() . ' — ' . get_field('god_tagline'));
-
+        $description = get_field('god_tagline')
+            ?: (get_the_title() . ' — Discover the sacred symbols, legends, and cosmic role of this powerful Orisha deity in Yoruba folklore.');
     } elseif (is_singular('story')) {
-
-        $description = get_the_excerpt() ?: wp_trim_words(get_the_content(), 30);
-
+        $description = get_the_excerpt() ?: wp_trim_words(get_the_content(), 28);
     } elseif (is_page('cultural-context')) {
-        $description = 'Explore the history, oral traditions, and living culture behind Yoruba mythology and the Orisha.';
-
+        $description = 'Uncover the history, oral traditions, and influence behind the Yoruba gods. Trace the sacred roots of Yoruba culture from ancient origins to modern day.';
     } elseif (is_singular()) {
         $description = get_the_excerpt() ?: get_bloginfo('description');
-
     } else {
         $description = get_bloginfo('description');
     }
+
     $description = wp_strip_all_tags($description);
     $description = trim(preg_replace('/\s+/', ' ', $description));
-    if (mb_strlen($description) > 160) {
-        $description = mb_substr($description, 0, 157) . '...';
+
+    if (mb_strlen($description) > 155) {
+        $description = mb_substr($description, 0, 152) . '...';
     }
 
     if ($description) {
         echo '<meta name="description" content="' . esc_attr($description) . '">' . "\n";
     }
-
 }, 1);
 
 
+
+// ============================================================
+// HTML5 IMAGE CLEANUP
+// Removes XHTML-style self-closing slashes from image markup.
+// ============================================================
 
 function itan_orisa_html5_image_cleanup($html)
 {
     return str_replace(' />', '>', $html);
 }
+
 add_filter('wp_get_attachment_image_attributes', function ($attr) {
-    return $attr; });
-add_filter('the_post_thumbnail_html', 'itan_orisa_html5_image_cleanup', 10, 1);
-add_filter('wp_get_attachment_image', 'itan_orisa_html5_image_cleanup', 10, 1);
+    return $attr;
+});
+
+add_filter(
+    'the_post_thumbnail_html',
+    'itan_orisa_html5_image_cleanup',
+    10,
+    1
+);
+
+add_filter(
+    'wp_get_attachment_image',
+    'itan_orisa_html5_image_cleanup',
+    10,
+    1
+);
+
+/**
+ * Fixes LiteSpeed Cache / WordPress sizes="auto" validation errors 
+ * by dropping empty or malformed size attributes from single imagery.
+ */
+function itan_orisa_sanitize_image_sizes_attribute($html)
+{
+    if (false === strpos($html, 'srcset=')) {
+        $html = preg_replace('/\s+sizes=["\'][^"\']*["\']/i', '', $html);
+    }
+
+    $html = str_replace('sizes="auto, "', '', $html);
+    $html = str_replace('sizes="auto,"', '', $html);
+
+    return $html;
+}
+add_filter('the_post_thumbnail_html', 'itan_orisa_sanitize_image_sizes_attribute', 99, 1);
 
 
+// ============================================================
+// HTML5 BUFFER CLEANUP
+// Removes self-closing slashes from common HTML elements
+// in the final frontend output.
+// ============================================================
 
-
-function itan_orisa_html5_buffer_cleanup( $buffer ) {
+function itan_orisa_html5_buffer_cleanup($buffer)
+{
     $pattern = '/<(img|input|br|hr|meta|link)([^>]*?)\s+\/>/i';
     $replace = '<$1$2>';
-    
-    return preg_replace( $pattern, $replace, $buffer );
+
+    return preg_replace($pattern, $replace, $buffer);
 }
 
-function itan_orisa_start_html_buffer() {
-    if ( ! is_admin() ) {
-        ob_start( 'itan_orisa_html5_buffer_cleanup' );
+
+// Start output buffering on the frontend.
+function itan_orisa_start_html_buffer()
+{
+    if (!is_admin()) {
+        ob_start('itan_orisa_html5_buffer_cleanup');
     }
 }
-add_action( 'wp_loaded', 'itan_orisa_start_html_buffer' );
+
+add_action('wp_loaded', 'itan_orisa_start_html_buffer');
