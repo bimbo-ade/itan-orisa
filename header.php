@@ -30,10 +30,19 @@
                 </a>
             </div>
 
-            <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle main navigation menu">
-            <label for="nav-toggle" class="nav-toggle-label">
-                <span></span><span></span><span></span>
-            </label>
+         <input
+    type="checkbox"
+    id="nav-toggle"
+    class="nav-toggle"
+    aria-label="Toggle main navigation menu"
+>
+
+<label for="nav-toggle" class="nav-toggle-label">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span class="sr-only">Toggle main navigation menu</span>
+</label>
 
             <?php
             if (has_nav_menu('primary')) {

@@ -1438,7 +1438,7 @@ END OF HOME PAGE
 
     --ogun: #40a145;
     --oya: #b05de4;
-    --sango: #c62121;
+    --sango: #e74848;
     position: relative;
     background: var(--love-bg) no-repeat fixed;
 
@@ -3884,4 +3884,15 @@ END OF ERROR PAGE
     margin-bottom: 0;
     padding-top: 1rem;
     border-top: 1px solid rgba(245, 232, 168, 0.2);
+}
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;color: transparent;
 }
