@@ -280,3 +280,11 @@ function itan_orisa_start_html_buffer()
 add_action('wp_loaded', 'itan_orisa_start_html_buffer');
 
 
+// Source - https://stackoverflow.com/a/32824599
+// Posted by rnevius
+// Retrieved 2026-09-05, License - CC BY-SA 3.0
+
+function wptuts_scripts_with_jquery() {
+    wp_enqueue_script( 'custom-script', get_template_directory_uri() . '/js/main.js', array( 'jquery' ));
+}
+add_action( 'wp_enqueue_scripts', 'wptuts_scripts_with_jquery' );

@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+document.addEventListener('DOMContentLoaded', () => {
 
 
 
@@ -94,3 +95,4 @@ document.addEventListener('DOMContentLoaded', () => {
     chapters.forEach((chapter) => {
         observer.observe(chapter);
     });
+});

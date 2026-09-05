@@ -28,7 +28,6 @@ $home_url = home_url('/');
             The page either doesn&#8217;t exist or has moved on.
         </p>
 
-        <!-- FIX: Flat DOM navigation layout equipped with clear target descriptions -->
         <nav class="error-actions" aria-label="Error recovery navigation">
             <a href="<?php echo esc_url($home_url); ?>"
                 class="btn-primary"
