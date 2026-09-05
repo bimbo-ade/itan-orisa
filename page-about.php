@@ -142,7 +142,7 @@ $cc_url = $cc_page ? get_permalink($cc_page->ID) : '#';
             <h2>About the creator</h2>
         </header>
         <div>
-            <p>This project was built as part of an MA in Web Design &amp; Content Planning at the University of
+            <p>Hi, im <em>Abimbola Adeyemi</em> . This project was built as part of an MA in Web Design &amp; Content Planning at the University of
                 Greenwich. It began as a coursework brief and became something more personal a question about
                 why the stories I grew up around were so absent from the digital spaces where other mythologies thrived.
             </p>
@@ -150,8 +150,8 @@ $cc_url = $cc_page ? get_permalink($cc_page->ID) : '#';
             </p>
             <p>
                 Should you have suggestions and want to reach out, please do so at this
-                <a href="mailto:bimboadeyemi65@gmail.com" class="email-link"
-                    aria-label="Send an email to bimboadeyemi65@gmail.com">
+                <a href="https://aemail.com/9QM8" class="email-link"
+                    aria-label="Send an email to author">
                     email address
                 </a>
             </p>

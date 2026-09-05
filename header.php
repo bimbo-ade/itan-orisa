@@ -26,7 +26,7 @@
         <div class="nav-container">
             <div class="logo">
                 <a href="<?php echo home_url(); ?>">
-                    <span class="logo-word">Ìtàn Òrìṣà</span>
+                    <span class="logo-word">Ìtàn <em> Òrìṣà</em> </span>
                 </a>
             </div>
 

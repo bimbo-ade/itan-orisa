@@ -101,7 +101,7 @@ $chapter_god_map = ['ogun', 'sango', 'oya', 'ogun', 'sango', 'oya', 'sango'];
             <?php if ($hero_intro): ?>
                 <?php echo wp_kses_post($hero_intro); ?>
             <?php endif; ?>
-
+            <span>Scroll to enter &darr;</span>
         </div>
     </section>
 
@@ -218,6 +218,41 @@ $chapter_god_map = ['ogun', 'sango', 'oya', 'ogun', 'sango', 'oya', 'sango'];
 </div>
 
 
+<!-- <script>
+    const chapters = document.querySelectorAll(
+        '.love-chapter'
+    );
 
+    const chapterDots = document.querySelectorAll(
+        '.love-chapter-rail a'
+    );
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+
+                    chapterDots.forEach((dot) => {
+                        dot.classList.remove('active');
+                    });
+
+                    const activeDot = document.querySelector(
+                        `.love-chapter-rail a[href="#${entry.target.id}"]`
+                    );
+
+                    if (activeDot) {
+                        activeDot.classList.add('active');
+                    }
+                }
+            });
+        }, {
+            threshold: 0.5
+        }
+    );
+
+    chapters.forEach((chapter) => {
+        observer.observe(chapter);
+    });
+</script> -->
 
 <?php get_footer(); ?>

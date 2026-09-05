@@ -33,6 +33,7 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
         <a href="#cc-sources" class="cc-nav-link">Sources</a>
     </nav>
 
+
     <div class="cc-body">
 
         <section class="cc-section" id="cc-yoruba">
@@ -386,9 +387,8 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
                             <li>
                                 Akinruntan, F. O. (2016).
                                 <a href=" https://thesun.ng/ugbo-a-kingdom-built-on-water/"
-                                    rel="noopener noreferrer">"
-                                    rel="noopener noreferrer"></a>
-                                <em>A History of the Oldest Kingdom in Yorubaland.</em>
+                                    rel="noopener noreferrer">
+                                    <em>A History of the Oldest Kingdom in Yorubaland.</em></a>
                             </li>
                         </ul>
                     </div>
@@ -470,5 +470,62 @@ $gods_archive = get_post_type_archive_link('god') ?: '#';
 
 
 </div>
+<!-- <script>
+document.addEventListener('DOMContentLoaded', () => {
 
+    document.querySelectorAll('.god-faq details').forEach(function(d) {
+        d.addEventListener('toggle', function() {
+            var plus = d.querySelector('summary span');
+            if (plus) plus.textContent = d.open ? '−' : '+';
+        });
+    });
+
+    const stickyNav = document.querySelector('.cc-sticky-nav');
+    
+    if (stickyNav) {
+        const navLinks = document.querySelectorAll('.cc-nav-link');
+        
+        const targetSections = [];
+        navLinks.forEach(link => {
+            const hash = link.getAttribute('href');
+            if (hash && hash.startsWith('#')) {
+                const section = document.querySelector(hash);
+                if (section) targetSections.push(section);
+            }
+        });
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -60% 0px', 
+            threshold: 0
+        };
+
+        const scrollSpyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const activeId = '#' + entry.target.id;
+                    
+                    navLinks.forEach(link => {
+                        if (link.getAttribute('href') === activeId) {
+                            link.classList.add('active');
+                
+                            link.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'nearest',
+                                inline: 'center'
+                            });
+                        } else {
+                            link.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        // Bind sections to active tracking matrix lanes
+        targetSections.forEach(section => scrollSpyObserver.observe(section));
+    }
+
+});
+</script> -->
 <?php get_footer(); ?>
